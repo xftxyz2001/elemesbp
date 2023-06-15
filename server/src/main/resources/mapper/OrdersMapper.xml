@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xftxyz.elm.mapper.OrdersMapper">
+
+    <resultMap id="BaseResultMap" type="com.xftxyz.elm.domain.Orders">
+            <id property="orderid" column="orderId" jdbcType="INTEGER"/>
+            <result property="userid" column="userId" jdbcType="VARCHAR"/>
+            <result property="businessid" column="businessId" jdbcType="INTEGER"/>
+            <result property="orderdate" column="orderDate" jdbcType="VARCHAR"/>
+            <result property="ordertotal" column="orderTotal" jdbcType="DECIMAL"/>
+            <result property="daid" column="daId" jdbcType="INTEGER"/>
+            <result property="orderstate" column="orderState" jdbcType="INTEGER"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        orderId,userId,businessId,
+        orderDate,orderTotal,daId,
+        orderState
+    </sql>
+</mapper>

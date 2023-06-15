@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xftxyz.elm.mapper.BusinessMapper">
+
+    <resultMap id="BaseResultMap" type="com.xftxyz.elm.domain.Business">
+            <id property="businessid" column="businessId" jdbcType="INTEGER"/>
+            <result property="businessname" column="businessName" jdbcType="VARCHAR"/>
+            <result property="businessaddress" column="businessAddress" jdbcType="VARCHAR"/>
+            <result property="businessexplain" column="businessExplain" jdbcType="VARCHAR"/>
+            <result property="businessimg" column="businessImg" jdbcType="VARCHAR"/>
+            <result property="ordertypeid" column="orderTypeId" jdbcType="INTEGER"/>
+            <result property="starprice" column="starPrice" jdbcType="DECIMAL"/>
+            <result property="deliveryprice" column="deliveryPrice" jdbcType="DECIMAL"/>
+            <result property="remarks" column="remarks" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        businessId,businessName,businessAddress,
+        businessExplain,businessImg,orderTypeId,
+        starPrice,deliveryPrice,remarks
+    </sql>
+</mapper>

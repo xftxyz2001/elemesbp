@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xftxyz.elm.mapper.OrderdetailetMapper">
+
+    <resultMap id="BaseResultMap" type="com.xftxyz.elm.domain.Orderdetailet">
+            <id property="odid" column="odId" jdbcType="INTEGER"/>
+            <result property="orderid" column="orderId" jdbcType="INTEGER"/>
+            <result property="foodid" column="foodId" jdbcType="INTEGER"/>
+            <result property="quantity" column="quantity" jdbcType="INTEGER"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        odId,orderId,foodId,
+        quantity
+    </sql>
+</mapper>

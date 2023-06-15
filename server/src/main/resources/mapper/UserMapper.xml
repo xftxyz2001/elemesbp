@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xftxyz.elm.mapper.UserMapper">
+
+    <resultMap id="BaseResultMap" type="com.xftxyz.elm.domain.User">
+            <id property="userid" column="userId" jdbcType="VARCHAR"/>
+            <result property="password" column="password" jdbcType="VARCHAR"/>
+            <result property="username" column="userName" jdbcType="VARCHAR"/>
+            <result property="usersex" column="userSex" jdbcType="INTEGER"/>
+            <result property="userimg" column="userImg" jdbcType="VARCHAR"/>
+            <result property="deltag" column="delTag" jdbcType="INTEGER"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        userId,password,userName,
+        userSex,userImg,delTag
+    </sql>
+</mapper>

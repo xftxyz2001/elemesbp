@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xftxyz.elm.mapper.CartMapper">
+
+    <resultMap id="BaseResultMap" type="com.xftxyz.elm.domain.Cart">
+            <id property="cartid" column="cartId" jdbcType="INTEGER"/>
+            <result property="foodid" column="foodId" jdbcType="INTEGER"/>
+            <result property="businessid" column="businessId" jdbcType="INTEGER"/>
+            <result property="userid" column="userId" jdbcType="VARCHAR"/>
+            <result property="quantity" column="quantity" jdbcType="INTEGER"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        cartId,foodId,businessId,
+        userId,quantity
+    </sql>
+</mapper>

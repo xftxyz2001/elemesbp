@@ -1,1 +1,33 @@
+spring:
+  servlet:
+    multipart:
+      max-file-size: 5MB
+      max-request-size: 20MB
 
+  jackson:
+    date-format: yyyy-MM-dd HH:mm:ss
+    time-zone: GMT+8
+
+  mvc:
+    hiddenmethod:
+      filter:
+        enabled: true # 开启页面表单的Rust功能
+
+  datasource:
+    # 配置数据源类型
+    type: com.zaxxer.hikari.HikariDataSource
+    # 配置连接数据库信息
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/elm?characterEncoding=utf-8&useSSL=false
+    username: root
+    password: 123456
+
+mybatis-plus:
+  # 配置mapper.xml文件的位置
+  mapper-locations: classpath:mapper/*.xml
+  # 配置逻辑删除字段
+  global-config:
+    db-config:
+      logic-delete-field: delTag
+      logic-delete-value: 0
+      logic-not-delete-value: 1
