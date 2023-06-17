@@ -19,4 +19,11 @@
         foodImg,foodPrice,businessId,
         remarks
     </sql>
+    <select id="selectAllByBusinessid" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from food
+        where
+        businessId = #{businessid,jdbcType=NUMERIC}
+    </select>
 </mapper>
