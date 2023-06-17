@@ -34,7 +34,10 @@ import FooterSection from '@/components/FooterSection.vue';
       <button>登录</button>
     </div>
     <div class="button-register">
-      <button>去注册</button>
+
+      <router-link to="/register">
+        <button>去注册</button>
+      </router-link>
     </div>
 
     <!-- 底部菜单部分 -->
