@@ -17,4 +17,12 @@
         userId,password,userName,
         userSex,userImg,delTag
     </sql>
+    <select id="selectOneByUseridAndPassword" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from user
+        where
+        userId = #{userid,jdbcType=VARCHAR}
+        AND password = #{password,jdbcType=VARCHAR}
+    </select>
 </mapper>

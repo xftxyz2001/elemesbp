@@ -10,6 +10,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
+/**
+ * 商家相关
+ */
 @RestController
 @RequestMapping("/business")
 public class BusinessController {
@@ -38,5 +41,63 @@ public class BusinessController {
     public List<Business> findBusinessByOrdertypeid(@PathVariable("ordertypeid") Integer ordertypeid) {
         return businessService.findBusinessByOrdertypeid(ordertypeid);
     }
+
+    // 商家名称
+    // 商家地址
+    // 起送费
+    // 配送费
+    /**
+     * 根据商家名称查询商家信息
+     * 
+     * @param businessname 商家名称
+     * @return 商家信息列表
+     */
+    // @GetMapping("/businessname/{businessname}")
+    // public List<Business>
+    // findBusinessByBusinessname(@PathVariable("businessname") String businessname)
+    // {
+    // return businessService.findBusinessByBusinessname(businessname);
+    // }
+
+    /**
+     * 根据商家地址查询商家信息
+     * 
+     * @param businessaddress 商家地址
+     * @return 商家信息列表
+     */
+    // @GetMapping("/businessaddress/{businessaddress}")
+    // public List<Business>
+    // findBusinessByBusinessaddress(@PathVariable("businessaddress") String
+    // businessaddress) {
+    // return businessService.findBusinessByBusinessaddress(businessaddress);
+    // }
+
+    /**
+     * 根据起送费范围查询商家信息
+     * 
+     * @param from 起送费下限
+     * @param to   起送费上限
+     * @return 商家信息列表
+     */
+    // @GetMapping("/startprice/{from}/{to}")
+    // public List<Business>
+    // findBusinessByStartpriceRange(@PathVariable("startprice") Integer from,
+    // @PathVariable("endprice") Integer to) {
+    // return businessService.findBusinessByStartpriceRange(from, to);
+    // }
+
+    /**
+     * 根据配送费范围查询商家信息
+     * 
+     * @param from 配送费下限
+     * @param to   配送费上限
+     * @return 商家信息列表
+     */
+    // @GetMapping("/deliveryprice/{from}/{to}")
+    // public List<Business>
+    // findBusinessByDeliverypriceRange(@PathVariable("deliveryprice") Integer from,
+    // @PathVariable("deliveryprice") Integer to) {
+    // return businessService.findBusinessByDeliverypriceRange(from, to);
+    // }
 
 }
