@@ -1,10 +1,38 @@
 <script setup lang="ts">
 import FooterSection from '@/components/FooterSection.vue';
+import { onMounted } from 'vue';
+
+onMounted(() => {
+  document.onscroll = () => {
+    //获取滚动条位置
+    let s1 = document.documentElement.scrollTop;
+    let s2 = document.body.scrollTop;
+    let scroll = s1 == 0 ? s2 : s1;
+    //获取视口宽度
+    let width = document.documentElement.clientWidth;
+    //使用vue自带api代替下面一行代码 
+    // let search = this.$refs.fixedBox;
+
+    //获取顶部固定块
+    let search = document.getElementById('fixedBox') as HTMLElement;
+
+    //判断滚动条超过视口宽度的12%时，搜索块变成固定定位
+    if (scroll > width * 0.12) {
+      search.style.position = 'fixed';
+      search.style.left = '0';
+      search.style.top = '0';
+    } else {
+      search.style.position = 'static';
+    }
+  }
+});
 </script>
 
 <template>
   <div class="wrapper">
     <!--header部分-->
+    <!-- <Search> </Search> -->
+
     <header>
       <div class="icon-location-box">
         <div class="icon-location"></div>
@@ -14,7 +42,7 @@ import FooterSection from '@/components/FooterSection.vue';
 
     <!--search部分-->
     <div class="search">
-      <div class="search-fixed-top" ref="fixedBox">
+      <div class="search-fixed-top" id="fixedBox" ref="fixedBox">
         <div class="search-box">
           <i class="fa fa-search"></i>搜索饿了么商家、商品名称
         </div>
@@ -740,5 +768,18 @@ import FooterSection from '@/components/FooterSection.vue';
 
 .wrapper .business li .business-info .business-info-promotion .business-info-promotion-right p {
   margin-right: 2vw;
+}
+
+/**评论**/
+.wrapper .comment .content {
+  width: 94%;
+  margin-top: 2vw;
+}
+
+.wrapper .comment .content textarea {
+  border: none;
+  resize: none;
+  outline-color: skyblue;
+  background-color: #EEE;
 }
 </style>
