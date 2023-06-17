@@ -4,7 +4,10 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.xftxyz.elm.domain.Business;
 import com.xftxyz.elm.service.BusinessService;
 import com.xftxyz.elm.mapper.BusinessMapper;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 /**
 * @author 25810
@@ -15,6 +18,13 @@ import org.springframework.stereotype.Service;
 public class BusinessServiceImpl extends ServiceImpl<BusinessMapper, Business>
     implements BusinessService{
 
+    @Autowired
+    private BusinessMapper businessMapper;
+
+    @Override
+    public List<Business> findBusinessByOrdertypeid(Integer ordertypeid) {
+        return businessMapper.selectAllByOrdertypeid(ordertypeid);
+    }
 }
 
 

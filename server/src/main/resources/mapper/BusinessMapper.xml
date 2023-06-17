@@ -21,4 +21,11 @@
         businessExplain,businessImg,orderTypeId,
         starPrice,deliveryPrice,remarks
     </sql>
+    <select id="selectAllByOrdertypeid" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from business
+        where
+        orderTypeId = #{ordertypeid,jdbcType=NUMERIC}
+    </select>
 </mapper>
