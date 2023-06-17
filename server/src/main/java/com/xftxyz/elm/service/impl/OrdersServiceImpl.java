@@ -4,6 +4,10 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.xftxyz.elm.domain.Orders;
 import com.xftxyz.elm.service.OrdersService;
 import com.xftxyz.elm.mapper.OrdersMapper;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 /**
@@ -15,8 +19,12 @@ import org.springframework.stereotype.Service;
 public class OrdersServiceImpl extends ServiceImpl<OrdersMapper, Orders>
         implements OrdersService {
 
+    @Autowired
+    private OrdersMapper ordersMapper;
+            
+    @Override
+    public List<Orders> findOrdersByUserId(String userId) {
+        return ordersMapper.selectAllByUserid(userId);
+    }
+
 }
-
-
-
-

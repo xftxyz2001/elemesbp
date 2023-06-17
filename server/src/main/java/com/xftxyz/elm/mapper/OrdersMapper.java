@@ -1,4 +1,6 @@
 package com.xftxyz.elm.mapper;
+import java.util.List;
+import org.apache.ibatis.annotations.Param;
 
 import com.xftxyz.elm.domain.Orders;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
@@ -12,7 +14,7 @@ import org.apache.ibatis.annotations.Mapper;
 */
 @Mapper
 public interface OrdersMapper extends BaseMapper<Orders> {
-
+    List<Orders> selectAllByUserid(@Param("userid") String userid);
 }
 
 

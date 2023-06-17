@@ -19,4 +19,11 @@
         orderDate,orderTotal,daId,
         orderState
     </sql>
+    <select id="selectAllByUserid" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from orders
+        where
+        userId = #{userid,jdbcType=VARCHAR}
+    </select>
 </mapper>

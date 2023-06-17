@@ -1,6 +1,9 @@
 package com.xftxyz.elm.service;
 
 import com.xftxyz.elm.domain.Orders;
+
+import java.util.List;
+
 import com.baomidou.mybatisplus.extension.service.IService;
 
 /**
@@ -9,5 +12,7 @@ import com.baomidou.mybatisplus.extension.service.IService;
 * @createDate 2023-06-15 16:16:07
 */
 public interface OrdersService extends IService<Orders> {
+
+    List<Orders> findOrdersByUserId(String userId);
 
 }
