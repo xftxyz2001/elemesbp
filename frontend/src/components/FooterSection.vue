@@ -3,22 +3,30 @@
 
 <template>
   <ul class="footer">
-    <li>
-      <i class="fa fa-home"></i>
-      <p>首页</p>
-    </li>
-    <li>
-      <i class="fa fa-compass"></i>
-      <p>发现</p>
-    </li>
-    <li>
-      <i class="fa fa-file-text-o"></i>
-      <p>订单</p>
-    </li>
-    <li>
-      <i class="fa fa-user-o"></i>
-      <p>我的</p>
-    </li>
+    <router-link to="/">
+      <li>
+        <i class="fa fa-home"></i>
+        <p>首页</p>
+      </li>
+    </router-link>
+    <router-link to="/discover">
+      <li>
+        <i class="fa fa-compass"></i>
+        <p>发现</p>
+      </li>
+    </router-link>
+    <router-link to="/order">
+      <li>
+        <i class="fa fa-file-text-o"></i>
+        <p>订单</p>
+      </li>
+    </router-link>
+    <router-link to="/profile">
+      <li>
+        <i class="fa fa-user-o"></i>
+        <p>我的</p>
+      </li>
+    </router-link>
   </ul>
 </template>
 
