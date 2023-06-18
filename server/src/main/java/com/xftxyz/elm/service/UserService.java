@@ -1,6 +1,7 @@
 package com.xftxyz.elm.service;
 
 import com.xftxyz.elm.domain.User;
+import com.xftxyz.elm.vo.req.RegisterVO;
 import com.baomidou.mybatisplus.extension.service.IService;
 
 /**
@@ -11,5 +12,9 @@ import com.baomidou.mybatisplus.extension.service.IService;
 public interface UserService extends IService<User> {
 
     User login(String userId, String password);
+
+    boolean checkUserid(String userid);
+
+    boolean register(RegisterVO registerVO);
 
 }

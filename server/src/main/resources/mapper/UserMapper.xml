@@ -25,4 +25,9 @@
         userId = #{userid,jdbcType=VARCHAR}
         AND password = #{password,jdbcType=VARCHAR}
     </select>
+    <select id="countByUserid" resultType="int">
+        select count(*)
+        from user
+        where userId = #{userid,jdbcType=VARCHAR}
+    </select>
 </mapper>

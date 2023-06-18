@@ -14,6 +14,8 @@ import org.apache.ibatis.annotations.Mapper;
 @Mapper
 public interface UserMapper extends BaseMapper<User> {
     User selectOneByUseridAndPassword(@Param("userid") String userid, @Param("password") String password);
+
+    int countByUserid(@Param("userid") String userid);
 }
 
 

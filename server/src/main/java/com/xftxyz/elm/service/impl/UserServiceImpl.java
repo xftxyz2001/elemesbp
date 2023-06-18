@@ -3,6 +3,7 @@ package com.xftxyz.elm.service.impl;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.xftxyz.elm.domain.User;
 import com.xftxyz.elm.service.UserService;
+import com.xftxyz.elm.vo.req.RegisterVO;
 import com.xftxyz.elm.mapper.UserMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -22,6 +23,24 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
     @Override
     public User login(String userId, String password) {
         return userMapper.selectOneByUseridAndPassword(userId, password);
+    }
+
+    @Override
+    public boolean checkUserid(String userid) {
+        return userMapper.countByUserid(userid) > 0;
+    }
+
+    @Override
+    public boolean register(RegisterVO registerVO) {
+        if (checkUserid(registerVO.getUserid())) {
+            return false;
+        }
+        User user = new User();
+        user.setUserid(registerVO.getUserid());
+        user.setPassword(registerVO.getPassword());
+        user.setUsername(registerVO.getUsername());
+        user.setUsersex(registerVO.getUsersex());
+        return save(user);
     }
 
 }
