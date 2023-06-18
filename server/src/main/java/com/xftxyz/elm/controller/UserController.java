@@ -8,8 +8,14 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.xftxyz.elm.config.ElmProperties;
+import com.xftxyz.elm.domain.User;
 import com.xftxyz.elm.service.UserService;
+import com.xftxyz.elm.vo.req.LoginVO;
 import com.xftxyz.elm.vo.req.RegisterVO;
+
+import jakarta.servlet.http.Cookie;
+import jakarta.servlet.http.HttpServletResponse;
 
 /**
  * 用户相关
@@ -21,11 +27,41 @@ public class UserController {
     @Autowired
     private UserService userService;
 
-    // 用户登录
-    // @PostMapping("/login")
+    @Autowired
+    private ElmProperties elmProperties;
 
-    // 用户登出
-    // @PostMapping("/logout")
+    /**
+     * 用户登录
+     * 
+     * @param loginVO  登录信息
+     * @param response 响应，用于设置cookie
+     * @return true:登录成功 false:登录失败
+     */
+    @PostMapping("/login")
+    public boolean login(@RequestBody LoginVO loginVO, HttpServletResponse response) {
+        User user = userService.login(loginVO);
+        Cookie cookie = new Cookie(elmProperties.getCookieToken(),
+                userService.toToken(user));
+        cookie.setPath("/");
+        cookie.setMaxAge(elmProperties.getCookieTokenExpire());
+        response.addCookie(cookie);
+        return true;
+    }
+
+    /**
+     * 用户登出
+     * 
+     * @param response 响应，用于设置cookie
+     * @return true:登出成功 false:登出失败
+     */
+    @PostMapping("/logout")
+    public boolean logout(HttpServletResponse response) {
+        Cookie cookie = new Cookie(elmProperties.getCookieToken(), "");
+        cookie.setPath("/");
+        cookie.setMaxAge(0);
+        response.addCookie(cookie);
+        return true;
+    }
 
     /**
      * 检查用户名是否存在

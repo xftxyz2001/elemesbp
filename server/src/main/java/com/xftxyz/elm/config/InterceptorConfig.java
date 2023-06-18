@@ -20,6 +20,6 @@ public class InterceptorConfig implements WebMvcConfigurer {
 
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
-        // TODO
+        // registry.addInterceptor(authInterceptor());
     }
 }

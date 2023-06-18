@@ -1,5 +1,53 @@
 <script setup lang="ts">
 import FooterSection from '@/components/FooterSection.vue';
+import { ref } from 'vue';
+import axios from 'axios';
+import router from '@/router';
+
+const userid = ref('');
+const password = ref('');
+
+// 手机号码验证
+function phoneVerify(phone: string) {
+  return /^((13\d)|(14[5,7,9])|(15[0-3,5-9])|(166)|(17[0,1,3,5,7,8])|(18[0-9])|(19[8,9]))\d{8}/.test(phone);
+}
+
+// 登录
+function login() {
+  console.log(userid.value, password.value);
+  // 数据验证
+  if (userid.value.length < 1) {
+    alert('手机号码不能为空');
+    return;
+  }
+  // 测试太费劲，先注释掉
+  // if (!phoneVerify(userid.value)) {
+  //   alert('手机号码格式不正确');
+  //   return;
+  // }
+  if (password.value.length < 1) {
+    alert('密码不能为空');
+    return;
+  }
+
+  // 发送请求
+  const data = {
+    userid: userid.value,
+    password: password.value,
+  };
+
+  axios.post('/user/login', data).then(res => {
+    let r = res.data;
+    if (r.code == 0) {
+      alert('登录成功');
+      // 跳转到首页
+      router.push('/');
+    } else {
+      alert(r.msg);
+    }
+  })
+
+}
 </script>
 
 <template>
@@ -17,7 +65,7 @@ import FooterSection from '@/components/FooterSection.vue';
           手机号码：
         </div>
         <div class="content">
-          <input type="text" placeholder="手机号码">
+          <input type="text" v-model="userid" placeholder="手机号码">
         </div>
       </li>
       <li>
@@ -25,13 +73,13 @@ import FooterSection from '@/components/FooterSection.vue';
           密码：
         </div>
         <div class="content">
-          <input type="password" placeholder="密码">
+          <input type="password" v-model="password" placeholder="密码">
         </div>
       </li>
     </ul>
 
     <div class="button-login">
-      <button>登录</button>
+      <button @click="login">登录</button>
     </div>
     <div class="button-register">
 

@@ -7,6 +7,7 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.xftxyz.elm.domain.User;
 import com.xftxyz.elm.mapper.UserMapper;
 import com.xftxyz.elm.service.UserService;
+import com.xftxyz.elm.vo.req.LoginVO;
 import com.xftxyz.elm.vo.req.RegisterVO;
 
 /**
@@ -22,8 +23,10 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
     private UserMapper userMapper;
 
     @Override
-    public User login(String userId, String password) {
-        return userMapper.selectOneByUseridAndPassword(userId, password);
+    public User login(LoginVO loginVO) {
+        String userid = loginVO.getUserid();
+        String password = loginVO.getPassword();
+        return userMapper.selectOneByUseridAndPassword(userid, password);
     }
 
     @Override
@@ -44,8 +47,17 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
         return save(user);
     }
 
+    @Override
+    public String toToken(User user) {
+        return user.getUserid() + ":" + user.getPassword();
+    }
+
+    @Override
+    public User fromToken(String token) {
+        String[] split = token.split(":");
+        String userid = split[0];
+        String password = split[1];
+        return userMapper.selectOneByUseridAndPassword(userid, password);
+    }
+
 }
-
-
-
-
