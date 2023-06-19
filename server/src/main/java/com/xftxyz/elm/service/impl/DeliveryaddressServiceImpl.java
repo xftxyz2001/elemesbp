@@ -1,5 +1,8 @@
 package com.xftxyz.elm.service.impl;
 
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
@@ -16,8 +19,12 @@ import com.xftxyz.elm.service.DeliveryaddressService;
 public class DeliveryaddressServiceImpl extends ServiceImpl<DeliveryaddressMapper, Deliveryaddress>
         implements DeliveryaddressService {
 
+    @Autowired
+    private DeliveryaddressMapper deliveryaddressMapper;
+
+    @Override
+    public List<Deliveryaddress> listDeliveryAddressByUserId(String userid) {
+        return deliveryaddressMapper.selectAllByUserid(userid);
+    }
+
 }
-
-
-
-

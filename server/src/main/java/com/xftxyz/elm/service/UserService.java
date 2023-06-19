@@ -1,9 +1,7 @@
 package com.xftxyz.elm.service;
 
-import com.xftxyz.elm.domain.User;
-import com.xftxyz.elm.vo.req.LoginVO;
-import com.xftxyz.elm.vo.req.RegisterVO;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.xftxyz.elm.domain.User;
 
 /**
  * @author 25810
@@ -12,11 +10,11 @@ import com.baomidou.mybatisplus.extension.service.IService;
  */
 public interface UserService extends IService<User> {
 
-    User login(LoginVO loginVO);
+    User login(String userid, String password);
 
-    boolean checkUserid(String userid);
+    Boolean checkUserid(String userid);
 
-    boolean register(RegisterVO registerVO);
+    Boolean register(String userid, String password, String username, Integer usersex);
 
     String toToken(User user);
 

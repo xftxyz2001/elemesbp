@@ -17,4 +17,11 @@
         daId,contactName,contactSex,
         contactTel,address,userId
     </sql>
+    <select id="selectAllByUserid" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from deliveryaddress
+        where
+        userId = #{userid,jdbcType=VARCHAR}
+    </select>
 </mapper>

@@ -27,9 +27,6 @@ public class UserController {
     @Autowired
     private UserService userService;
 
-    @Autowired
-    private ElmProperties elmProperties;
-
     /**
      * 用户登录
      * 
@@ -39,11 +36,10 @@ public class UserController {
      */
     @PostMapping("/login")
     public boolean login(@RequestBody LoginVO loginVO, HttpServletResponse response) {
-        User user = userService.login(loginVO);
-        Cookie cookie = new Cookie(elmProperties.getCookieToken(),
-                userService.toToken(user));
+        User user = userService.login(loginVO.getUserid(), loginVO.getPassword());
+        Cookie cookie = new Cookie(ElmProperties.cookieToken, userService.toToken(user));
         cookie.setPath("/");
-        cookie.setMaxAge(elmProperties.getCookieTokenExpire());
+        cookie.setMaxAge(ElmProperties.cookieTokenExpire);
         response.addCookie(cookie);
         return true;
     }
@@ -56,7 +52,7 @@ public class UserController {
      */
     @PostMapping("/logout")
     public boolean logout(HttpServletResponse response) {
-        Cookie cookie = new Cookie(elmProperties.getCookieToken(), "");
+        Cookie cookie = new Cookie(ElmProperties.cookieToken, "");
         cookie.setPath("/");
         cookie.setMaxAge(0);
         response.addCookie(cookie);
@@ -82,7 +78,8 @@ public class UserController {
      */
     @PostMapping("/register")
     public boolean register(@RequestBody RegisterVO registerVO) {
-        return userService.register(registerVO);
+        return userService.register(registerVO.getUserid(), registerVO.getPassword(),
+                registerVO.getUsername(), registerVO.getUsersex());
     }
 
     // 用户修改密码

@@ -7,8 +7,6 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.xftxyz.elm.domain.User;
 import com.xftxyz.elm.mapper.UserMapper;
 import com.xftxyz.elm.service.UserService;
-import com.xftxyz.elm.vo.req.LoginVO;
-import com.xftxyz.elm.vo.req.RegisterVO;
 
 /**
  * @author 25810
@@ -23,28 +21,8 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
     private UserMapper userMapper;
 
     @Override
-    public User login(LoginVO loginVO) {
-        String userid = loginVO.getUserid();
-        String password = loginVO.getPassword();
-        return userMapper.selectOneByUseridAndPassword(userid, password);
-    }
-
-    @Override
-    public boolean checkUserid(String userid) {
+    public Boolean checkUserid(String userid) {
         return userMapper.countByUserid(userid) > 0;
-    }
-
-    @Override
-    public boolean register(RegisterVO registerVO) {
-        if (checkUserid(registerVO.getUserid())) {
-            return false;
-        }
-        User user = new User();
-        user.setUserid(registerVO.getUserid());
-        user.setPassword(registerVO.getPassword());
-        user.setUsername(registerVO.getUsername());
-        user.setUsersex(registerVO.getUsersex());
-        return save(user);
     }
 
     @Override
@@ -57,7 +35,25 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
         String[] split = token.split(":");
         String userid = split[0];
         String password = split[1];
+        return login(userid, password);
+    }
+
+    @Override
+    public User login(String userid, String password) {
         return userMapper.selectOneByUseridAndPassword(userid, password);
+    }
+
+    @Override
+    public Boolean register(String userid, String password, String username, Integer usersex) {
+        if (checkUserid(userid)) {
+            return false;
+        }
+        User user = new User();
+        user.setUserid(userid);
+        user.setPassword(password);
+        user.setUsername(username);
+        user.setUsersex(usersex);
+        return save(user);
     }
 
 }

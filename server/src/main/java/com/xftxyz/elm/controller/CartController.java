@@ -1,11 +1,16 @@
 package com.xftxyz.elm.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.xftxyz.elm.service.CartService;
 
+/**
+ * 购物车相关
+ */
 @RestController
+@RequestMapping("/cart")
 public class CartController {
 
     @Autowired

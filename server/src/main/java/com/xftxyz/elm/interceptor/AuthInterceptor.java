@@ -19,9 +19,6 @@ public class AuthInterceptor implements HandlerInterceptor {
     @Autowired
     private UserService userService;
 
-    @Autowired
-    private ElmProperties elmProperties;
-
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
             throws Exception {
@@ -30,7 +27,7 @@ public class AuthInterceptor implements HandlerInterceptor {
         String token = null;
         if (cookies != null) {
             for (Cookie cookie : cookies) {
-                if (elmProperties.getCookieToken().equals(cookie.getName())) {
+                if (ElmProperties.cookieToken.equals(cookie.getName())) {
                     token = cookie.getValue();
                     break;
                 }
@@ -49,7 +46,7 @@ public class AuthInterceptor implements HandlerInterceptor {
         }
 
         // 将用户信息放入request中
-        request.setAttribute(elmProperties.getRequestUser(), user);
+        request.setAttribute(ElmProperties.requestUser, user);
         return true;
     }
 }

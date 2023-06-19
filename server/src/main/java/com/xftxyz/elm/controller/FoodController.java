@@ -11,6 +11,9 @@ import org.springframework.web.bind.annotation.RestController;
 import com.xftxyz.elm.domain.Food;
 import com.xftxyz.elm.service.FoodService;
 
+/**
+ * 食品相关
+ */
 @RestController
 @RequestMapping("/food")
 public class FoodController {

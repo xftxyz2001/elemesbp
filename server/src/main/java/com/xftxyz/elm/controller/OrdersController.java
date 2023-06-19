@@ -11,6 +11,9 @@ import org.springframework.web.bind.annotation.RestController;
 import com.xftxyz.elm.domain.Orders;
 import com.xftxyz.elm.service.OrdersService;
 
+/**
+ * 订单相关
+ */
 @RestController
 @RequestMapping("/orders")
 public class OrdersController {
