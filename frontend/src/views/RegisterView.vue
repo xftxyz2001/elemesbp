@@ -1,5 +1,98 @@
 <script setup lang="ts">
 import FooterSection from '@/components/FooterSection.vue';
+import router from '@/router';
+import axios from 'axios';
+import { ref } from 'vue';
+
+const registerForm = ref({
+  userId: '',
+  password: '',
+  userName: '',
+  userSex: 1
+});
+
+const confirmPassword = ref('');
+
+// 手机号码验证
+function phoneVerify(phone: string) {
+  return /^((13\d)|(14[5,7,9])|(15[0-3,5-9])|(166)|(17[0,1,3,5,7,8])|(18[0-9])|(19[8,9]))\d{8}/.test(phone);
+}
+
+// 用户名验证（检查是否存在）
+function checkUserId() {
+  console.log(registerForm.value.userId);
+  if (registerForm.value.userId.length < 1) {
+    alert('手机号码不能为空');
+    return;
+  }
+  // 测试太费劲，先注释掉
+  // if (!phoneVerify(userid.value)) {
+  //   alert('手机号码格式不正确');
+  //   return;
+  // }
+  // 发送请求
+  axios.post(`/user/${registerForm.value.userId}`).then(res => {
+    let r = res.data;
+    if (r.code == 0) {
+      alert('手机号码已存在');
+      // 跳转到登录页
+      router.push('/login');
+    } else {
+      alert(r.msg);
+    }
+  })
+}
+
+// 密码验证（检查是否符合要求）
+function checkPassword() { }
+
+// 确认密码验证（检查两次输入是否一致）
+function checkConfirmPassword() { 
+  if (registerForm.value.password != confirmPassword.value) {
+    alert('两次输入的密码不一致');
+    return;
+  }
+}
+
+// 注册
+function register() {
+  console.log(registerForm.value);
+  // 数据验证
+  if (registerForm.value.userId.length < 1) {
+    alert('手机号码不能为空');
+    return;
+  }
+  // 测试太费劲，先注释掉
+  // if (!phoneVerify(userid.value)) {
+  //   alert('手机号码格式不正确');
+  //   return;
+  // }
+  if (registerForm.value.password.length < 1) {
+    alert('密码不能为空');
+    return;
+  }
+  
+
+  // 发送请求
+  const data = {
+    userid: registerForm.value.userId,
+    password: registerForm.value.password,
+    username: registerForm.value.userName,
+    usersex: registerForm.value.userSex
+  };
+
+  axios.post('/user/register', data).then(res => {
+    let r = res.data;
+    if (r.code == 0) {
+      alert('注册成功');
+      // 跳转到登录页
+      router.push('/login');
+    } else {
+      alert(r.msg);
+    }
+  })
+
+}
 </script>
 
 <template>
@@ -17,7 +110,7 @@ import FooterSection from '@/components/FooterSection.vue';
           手机号码：
         </div>
         <div class="content">
-          <input type="text" placeholder="手机号码">
+          <input type="text" v-model="registerForm.userId" @blur="checkUserId" placeholder="手机号码">
         </div>
       </li>
       <li>
@@ -25,7 +118,7 @@ import FooterSection from '@/components/FooterSection.vue';
           密码：
         </div>
         <div class="content">
-          <input type="password" placeholder="密码">
+          <input type="password" v-model="registerForm.password" @blur="checkPassword" placeholder="密码">
         </div>
       </li>
       <li>
@@ -33,7 +126,7 @@ import FooterSection from '@/components/FooterSection.vue';
           确认密码：
         </div>
         <div class="content">
-          <input type="password" placeholder="确认密码">
+          <input type="password" v-model="confirmPassword" @blur="checkConfirmPassword" placeholder="确认密码">
         </div>
       </li>
       <li>
@@ -41,22 +134,22 @@ import FooterSection from '@/components/FooterSection.vue';
           用户名称：
         </div>
         <div class="content">
-          <input type="text" placeholder="用户名称">
+          <input type="text" v-model="registerForm.userName" placeholder="用户名称">
         </div>
       </li>
       <li>
         <div class="title">
           性别：
         </div>
-        <div class="content" style="font-size: 3vw;">
-          <input type="radio" value="1" style="width:6vw;height: 3.2vw;">男
-          <input type="radio" value="0" style="width:6vw;height: 3.2vw;">女
+        <div class="content">
+          <input type="radio" v-model="registerForm.userSex" value="1">男
+          <input type="radio" v-model="registerForm.userSex" value="0">女
         </div>
       </li>
     </ul>
 
     <div class="button-login">
-      <button>注册</button>
+      <button @click="register">注册</button>
     </div>
 
     <!-- 底部菜单部分 -->
@@ -112,6 +205,12 @@ import FooterSection from '@/components/FooterSection.vue';
 
 .wrapper .form-box li .content {
   flex: 1;
+  font-size: 3vw;
+}
+
+.wrapper .form-box li .content input {
+  width: 6vw;
+  height: 3.2vw;
 }
 
 .wrapper .form-box li .content input {

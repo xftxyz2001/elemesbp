@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import FooterSection from '@/components/FooterSection.vue';
-import { ref } from 'vue';
-import axios from 'axios';
 import router from '@/router';
+import axios from 'axios';
+import { ref } from 'vue';
 
 const userid = ref('');
 const password = ref('');
