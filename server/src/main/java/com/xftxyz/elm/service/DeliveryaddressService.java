@@ -1,10 +1,10 @@
 package com.xftxyz.elm.service;
 
-import com.xftxyz.elm.domain.Deliveryaddress;
-
 import java.util.List;
 
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.xftxyz.elm.domain.Deliveryaddress;
+import com.xftxyz.elm.domain.User;
 
 /**
 * @author 25810
@@ -13,6 +13,6 @@ import com.baomidou.mybatisplus.extension.service.IService;
 */
 public interface DeliveryaddressService extends IService<Deliveryaddress> {
 
-    List<Deliveryaddress> listDeliveryAddressByUserId(String userid);
+    List<Deliveryaddress> listDeliveryAddressByUser(User user);
 
 }

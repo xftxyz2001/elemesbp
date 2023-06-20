@@ -7,6 +7,7 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.xftxyz.elm.domain.User;
 import com.xftxyz.elm.mapper.UserMapper;
 import com.xftxyz.elm.service.UserService;
+import com.xftxyz.elm.vo.res.UserVO;
 
 /**
  * @author 25810
@@ -54,6 +55,27 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
         user.setUsername(username);
         user.setUsersex(usersex);
         return save(user);
+    }
+
+    @Override
+    public UserVO getUserVO(User user) {
+        UserVO userVO = new UserVO();
+        userVO.setUserid(user.getUserid());
+        userVO.setUsername(user.getUsername());
+        userVO.setUsersex(user.getUsersex());
+        userVO.setUserimg(user.getUserimg());
+        return userVO;
+    }
+
+    @Override
+    public UserVO getUserVO(String userid) {
+        User user = getById(userid);
+        return getUserVO(user);
+    }
+
+    @Override
+    public Boolean deleteUser(User user) {
+        return removeById(user.getUserid());
     }
 
 }

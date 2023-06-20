@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.xftxyz.elm.domain.Deliveryaddress;
+import com.xftxyz.elm.domain.User;
 import com.xftxyz.elm.mapper.DeliveryaddressMapper;
 import com.xftxyz.elm.service.DeliveryaddressService;
 
@@ -23,8 +24,8 @@ public class DeliveryaddressServiceImpl extends ServiceImpl<DeliveryaddressMappe
     private DeliveryaddressMapper deliveryaddressMapper;
 
     @Override
-    public List<Deliveryaddress> listDeliveryAddressByUserId(String userid) {
-        return deliveryaddressMapper.selectAllByUserid(userid);
+    public List<Deliveryaddress> listDeliveryAddressByUser(User user) {
+        return deliveryaddressMapper.selectAllByUserid(user.getUserid());
     }
 
 }

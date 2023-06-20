@@ -2,6 +2,7 @@ package com.xftxyz.elm.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.xftxyz.elm.domain.User;
+import com.xftxyz.elm.vo.res.UserVO;
 
 /**
  * @author 25810
@@ -19,5 +20,11 @@ public interface UserService extends IService<User> {
     String toToken(User user);
 
     User fromToken(String token);
+
+    UserVO getUserVO(User user);
+
+    UserVO getUserVO(String userid);
+
+    Boolean deleteUser(User user);
 
 }

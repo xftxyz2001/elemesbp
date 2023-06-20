@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.xftxyz.elm.config.ElmProperties;
 import com.xftxyz.elm.domain.Deliveryaddress;
+import com.xftxyz.elm.domain.User;
 import com.xftxyz.elm.service.DeliveryaddressService;
 
 /**
@@ -25,8 +26,8 @@ public class DeliveryAddressController {
 
     // 列出用户的所有配送地址
     @GetMapping("/list")
-    public List<Deliveryaddress> listDeliveryAddressByUserId(@ModelAttribute(ElmProperties.requestUser) String userid) {
-        return deliveryaddressService.listDeliveryAddressByUserId(userid);
+    public List<Deliveryaddress> listDeliveryAddressByUserId(@ModelAttribute(ElmProperties.requestUser) User user) {
+        return deliveryaddressService.listDeliveryAddressByUser(user);
     }
 
     // 根据配送地址编号查询配送地址
