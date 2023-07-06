@@ -1,4 +1,5 @@
 package com.xftxyz.elm.mapper;
+import org.apache.ibatis.annotations.Param;
 
 import com.xftxyz.elm.domain.Cart;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
@@ -12,7 +13,7 @@ import org.apache.ibatis.annotations.Mapper;
 */
 @Mapper
 public interface CartMapper extends BaseMapper<Cart> {
-
+    int countByUseridAndBusinessid(@Param("userid") String userid, @Param("businessid") Integer businessid);
 }
 
 

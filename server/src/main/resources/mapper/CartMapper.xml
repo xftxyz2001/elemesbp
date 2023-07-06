@@ -16,4 +16,10 @@
         cartId,foodId,businessId,
         userId,quantity
     </sql>
+    <select id="countByUseridAndBusinessid" resultType="int">
+        select count(*)
+        from cart
+        where userId = #{userid,jdbcType=VARCHAR}
+          AND businessId = #{businessid,jdbcType=NUMERIC}
+    </select>
 </mapper>
