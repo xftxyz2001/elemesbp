@@ -1,11 +1,41 @@
 <script setup lang="ts">
 import FooterSection from '@/components/FooterSection.vue';
 import { useRoute } from 'vue-router';
-
+import axios from 'axios';
+import { ref } from 'vue';
+import type { Ref } from 'vue/dist/vue.js';
 const route = useRoute();
 
-console.log(route.params); //route.params用于从URL路径中获取参数。
-console.log(route.query); //route.query用于从URL查询字符串中获取参数。
+interface BusinessItem {
+  businessid: number; // 商家编号
+  businessname: string; // 商家名称
+  businessaddress: string; // 商家地址
+  businessexplain: string; // 商家介绍
+  businessimg: string; // 商家图片（base64）
+  ordertypeid: number; // 点餐分类
+  starprice: number; // 起送费
+  deliveryprice: number; // 配送费
+  remarks: string; // 备注
+}
+
+const ordertypeid = route.params.type; // 点餐分类编号
+const businessList: Ref<BusinessItem[] | null> = ref([]); // 商家列表
+
+// 根据点餐分类编号获取商家列表
+axios.get('/business/ordertype/' + ordertypeid).then((res) => {
+  let r = res.data;
+  if (r.code == 0) {
+    businessList.value = r.data;
+
+  } else {
+    alert(r.msg);
+  }
+});
+
+// 跳转到商家详情页
+function toBusinessInfo(businessid: number) {
+  // 跳转到商家详情页
+}
 
 </script>
 
@@ -18,11 +48,16 @@ console.log(route.query); //route.query用于从URL查询字符串中获取参�
 
     <!-- 商家列表部分 -->
     <ul class="business">
-      <li>1</li>
-      <li>2</li>
-      <li>3</li>
-      <li>4</li>
-      <li>5</li>
+      <li v-for="item in businessList" :key="item.businessid" @click="toBusinessInfo(item.businessid)">
+        <div class="business-img">
+          <img :src="item.businessimg">
+        </div>
+        <div class="business-info">
+          <h3>{{ item.businessname }}</h3>
+          <p>&#165;{{ item.starprice }}起送 | &#165;{{ item.deliveryprice }}配送</p>
+          <p>{{ item.businessexplain }}</p>
+        </div>
+      </li>
     </ul>
 
     <!-- 底部菜单部分 -->
