@@ -1,10 +1,11 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import HomeView from '../views/HomeView.vue'
-import LoginView from '../views/LoginView.vue'
-import DiscoverView from '@/views/DiscoverView.vue'
-import OrderView from '@/views/OrderView.vue'
-import ProfileView from '@/views/ProfileView.vue'
-import RegisterView from '@/views/RegisterView.vue'
+import HomeView from '../views/HomeView.vue' // 首页
+import LoginView from '../views/LoginView.vue' // 登录页
+import DiscoverView from '@/views/DiscoverView.vue' // 发现页
+import OrderView from '@/views/OrderView.vue' // 订单页
+import ProfileView from '@/views/ProfileView.vue' // 我的页
+import RegisterView from '@/views/RegisterView.vue' // 注册页
+import BusinessListView from '@/views/BusinessListView.vue'; // 商家列表页
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -38,6 +39,11 @@ const router = createRouter({
       path: '/register',
       name: 'register',
       component: RegisterView
+    },
+    {
+      path: '/businessList/:type',
+      name: 'businessList',
+      component: BusinessListView
     }
     // {
     //   path: '/about',

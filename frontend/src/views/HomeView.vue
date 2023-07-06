@@ -1,8 +1,10 @@
 <script setup lang="ts">
 import FooterSection from '@/components/FooterSection.vue';
-import { onMounted } from 'vue';
+import router from '@/router';
+import { onMounted, onBeforeUnmount } from 'vue';
 
 onMounted(() => {
+  // 将搜索块固定到视口顶部
   document.onscroll = () => {
     //获取滚动条位置
     let s1 = document.documentElement.scrollTop;
@@ -10,9 +12,6 @@ onMounted(() => {
     let scroll = s1 == 0 ? s2 : s1;
     //获取视口宽度
     let width = document.documentElement.clientWidth;
-    //使用vue自带api代替下面一行代码 
-    // let search = this.$refs.fixedBox;
-
     //获取顶部固定块
     let search = document.getElementById('fixedBox') as HTMLElement;
 
@@ -26,6 +25,22 @@ onMounted(() => {
     }
   }
 });
+
+onBeforeUnmount(() => {
+  // 组件卸载后去掉document滚动条事件
+  document.onscroll = null;
+});
+
+// 根据商家类别跳转到商家列表页
+function toBusinessList(type: number) {
+  // 路由跳转
+  router.push({
+    name: 'businessList',
+    params: {
+      type: type
+    }
+  });
+}
 </script>
 
 <template>
@@ -51,44 +66,43 @@ onMounted(() => {
 
     <!--点餐分类部分-->
     <ul class="foodtype">
-      <li>
+      <li @click="toBusinessList(1)">
         <img src="../assets/1.png">
         <p>美食</p>
       </li>
-      <li>
+      <li @click="toBusinessList(2)">
         <img src="../assets/2.png">
         <p>早餐</p>
       </li>
-      <li>
+      <li @click="toBusinessList(3)">
         <img src="../assets/3.png">
         <p>跑腿代购</p>
       </li>
-      <li>
+      <li @click="toBusinessList(4)">
         <img src="../assets/4.png">
         <p>汉堡披萨</p>
       </li>
-      <li>
+      <li @click="toBusinessList(5)">
         <img src="../assets/5.png">
         <p>甜品饮品</p>
       </li>
-      <li>
+      <li @click="toBusinessList(6)">
         <img src="../assets/6.png">
         <p>速食简餐</p>
       </li>
-      <li>
+      <li @click="toBusinessList(7)">
         <img src="../assets/7.png">
         <p>地方小吃</p>
       </li>
-      <li>
+      <li @click="toBusinessList(8)">
         <img src="../assets/8.png">
         <p>米粉面馆</p>
       </li>
-      <li>
+      <li @click="toBusinessList(9)">
         <img src="../assets/9.png">
         <p>包子粥铺</p>
       </li>
-
-      <li>
+      <li @click="toBusinessList(10)">
         <img src="../assets/10.png">
         <p>炸鸡炸串</p>
       </li>
