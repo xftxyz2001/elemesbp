@@ -16,17 +16,35 @@ interface BusinessItem {
   starprice: number; // 起送费
   deliveryprice: number; // 配送费
   remarks: string; // 备注
+
+  quantity: number; // 当前用户在指定店家的购物车项数
 }
 
 const ordertypeid = route.params.type; // 点餐分类编号
 const businessList: Ref<BusinessItem[] | null> = ref([]); // 商家列表
+
+// 当前用户在指定店家的购物车项数
+function getCartItemCountForUserInStore(businessid: number): number {
+  axios.get('/cart/count/' + businessid).then((res) => {
+    let r = res.data;
+    if (r.code == 0) {
+      return r.data;
+    }
+  });
+  return -1;
+}
 
 // 根据点餐分类编号获取商家列表
 axios.get('/business/ordertype/' + ordertypeid).then((res) => {
   let r = res.data;
   if (r.code == 0) {
     businessList.value = r.data;
-
+    // 获取当前用户在指定店家的购物车项数
+    if (businessList.value && businessList.value.length > 0) {
+      for (let i = 0; i < businessList.value.length; i++) {
+        businessList.value[i].quantity = getCartItemCountForUserInStore(businessList.value[i].businessid);
+      }
+    }
   } else {
     alert(r.msg);
   }
@@ -51,6 +69,7 @@ function toBusinessInfo(businessid: number) {
       <li v-for="item in businessList" :key="item.businessid" @click="toBusinessInfo(item.businessid)">
         <div class="business-img">
           <img :src="item.businessimg">
+          <div class="business-img-quantity" v-show="item.quantity > 0"> {{ item.quantity }} </div>
         </div>
         <div class="business-info">
           <h3>{{ item.businessname }}</h3>
