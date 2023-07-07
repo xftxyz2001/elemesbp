@@ -2,6 +2,7 @@
 import axios from 'axios';
 import {ref, onMounted, onBeforeMount} from 'vue';
 import { useRoute } from 'vue-router';
+import router from "@/router";
 
 const route = useRoute();
 
@@ -43,8 +44,7 @@ interface CartItem {
 }
 
 const lbid = localStorage.getItem('businessid');
-const ibid = lbid && parseInt(lbid);
-const businessid = ibid || route.params.id; // 商家编号
+const businessid = lbid && parseInt(lbid); // 商家编号
 const business = ref<BusinessItem | null>(null); // 商家信息
 
 const deliveryaddress = ref<DeliveryAddressItem | null>(null); // 收货地址
@@ -97,13 +97,13 @@ function goback() {
 // 添加收货地址
 function toUserAddress() {
   console.log("添加收货地址");
-  localStorage.setItem('businessid',businessid.toString());
+  router.push({name:'userAddress'});
 
 }
 
 // 去支付
 function toPayment() {
-
+  
 }
 
 
