@@ -1,6 +1,7 @@
 package com.xftxyz.elm.service.impl;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +16,7 @@ import com.xftxyz.elm.service.BusinessService;
 import com.xftxyz.elm.service.CartService;
 import com.xftxyz.elm.service.FoodService;
 import com.xftxyz.elm.vo.res.CartInfoVO;
+import com.xftxyz.elm.vo.res.CartWithFoodVO;
 
 /**
  * @author 25810
@@ -117,6 +119,23 @@ public class CartServiceImpl extends ServiceImpl<CartMapper, Cart>
             return 0;
         }
         return cart.getQuantity();
+    }
+
+    @Override
+    public List<CartWithFoodVO> listCartWithFood(String userid, Integer businessid) {
+        List<Cart> carts = listCart(userid, businessid);
+        List<CartWithFoodVO> cartWithFoodVOs = new ArrayList<>();
+        for (Cart cart : carts) {
+            CartWithFoodVO cartWithFoodVO = new CartWithFoodVO();
+            cartWithFoodVO.setCartid(cart.getCartid());
+            cartWithFoodVO.setFoodid(cart.getFoodid());
+            cartWithFoodVO.setBusinessid(cart.getBusinessid());
+            cartWithFoodVO.setUserid(cart.getUserid());
+            cartWithFoodVO.setQuantity(cart.getQuantity());
+            cartWithFoodVO.setFood(foodService.getById(cart.getFoodid()));
+            cartWithFoodVOs.add(cartWithFoodVO);
+        }
+        return cartWithFoodVOs;
     }
 
 }
