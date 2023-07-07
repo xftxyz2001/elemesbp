@@ -56,7 +56,7 @@ public class DeliveryAddressController {
 
     // 删除配送地址
     @DeleteMapping("/{daid}")
-    public boolean removeDeliveryAddressById(Integer daid) {
+    public boolean removeDeliveryAddressById(@PathVariable("daid") Integer daid) {
         return deliveryaddressService.removeById(daid);
     }
 
