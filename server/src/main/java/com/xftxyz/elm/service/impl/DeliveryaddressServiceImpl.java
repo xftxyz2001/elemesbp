@@ -28,4 +28,16 @@ public class DeliveryaddressServiceImpl extends ServiceImpl<DeliveryaddressMappe
         return deliveryaddressMapper.selectAllByUserid(user.getUserid());
     }
 
+    @Override
+    public Boolean saveDeliveryAddress(String userid, String contactname, Integer contactsex, String contacttel,
+            String address) {
+        Deliveryaddress deliveryaddress = new Deliveryaddress();
+        deliveryaddress.setUserid(userid);
+        deliveryaddress.setContactname(contactname);
+        deliveryaddress.setContactsex(contactsex);
+        deliveryaddress.setContacttel(contacttel);
+        deliveryaddress.setAddress(address);
+        return save(deliveryaddress);
+    }
+
 }
