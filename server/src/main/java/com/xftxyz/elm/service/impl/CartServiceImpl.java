@@ -49,6 +49,10 @@ public class CartServiceImpl extends ServiceImpl<CartMapper, Cart>
     public CartInfoVO getCartInfo(String userid, Integer businessid) {
         List<Cart> carts = listCart(userid, businessid);
         CartInfoVO cartInfoVO = new CartInfoVO();
+        // 如果购物车为空
+        if (carts.size() == 0) {
+            return cartInfoVO;
+        }
         for (Cart cart : carts) {
             // 加数量
             cartInfoVO.setTotalQuantity(cartInfoVO.getTotalQuantity() + cart.getQuantity());
