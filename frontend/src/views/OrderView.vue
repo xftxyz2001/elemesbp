@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import axios from 'axios';
-import { ref, onMounted } from 'vue';
+import {ref, onMounted, onBeforeMount} from 'vue';
 import { useRoute } from 'vue-router';
 
 const route = useRoute();
@@ -16,30 +16,6 @@ interface BusinessItem {
   deliveryprice: number; // 配送费
   remarks: string; // 备注
 }
-
-const businessid = route.params.id; // 商家编号
-const business = ref<BusinessItem | null>(null); // 商家信息
-
-// 根据商家编号获取商家信息
-axios.get('/business/business/' + businessid).then((res) => {
-  let r = res.data;
-  if (r.code == 0) {
-    business.value = r.data;
-  } else {
-    alert(r.msg);
-  }
-});
-
-// 添加收货地址
-function toUserAddress() {
-  console.log("添加收货地址");
-}
-
-// 去支付
-function toPayment() {
-
-}
-
 interface DeliveryAddressItem {
   daid: number; // 收货地址编号
   contactname: string; // 联系人姓名
@@ -48,25 +24,58 @@ interface DeliveryAddressItem {
   address: string; // 收货地址
   userid: number; // 用户编号
 }
+interface FoodItem{
+  foodid: number;
+  foodname: string;
+  foodexplain: string;
+  foodimg : string;
+  foodprice: number;
+  businessid: number;
+  remarks: string;
+}
+interface CartItem {
+  cartid: number; // 购物车编号
+  foodid: number; // 菜品编号
+  businessid: number; // 商家编号
+  userid: number; // 用户编号
+  quantity: number; // 数量
+  food: FoodItem;
+}
+
+const lbid = localStorage.getItem('businessid');
+const ibid = lbid && parseInt(lbid);
+const businessid = ibid || route.params.id; // 商家编号
+const business = ref<BusinessItem | null>(null); // 商家信息
 
 const deliveryaddress = ref<DeliveryAddressItem | null>(null); // 收货地址
-
-// 获取收货地址
-axios.get('/deliveryaddress/deliveryaddress/' + 1).then((res) => {
-  let r = res.data;
-  if (r.code == 0) {
-    deliveryaddress.value = r.data;
-  } else {
-    alert(r.msg);
-  }
-});
 
 const totalQuantity = ref(0); // 总数量
 const totalPrice = ref(0); // 总价格
 const totalSettle = ref(0); // 总结算价
 
-// 刷新购物车
-function updateCart() {
+
+const cartList = ref<CartItem[]>([]); // 购物车列表
+
+
+onBeforeMount(() => {
+  // 根据商家编号获取商家信息
+  axios.get('/business/business/' + businessid).then((res) => {
+    let r = res.data;
+    if (r.code == 0) {
+      business.value = r.data;
+    } else {
+      alert(r.msg);
+    }
+  });
+  axios.get('/deliveryaddress/deliveryaddress/' + 1).then((res) => {
+    let r = res.data;
+    if (r.code == 0) {
+      deliveryaddress.value = r.data;
+    } else {
+      alert(r.msg);
+    }
+  });
+  // 刷新购物车
   axios.get('/cart/info/' + businessid).then((res) => {
     let r = res.data;
     if (r.code == 0) {
@@ -77,26 +86,29 @@ function updateCart() {
       alert(r.msg);
     }
   });
+  getCartList();
+})
+
+// 返回上一页
+function goback() {
+  history.back();
 }
 
-// cartid
-// foodid
-// businessid
-// userid
-// quantity
+// 添加收货地址
+function toUserAddress() {
+  console.log("添加收货地址");
+  localStorage.setItem('businessid',businessid.toString());
 
-interface CartItem {
-  cartid: number; // 购物车编号
-  foodid: number; // 菜品编号
-  businessid: number; // 商家编号
-  userid: number; // 用户编号
-  quantity: number; // 数量
 }
 
-const cartList = ref<CartItem[]>([]); // 购物车列表
+// 去支付
+function toPayment() {
+
+}
+
 
 function getCartList() {
-  axios.get('/cart/list/' + businessid).then((res) => {
+  axios.get('/cart/business/' + businessid + '/with/food').then((res) => {
     let r = res.data;
     if (r.code == 0) {
       cartList.value = r.data;
@@ -112,6 +124,7 @@ function getCartList() {
   <div class="wrapper">
     <!-- header部分 -->
     <header>
+      <i class="fa fa-angle-left" @click="goback()"></i>
       <p>确认订单</p>
     </header>
     <!-- 订单信息部分 -->
@@ -132,10 +145,10 @@ function getCartList() {
     <ul class="order-detailed">
       <li v-for="cart in cartList">
         <div class="order-detailed-left">
-          <img :src="cart.food.foodImg">
-          <p>{{ cart.food.foodName }} x {{ cart.quantity }}</p>
+          <img :src="cart.food.foodimg">
+          <p>{{ cart.food.foodname }} x {{ cart.quantity }}</p>
         </div>
-        <p>&#165;{{ (cart.food.foodPrice * cart.quantity).toFixed(2) }}</p>
+        <p>&#165;{{ (cart.food.foodprice * cart.quantity).toFixed(2) }}</p>
       </li>
     </ul>
     <div class="order-deliveryfee">

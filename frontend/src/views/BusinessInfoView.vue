@@ -154,7 +154,7 @@ function minus(food: FoodItem) {
 // showStarPrice.value = totalSettle.value < business.value?.starprice;
 
 function toOrder() {
-  router.push({name:'order'});
+  router.push({name:'order',params:{businessid : businessid}});
   console.log('结算');
 }
 </script>
