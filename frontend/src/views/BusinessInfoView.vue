@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import axios from 'axios';
-import { ref } from 'vue';
+import {onBeforeMount, ref} from 'vue';
 import type { Ref } from 'vue/dist/vue.js';
 import { useRoute } from 'vue-router';
 import router from "@/router";
@@ -22,15 +22,7 @@ interface BusinessItem {
 const businessid = route.params.id; // 商家编号
 const business = ref<BusinessItem | null>(null); // 商家信息
 
-// 根据商家编号获取商家信息
-axios.get('/business/business/' + businessid).then((res) => {
-  let r = res.data;
-  if (r.code == 0) {
-    business.value = r.data;
-  } else {
-    alert(r.msg);
-  }
-});
+
 
 // 根据商家编号获取商家食品列表
 interface FoodItem {
@@ -47,17 +39,31 @@ interface FoodItem {
 
 const foodList: Ref<FoodItem[]> = ref([]); // 食品列表
 
-axios.get('/food/business/' + businessid).then((res) => {
-  let r = res.data;
-  if (r.code == 0) {
-    foodList.value = r.data;
-    for (const food of foodList.value) {
-      food.quantity = 0;
+onBeforeMount(()=>{
+  // 根据商家编号获取商家信息
+  axios.get('/business/business/' + businessid).then((res) => {
+    let r = res.data;
+    if (r.code == 0) {
+      business.value = r.data;
+    } else {
+      alert(r.msg);
     }
-  } else {
-    alert(r.msg);
-  }
-});
+  });
+  axios.get('/food/business/' + businessid).then((res) => {
+    let r = res.data;
+    if (r.code == 0) {
+      foodList.value = r.data;
+      for (const food of foodList.value) {
+        food.quantity = 0;
+      }
+      updateNum();
+    } else {
+      alert(r.msg);
+    }
+  });
+})
+
+
 
 const totalQuantity = ref(0); // 总数量
 const totalPrice = ref(0); // 总价格
@@ -77,22 +83,24 @@ function updateCart() {
   });
 }
 
-
-axios.get('/cart/business/' + businessid).then((res) =>{
-  let r = res.data;
-  if (r.code == 0) {
-    for (const cart of r.data) {
-      let food = foodList.value.find((item) => item.foodid == cart.foodid);
-      if(food){
-        food.quantity = cart.quantity;
-        console.log(food.foodid + ' ' + food.quantity);
+function updateNum(){
+  axios.get('/cart/business/' + businessid).then((res) =>{
+    let r = res.data;
+    if (r.code == 0) {
+      for (const cart of r.data) {
+        let food = foodList.value.find((item) => item.foodid == cart.foodid);
+        if(food){
+          food.quantity = cart.quantity;
+          console.log(food.foodid + ' ' + food.quantity);
+        }
       }
+      updateCart();
+    } else {
+      alert(r.msg);
     }
-    updateCart();
-  } else {
-    alert(r.msg);
-  }
-})
+  })
+}
+
 
 // 返回上一页
 function goback() {
@@ -122,6 +130,7 @@ function add(food: FoodItem) {
   if (!food) {
     console.log('食品为空');
   }
+  console.log(business);
   // 加数量
   food.quantity++;
   // 发请求
@@ -145,6 +154,7 @@ function minus(food: FoodItem) {
 // showStarPrice.value = totalSettle.value < business.value?.starprice;
 
 function toOrder() {
+  router.push({name:'order'});
   console.log('结算');
 }
 </script>
@@ -230,12 +240,12 @@ function toOrder() {
       </div>
       <div class="cart-right">
         <!-- 不够起送费 -->
-        <div class="cart-right-item" v-show="totalSettle < business?.starprice!"
+        <div class="cart-right-item" v-if="totalSettle < business?.starprice"
           style="background-color: #535356;cursor: default;">
           &#165;{{ business?.starprice }}起送
         </div>
         <!-- 达到起送费 -->
-        <div class="cart-right-item" @click="toOrder" v-show="totalSettle >= business?.starprice!">
+        <div class="cart-right-item" @click="toOrder" v-if="totalSettle >= business?.starprice">
           去结算
         </div>
       </div>
