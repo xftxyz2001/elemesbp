@@ -3,6 +3,7 @@ import axios from 'axios';
 import { ref } from 'vue';
 import type { Ref } from 'vue/dist/vue.js';
 import { useRoute } from 'vue-router';
+import router from "@/router";
 
 const route = useRoute();
 
@@ -58,20 +59,13 @@ axios.get('/food/business/' + businessid).then((res) => {
   }
 });
 
-
-
-// 返回上一页
-function goback() {
-  history.back();
-}
-
 const totalQuantity = ref(0); // 总数量
 const totalPrice = ref(0); // 总价格
 const totalSettle = ref(0); // 总结算价
 
 // 刷新购物车
 function updateCart() {
-  axios.get('/info' + businessid).then((res) => {
+  axios.get('/cart/info/' + businessid).then((res) => {
     let r = res.data;
     if (r.code == 0) {
       totalQuantity.value = r.data.totalQuantity;
@@ -83,6 +77,46 @@ function updateCart() {
   });
 }
 
+
+axios.get('/cart/' + businessid).then((res) =>{
+  let r = res.data;
+  if (r.code == 0) {
+    for (const cart of r.data) {
+      let food = foodList.value.find((item) => item.foodid == cart.foodid);
+      if(food){
+        food.quantity = cart.quantity;
+        console.log(food.foodid + ' ' + food.quantity);
+      }
+    }
+    updateCart();
+  } else {
+    alert(r.msg);
+  }
+})
+
+// 返回上一页
+function goback() {
+  history.back();
+}
+
+function updateQuantity(food: FoodItem){
+  let param = {
+    businessid: businessid,
+    foodid: food.foodid,
+    quantity: food.quantity
+  };
+  axios.put('/cart/update', param).then(res => {
+    let r = res.data;
+    if (r.code == 0) {
+      console.log('更新成功');
+      updateCart();
+    } else {
+      alert(r.msg);
+    }
+  });
+
+}
+
 // 添加食品
 function add(food: FoodItem) {
   if (!food) {
@@ -91,11 +125,20 @@ function add(food: FoodItem) {
   // 加数量
   food.quantity++;
   // 发请求
+  updateQuantity(food);
+
+
 }
 
 // 减少食品
 function minus(food: FoodItem) {
-  
+  if (!food) {
+    console.log('食品为空');
+  }
+  // 减数量
+  food.quantity--;
+  // 发请求
+  updateQuantity(food);
 }
 
 // const showStarPrice = ref(false);
