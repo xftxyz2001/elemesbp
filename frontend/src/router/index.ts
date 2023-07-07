@@ -2,11 +2,12 @@ import { createRouter, createWebHistory } from 'vue-router'
 import HomeView from '../views/HomeView.vue' // 首页
 import LoginView from '../views/LoginView.vue' // 登录页
 import DiscoverView from '@/views/DiscoverView.vue' // 发现页
-import OrderView from '@/views/OrderView.vue' // 订单页
+import MyOrdersView from '@/views/MyOrdersView.vue' // 订单页
 import ProfileView from '@/views/ProfileView.vue' // 我的页
 import RegisterView from '@/views/RegisterView.vue' // 注册页
 import BusinessListView from '@/views/BusinessListView.vue'; // 商家列表页
 import BusinessInfoView from '@/views/BusinessInfoView.vue'; // 商家详情页
+import OrderView from '@/views/OrderView.vue'; // 订单页
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -22,9 +23,9 @@ const router = createRouter({
       component: DiscoverView
     },
     {
-      path: '/order',
-      name: 'order',
-      component: OrderView
+      path: '/myorder',
+      name: 'myorder',
+      component: MyOrdersView
     },
     {
       path: '/profile',
@@ -50,6 +51,11 @@ const router = createRouter({
       path: '/businessInfo/:id',
       name: 'businessInfo',
       component: BusinessInfoView
+    },
+    {
+      path: '/order/:id',
+      name: 'order',
+      component: OrderView
     }
     // {
     //   path: '/about',

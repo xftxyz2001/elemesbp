@@ -15,7 +15,7 @@
         <p>发现</p>
       </li>
     </router-link>
-    <router-link to="/order">
+    <router-link to="/myorder">
       <li>
         <i class="fa fa-file-text-o"></i>
         <p>订单</p>
