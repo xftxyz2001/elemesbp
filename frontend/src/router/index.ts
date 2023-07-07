@@ -6,6 +6,7 @@ import OrderView from '@/views/OrderView.vue' // 订单页
 import ProfileView from '@/views/ProfileView.vue' // 我的页
 import RegisterView from '@/views/RegisterView.vue' // 注册页
 import BusinessListView from '@/views/BusinessListView.vue'; // 商家列表页
+import BusinessInfoView from '@/views/BusinessInfoView.vue'; // 商家详情页
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -44,6 +45,11 @@ const router = createRouter({
       path: '/businessList/:type',
       name: 'businessList',
       component: BusinessListView
+    },
+    {
+      path: '/businessInfo/:id',
+      name: 'businessInfo',
+      component: BusinessInfoView
     }
     // {
     //   path: '/about',

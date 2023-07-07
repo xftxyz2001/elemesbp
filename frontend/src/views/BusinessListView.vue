@@ -4,6 +4,7 @@ import { useRoute } from 'vue-router';
 import axios from 'axios';
 import { ref } from 'vue';
 import type { Ref } from 'vue/dist/vue.js';
+import router from '@/router';
 const route = useRoute();
 
 interface BusinessItem {
@@ -21,7 +22,7 @@ interface BusinessItem {
 }
 
 const ordertypeid = route.params.type; // 点餐分类编号
-const businessList: Ref<BusinessItem[] | null> = ref([]); // 商家列表
+const businessList: Ref<BusinessItem[] | null> = ref(null); // 商家列表
 
 // 当前用户在指定店家的购物车项数
 function getCartItemCountForUserInStore(businessid: number): number {
@@ -52,9 +53,13 @@ axios.get('/business/ordertype/' + ordertypeid).then((res) => {
 
 // 跳转到商家详情页
 function toBusinessInfo(businessid: number) {
-  // 跳转到商家详情页
+  router.push({
+    name: 'businessInfo',
+    params: {
+      id: businessid,
+    },
+  });
 }
-
 </script>
 
 <template>
