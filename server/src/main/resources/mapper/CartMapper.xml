@@ -30,4 +30,13 @@
         userId = #{userid,jdbcType=VARCHAR}
         AND businessId = #{businessid,jdbcType=NUMERIC}
     </select>
+    <select id="selectOneByUseridAndBusinessidAndFoodid" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from cart
+        where
+        userId = #{userid,jdbcType=VARCHAR}
+        AND businessId = #{businessid,jdbcType=NUMERIC}
+        AND foodId = #{foodid,jdbcType=NUMERIC}
+    </select>
 </mapper>

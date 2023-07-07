@@ -4,7 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -101,7 +101,7 @@ public class UserController {
      * @return true:注销成功 false:注销失败
      */
     @DeleteMapping("/delete")
-    public Boolean deleteUser(@ModelAttribute(ElmProperties.requestUser) User user) {
+    public Boolean deleteUser(@RequestAttribute(ElmProperties.requestUser) User user) {
         return userService.deleteUser(user);
     }
 
@@ -123,7 +123,7 @@ public class UserController {
      * @return 当前用户信息
      */
     @GetMapping("/info")
-    public UserVO currentUserInfo(@ModelAttribute(ElmProperties.requestUser) User user) {
+    public UserVO currentUserInfo(@RequestAttribute(ElmProperties.requestUser) User user) {
         return userService.getUserVO(user);
     }
 

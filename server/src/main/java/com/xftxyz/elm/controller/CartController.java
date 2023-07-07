@@ -4,8 +4,10 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -13,6 +15,7 @@ import com.xftxyz.elm.config.ElmProperties;
 import com.xftxyz.elm.domain.Cart;
 import com.xftxyz.elm.domain.User;
 import com.xftxyz.elm.service.CartService;
+import com.xftxyz.elm.vo.req.CartUpdateVO;
 
 /**
  * 购物车相关
@@ -26,23 +29,29 @@ public class CartController {
 
     // 当前用户在指定店家的购物车项数
     @GetMapping("/count/{businessid}")
-    public Integer getCartItemCountForUserInStore(@ModelAttribute(ElmProperties.requestUser) User user,
+    public Integer getCartItemCountForUserInStore(@RequestAttribute(ElmProperties.requestUser) User user,
             @PathVariable("businessid") Integer businessid) {
         return cartService.getTotalQuantity(user.getUserid(), businessid);
     }
 
     // 当前用户在指定店家的购物车
     @GetMapping("/{businessid}")
-    public List<Cart> listCart(@ModelAttribute(ElmProperties.requestUser) User user,
+    public List<Cart> listCart(@RequestAttribute(ElmProperties.requestUser) User user,
             @PathVariable("businessid") Integer businessid) {
         return cartService.listCart(user.getUserid(), businessid);
     }
 
     // 当前用户在指定店家的购物车信息
     @GetMapping("/info/{businessid}")
-    public Object getCartInfo(@ModelAttribute(ElmProperties.requestUser) User user,
+    public Object getCartInfo(@RequestAttribute(ElmProperties.requestUser) User user,
             @PathVariable("businessid") Integer businessid) {
         return cartService.getCartInfo(user.getUserid(), businessid);
+    }
+
+    // 更新购物车
+    @PutMapping("/update")
+    public Boolean updateCart(@RequestAttribute(ElmProperties.requestUser) User user, @RequestBody CartUpdateVO cartUpdateVO) {
+        return cartService.updateCart(user.getUserid(), cartUpdateVO.getBusinessid(), cartUpdateVO.getFoodid(), cartUpdateVO.getQuantity());
     }
 
     // public Object updateCart(HttpServletRequest request) throws Exception {

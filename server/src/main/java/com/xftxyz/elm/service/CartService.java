@@ -1,12 +1,10 @@
 package com.xftxyz.elm.service;
 
-import com.xftxyz.elm.domain.Cart;
-import com.xftxyz.elm.vo.res.CartInfoVO;
-
-import java.math.BigDecimal;
 import java.util.List;
 
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.xftxyz.elm.domain.Cart;
+import com.xftxyz.elm.vo.res.CartInfoVO;
 
 /**
  * @author 25810
@@ -24,5 +22,7 @@ public interface CartService extends IService<Cart> {
     Integer getTotalQuantity(List<Cart> carts);
     
     CartInfoVO getCartInfo(String userid, Integer businessid);
+
+    Boolean updateCart(String userid, Integer businessid, Integer foodid, Integer quantity);
 
 }

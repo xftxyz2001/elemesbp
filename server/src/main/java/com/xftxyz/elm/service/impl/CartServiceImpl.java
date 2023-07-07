@@ -81,4 +81,29 @@ public class CartServiceImpl extends ServiceImpl<CartMapper, Cart>
         return totalQuantity;
     }
 
+    @Override
+    public Boolean updateCart(String userid, Integer businessid, Integer foodid, Integer quantity) {
+        // 查询出购物车中是否有该商品
+        Cart cart = cartMapper.selectOneByUseridAndBusinessidAndFoodid(userid, businessid, foodid);
+        if (cart == null) {
+            // 没有该商品，新增
+            cart = new Cart();
+            cart.setUserid(userid);
+            cart.setBusinessid(businessid);
+            cart.setFoodid(foodid);
+            cart.setQuantity(quantity);
+            // System.out.println(cart);
+            return cartMapper.insert(cart) > 0;
+        } else {
+            // 有该商品
+            if (quantity == 0) {
+                // 数量为0，删除
+                return cartMapper.deleteById(cart.getCartid()) > 0;
+            }
+            // 数量不为0，更新
+            cart.setQuantity(quantity);
+            return cartMapper.updateById(cart) > 0;
+        }
+    }
+
 }

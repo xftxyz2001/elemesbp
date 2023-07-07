@@ -5,7 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -26,7 +26,7 @@ public class DeliveryAddressController {
 
     // 列出用户的所有配送地址
     @GetMapping("/list")
-    public List<Deliveryaddress> listDeliveryAddressByUserId(@ModelAttribute(ElmProperties.requestUser) User user) {
+    public List<Deliveryaddress> listDeliveryAddressByUserId(@RequestAttribute(ElmProperties.requestUser) User user) {
         return deliveryaddressService.listDeliveryAddressByUser(user);
     }
 
