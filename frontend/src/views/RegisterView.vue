@@ -142,8 +142,8 @@ function register() {
           性别：
         </div>
         <div class="content">
-          <input type="radio" v-model="registerForm.userSex" value="1">男
-          <input type="radio" v-model="registerForm.userSex" value="0">女
+          <input type="radio" style="width: 6vw; height: 3.2vw;" v-model="registerForm.userSex" value="1">男
+          <input type="radio" style="width: 6vw; height: 3.2vw;" v-model="registerForm.userSex" value="0">女
         </div>
       </li>
     </ul>
@@ -208,10 +208,12 @@ function register() {
   font-size: 3vw;
 }
 
+/*
 .wrapper .form-box li .content input {
   width: 6vw;
   height: 3.2vw;
 }
+*/
 
 .wrapper .form-box li .content input {
   border: none;

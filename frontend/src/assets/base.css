@@ -46,7 +46,8 @@
     --color-border-hover: var(--vt-c-divider-dark-1);
 
     --color-heading: var(--vt-c-text-dark-1);
-    --color-text: var(--vt-c-text-dark-2);
+    /* --color-text: var(--vt-c-text-dark-2); */
+    filter: brightness(0.7); /* 夜间模式降低亮度 */
   }
 }
 
