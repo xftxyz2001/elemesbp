@@ -1,8 +1,5 @@
 package com.xftxyz.elm.vo.res;
 
-import com.baomidou.mybatisplus.annotation.IdType;
-import com.baomidou.mybatisplus.annotation.TableId;
-
 import lombok.Data;
 
 @Data
@@ -10,7 +7,6 @@ public class UserVO {
     /**
      * 用户编号
      */
-    @TableId(type = IdType.ASSIGN_ID)
     private String userid;
 
     /**

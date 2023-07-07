@@ -26,4 +26,9 @@
         where
         businessId = #{businessid,jdbcType=NUMERIC}
     </select>
+    <select id="selectFoodpriceByFoodid" resultMap="BaseResultMap">
+        select foodPrice
+        from food
+        where foodId = #{foodid,jdbcType=NUMERIC}
+    </select>
 </mapper>

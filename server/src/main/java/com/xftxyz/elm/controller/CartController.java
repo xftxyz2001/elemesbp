@@ -1,5 +1,7 @@
 package com.xftxyz.elm.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -8,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.xftxyz.elm.config.ElmProperties;
+import com.xftxyz.elm.domain.Cart;
 import com.xftxyz.elm.domain.User;
 import com.xftxyz.elm.service.CartService;
 
@@ -25,15 +28,22 @@ public class CartController {
     @GetMapping("/count/{businessid}")
     public Integer getCartItemCountForUserInStore(@ModelAttribute(ElmProperties.requestUser) User user,
             @PathVariable("businessid") Integer businessid) {
-        return cartService.getCartItemCountForUserInStore(user.getUserid(), businessid);
+        return cartService.getTotalQuantity(user.getUserid(), businessid);
     }
 
-    // public Object listCart(HttpServletRequest request) throws Exception {
-    // String userId = request.getParameter("userId");
-    // Integer businessId = Integer.valueOf(request.getParameter("businessId"));
-    // List<Cart> carts = cartService.listCart(userId, businessId);
-    // return carts;
-    // }
+    // 当前用户在指定店家的购物车
+    @GetMapping("/{businessid}")
+    public List<Cart> listCart(@ModelAttribute(ElmProperties.requestUser) User user,
+            @PathVariable("businessid") Integer businessid) {
+        return cartService.listCart(user.getUserid(), businessid);
+    }
+
+    // 当前用户在指定店家的购物车信息
+    @GetMapping("/info/{businessid}")
+    public Object getCartInfo(@ModelAttribute(ElmProperties.requestUser) User user,
+            @PathVariable("businessid") Integer businessid) {
+        return cartService.getCartInfo(user.getUserid(), businessid);
+    }
 
     // public Object updateCart(HttpServletRequest request) throws Exception {
     // String userId = request.getParameter("userId");

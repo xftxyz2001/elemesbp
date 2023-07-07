@@ -1,4 +1,5 @@
 package com.xftxyz.elm.mapper;
+import java.util.List;
 import org.apache.ibatis.annotations.Param;
 
 import com.xftxyz.elm.domain.Cart;
@@ -14,6 +15,8 @@ import org.apache.ibatis.annotations.Mapper;
 @Mapper
 public interface CartMapper extends BaseMapper<Cart> {
     int countByUseridAndBusinessid(@Param("userid") String userid, @Param("businessid") Integer businessid);
+
+    List<Cart> selectByUseridAndBusinessid(@Param("userid") String userid, @Param("businessid") Integer businessid);
 }
 
 
