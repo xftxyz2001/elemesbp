@@ -20,6 +20,8 @@ public interface CartService extends IService<Cart> {
     Integer getTotalQuantity(String userid, Integer businessid);
 
     Integer getTotalQuantity(List<Cart> carts);
+
+    Integer getQuantity(String userid, Integer businessid, Integer foodid);
     
     CartInfoVO getCartInfo(String userid, Integer businessid);
 

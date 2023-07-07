@@ -106,4 +106,13 @@ public class CartServiceImpl extends ServiceImpl<CartMapper, Cart>
         }
     }
 
+    @Override
+    public Integer getQuantity(String userid, Integer businessid, Integer foodid) {
+        Cart cart = cartMapper.selectOneByUseridAndBusinessidAndFoodid(userid, businessid, foodid);
+        if (cart == null) {
+            return 0;
+        }
+        return cart.getQuantity();
+    }
+
 }
