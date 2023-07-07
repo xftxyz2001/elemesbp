@@ -22,7 +22,7 @@ public class CartController {
     private CartService cartService;
 
     // 当前用户在指定店家的购物车项数
-    @GetMapping("/count/{businessid}}")
+    @GetMapping("/count/{businessid}")
     public Integer getCartItemCountForUserInStore(@ModelAttribute(ElmProperties.requestUser) User user,
             @PathVariable("businessid") Integer businessid) {
         return cartService.getCartItemCountForUserInStore(user.getUserid(), businessid);
