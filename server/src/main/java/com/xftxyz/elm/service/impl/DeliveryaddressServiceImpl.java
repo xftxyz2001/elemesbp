@@ -29,9 +29,20 @@ public class DeliveryaddressServiceImpl extends ServiceImpl<DeliveryaddressMappe
     }
 
     @Override
-    public Boolean saveDeliveryAddress(String userid, String contactname, Integer contactsex, String contacttel,
-            String address) {
-        Deliveryaddress deliveryaddress = new Deliveryaddress();
+    public Boolean saveDeliveryAddress(Integer daid, String userid, String contactname, Integer contactsex,
+            String contacttel, String address) {
+        // 查询是否存在
+        Deliveryaddress deliveryaddress = getById(daid);
+        // 存在，更新
+        if (deliveryaddress != null) {
+            deliveryaddress.setContactname(contactname);
+            deliveryaddress.setContactsex(contactsex);
+            deliveryaddress.setContacttel(contacttel);
+            deliveryaddress.setAddress(address);
+            return updateById(deliveryaddress);
+        }
+        // 不存在，添加
+        deliveryaddress = new Deliveryaddress();
         deliveryaddress.setUserid(userid);
         deliveryaddress.setContactname(contactname);
         deliveryaddress.setContactsex(contactsex);

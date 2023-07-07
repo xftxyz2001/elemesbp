@@ -27,8 +27,8 @@ public class R<T> {
      */
     public static <T> R<T> ok(T data) {
         R<T> result = new R<T>();
-        result.setCode(0);
-        result.setmsg("SUCCESS");
+        result.setCode(ResultCode.SUCCESS.getCode());
+        result.setmsg(ResultCode.SUCCESS.getMessage());
         result.setData(data);
         return result;
     }
