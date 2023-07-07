@@ -5,6 +5,10 @@ import lombok.Data;
 @Data
 public class DeliveryaddressVO {
     /**
+     * 送货地址编号
+     */
+    private Integer daid;
+    /**
      * 联系人姓名
      */
     private String contactname;

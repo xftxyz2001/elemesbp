@@ -42,7 +42,9 @@ public class DeliveryAddressController {
     @PostMapping("/save")
     public Boolean saveDeliveryAddress(@RequestAttribute(ElmProperties.requestUser) User user,
             DeliveryaddressVO deliveryaddressVO) {
-        return deliveryaddressService.saveDeliveryAddress(user.getUserid(),
+        return deliveryaddressService.saveDeliveryAddress(
+                deliveryaddressVO.getDaid(),
+                user.getUserid(),
                 deliveryaddressVO.getContactname(),
                 deliveryaddressVO.getContactsex(),
                 deliveryaddressVO.getContacttel(),
