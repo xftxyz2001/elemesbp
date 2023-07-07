@@ -9,6 +9,7 @@ import BusinessListView from '@/views/BusinessListView.vue'; // 商家列表页
 import BusinessInfoView from '@/views/BusinessInfoView.vue'; // 商家详情页
 import OrderView from '@/views/OrderView.vue'; // 订单页
 import UserAddressView from '@/views/UserAddressView.vue'; // 用户地址页
+import UserAddressEditView from '@/views/UserAddressEditView.vue'; // 编辑地址页
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -72,6 +73,12 @@ const router = createRouter({
       path: '/useraddress',
       name: 'userAddress',
       component: UserAddressView
+    },
+    {
+      // 编辑地址页
+      path: '/editaddress/:id',
+      name: 'editAddress',
+      component: UserAddressEditView
     }
     // {
     //   path: '/about',
