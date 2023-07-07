@@ -17,6 +17,7 @@ import com.xftxyz.elm.domain.User;
 import com.xftxyz.elm.service.CartService;
 import com.xftxyz.elm.vo.req.CartUpdateVO;
 import com.xftxyz.elm.vo.res.CartInfoVO;
+import com.xftxyz.elm.vo.res.CartWithFoodVO;
 
 /**
  * 购物车相关
@@ -40,7 +41,14 @@ public class CartController {
     public List<Cart> listCart(@RequestAttribute(ElmProperties.requestUser) User user,
             @PathVariable("businessid") Integer businessid) {
         return cartService.listCart(user.getUserid(), businessid);
-    }   
+    }
+
+    // 当前用户在指定店家的购物车（包含食品信息）
+    @GetMapping("/business/{businessid}/with/food")
+    public List<CartWithFoodVO> listCartWithFood(@RequestAttribute(ElmProperties.requestUser) User user,
+            @PathVariable("businessid") Integer businessid) {
+        return cartService.listCartWithFood(user.getUserid(), businessid);
+    }
 
     // 当前用户在指定店家的购物车信息
     @GetMapping("/info/{businessid}")
@@ -51,39 +59,10 @@ public class CartController {
 
     // 更新购物车
     @PutMapping("/update")
-    public Boolean updateCart(@RequestAttribute(ElmProperties.requestUser) User user, @RequestBody CartUpdateVO cartUpdateVO) {
-        return cartService.updateCart(user.getUserid(), cartUpdateVO.getBusinessid(), cartUpdateVO.getFoodid(), cartUpdateVO.getQuantity());
+    public Boolean updateCart(@RequestAttribute(ElmProperties.requestUser) User user,
+            @RequestBody CartUpdateVO cartUpdateVO) {
+        return cartService.updateCart(user.getUserid(), cartUpdateVO.getBusinessid(), cartUpdateVO.getFoodid(),
+                cartUpdateVO.getQuantity());
     }
 
-    // public Object updateCart(HttpServletRequest request) throws Exception {
-    // String userId = request.getParameter("userId");
-    // int businessId = Integer.parseInt(request.getParameter("businessId"));
-    // int foodId = Integer.parseInt(request.getParameter("foodId"));
-    // int quantity = Integer.parseInt(request.getParameter("quantity"));
-    // int i = cartService.updateCart(userId, businessId, foodId, quantity);
-    // return i;
-    // }
-
-    // public Object removeCart(HttpServletRequest request) throws Exception {
-    // String userId = request.getParameter("userId");
-    // int businessId = Integer.parseInt(request.getParameter("businessId"));
-    // int foodId = Integer.parseInt(request.getParameter("foodId"));
-    // int i = cartService.removeCart(userId, businessId, foodId);
-    // return i;
-    // }
-
-    // public Object removeCart1(HttpServletRequest request) throws Exception {
-    // String userId = request.getParameter("userId");
-    // int businessId = Integer.parseInt(request.getParameter("businessId"));
-    // int i = cartService.removeCart1(userId, businessId);
-    // return i;
-    // }
-
-    // public Object saveCart(HttpServletRequest request) throws Exception {
-    // String userId = request.getParameter("userId");
-    // int businessId = Integer.parseInt(request.getParameter("businessId"));
-    // int foodId = Integer.parseInt(request.getParameter("foodId"));
-    // int i = cartService.saveCart(userId, businessId, foodId);
-    // return i;
-    // }
 }

@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -13,12 +14,13 @@ import com.xftxyz.elm.config.ElmProperties;
 import com.xftxyz.elm.domain.Deliveryaddress;
 import com.xftxyz.elm.domain.User;
 import com.xftxyz.elm.service.DeliveryaddressService;
+import com.xftxyz.elm.vo.req.DeliveryaddressVO;
 
 /**
  * 配送地址相关
  */
 @RestController
-@RequestMapping("/deliveryaddress")
+@RequestMapping("/daddress")
 public class DeliveryAddressController {
 
     @Autowired
@@ -37,32 +39,15 @@ public class DeliveryAddressController {
     }
 
     // 添加配送地址
-    // public Object saveDeliveryAddress(HttpServletRequest request) throws
-    // Exception {
-    // String contactName = request.getParameter("contactName");
-    // String contactTel = request.getParameter("contactTel");
-    // String address = request.getParameter("address");
-    // int contactSex = Integer.parseInt(request.getParameter("contactSex"));
-    // String userId = request.getParameter("userId");
-    // int i = deliveryaddressService.saveDeliveryAddress(contactName, contactSex,
-    // contactTel, address, userId);
-    // return i;
-    // }
-
-    // 修改配送地址
-    // public Object updateDeliveryAddress(HttpServletRequest request) throws
-    // Exception {
-    // String contactName = request.getParameter("contactName");
-    // String contactTel = request.getParameter("contactTel");
-    // String address = request.getParameter("address");
-    // String userId = request.getParameter("userId");
-    // int contactSex = Integer.parseInt(request.getParameter("contactSex"));
-    // int daId = Integer.parseInt(request.getParameter("daId"));
-    // int i = deliveryaddressService.updateDeliveryAddress(daId, contactName,
-    // contactSex, contactTel, address,
-    // userId);
-    // return i;
-    // }
+    @PostMapping("/save")
+    public Boolean saveDeliveryAddress(@RequestAttribute(ElmProperties.requestUser) User user,
+            DeliveryaddressVO deliveryaddressVO) {
+        return deliveryaddressService.saveDeliveryAddress(user.getUserid(),
+                deliveryaddressVO.getContactname(),
+                deliveryaddressVO.getContactsex(),
+                deliveryaddressVO.getContacttel(),
+                deliveryaddressVO.getAddress());
+    }
 
     // 删除配送地址
     @DeleteMapping("/{daid}")

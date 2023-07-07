@@ -5,6 +5,7 @@ import java.util.List;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.xftxyz.elm.domain.Cart;
 import com.xftxyz.elm.vo.res.CartInfoVO;
+import com.xftxyz.elm.vo.res.CartWithFoodVO;
 
 /**
  * @author 25810
@@ -26,5 +27,7 @@ public interface CartService extends IService<Cart> {
     CartInfoVO getCartInfo(String userid, Integer businessid);
 
     Boolean updateCart(String userid, Integer businessid, Integer foodid, Integer quantity);
+
+    List<CartWithFoodVO> listCartWithFood(String userid, Integer businessid);
 
 }

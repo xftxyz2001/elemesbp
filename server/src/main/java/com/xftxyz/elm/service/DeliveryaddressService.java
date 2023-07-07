@@ -15,4 +15,7 @@ public interface DeliveryaddressService extends IService<Deliveryaddress> {
 
     List<Deliveryaddress> listDeliveryAddressByUser(User user);
 
+    Boolean saveDeliveryAddress(String userid, String contactname, Integer contactsex, String contacttel,
+            String address);
+
 }
