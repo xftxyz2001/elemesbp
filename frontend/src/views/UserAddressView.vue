@@ -2,6 +2,7 @@
 import axios from 'axios';
 import FooterSection from '@/components/FooterSection.vue';
 import { ref, onMounted } from 'vue';
+import router from "@/router";
 
 // Integer daid
 // String contactname
@@ -26,10 +27,29 @@ axios.get('/').then((res) => {
   }
 });
 
-function setDeliveryAddress(da: DeliveryAddressItem) { }
-function editUserAddress(da: DeliveryAddressItem) { }
-function removeUserAddress(da: DeliveryAddressItem) { }
-function toAddUserAddress() { }
+function setDeliveryAddress(da: DeliveryAddressItem) {
+  localStorage.setItem('daid',da.daid.toString());
+}
+function editUserAddress(da: DeliveryAddressItem) {
+  router.push({name:'editAddress',params:{id:da.daid}});
+}
+function removeUserAddress(da: DeliveryAddressItem) {
+  let daid = localStorage.getItem('daid');
+  if(daid && parseInt(daid) == da.daid){
+    localStorage.setItem('daid',deliveryAddressList.value[0].daid.toString());
+  }
+  axios.delete('/daddress/' + da.daid).then((res) => {
+    let r = res.data;
+    if (r.code == 0) {
+      alert('删除成功');
+    } else {
+      alert(r.msg);
+    }
+  });
+}
+function toAddUserAddress() {
+  router.push({name:'editAddress'});
+}
 
 </script>
 

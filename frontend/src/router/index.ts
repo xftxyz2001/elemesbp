@@ -58,13 +58,13 @@ const router = createRouter({
     },
     {
       // 商家详情页
-      path: '/businessInfo',
+      path: '/businessInfo/:id',
       name: 'businessInfo',
       component: BusinessInfoView
     },
     {
       // 确认订单页
-      path: '/order/:id',
+      path: '/order/',
       name: 'order',
       component: OrderView
     },

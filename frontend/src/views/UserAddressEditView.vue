@@ -23,9 +23,22 @@ axios.get('/dadress/' + daid).then((res) => {
     deliveryAddress.value = r.data;
   }
 });
-
+//daddress/save
 function saveUserAddress() {
-  
+  let param = {
+    contactname: deliveryAddress.value.contactname,
+    contactsex: deliveryAddress.value.contactsex,
+    contacttel: deliveryAddress.value.contacttel,
+    address: deliveryAddress.value.address
+  };
+  axios.post('/daddress/save', param).then(res => {
+    let r = res.data;
+    if (r.code == 0) {
+      console.log('更新成功');
+    } else {
+      alert(r.msg);
+    }
+  });
 }
 </script>
 

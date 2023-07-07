@@ -154,7 +154,8 @@ function minus(food: FoodItem) {
 // showStarPrice.value = totalSettle.value < business.value?.starprice;
 
 function toOrder() {
-  router.push({name:'order',params:{businessid : businessid}});
+  localStorage.setItem("businessid",businessid.toString());
+  router.push({name:'order'});
   console.log('结算');
 }
 </script>
