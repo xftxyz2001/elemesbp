@@ -1,10 +1,10 @@
 package com.xftxyz.elm.service;
 
-import com.xftxyz.elm.domain.Food;
-
 import java.util.List;
 
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.xftxyz.elm.domain.Food;
+import com.xftxyz.elm.vo.res.FoodWithQuantityVO;
 
 /**
 * @author 25810
@@ -13,6 +13,8 @@ import com.baomidou.mybatisplus.extension.service.IService;
 */
 public interface FoodService extends IService<Food> {
 
-    List<Food> findFoodByBusinessid(Integer businessid);
+    List<Food> getFoodList(Integer businessid);
+
+    List<FoodWithQuantityVO> getFoodListWithQuantity(Integer businessid);
 
 }

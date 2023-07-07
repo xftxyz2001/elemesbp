@@ -62,7 +62,7 @@ public class CartServiceImpl extends ServiceImpl<CartMapper, Cart>
         // 查配送费
         Business business = businessService.getById(businessid);
         // 总金额
-        cartInfoVO.setTotalPrice(cartInfoVO.getTotalPrice().add(business.getStarprice()));
+        cartInfoVO.setTotalPrice(cartInfoVO.getTotalPrice().add(business.getDeliveryprice()));
         return cartInfoVO;
     }
 

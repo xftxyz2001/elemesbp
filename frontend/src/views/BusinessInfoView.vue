@@ -78,7 +78,7 @@ function updateCart() {
 }
 
 
-axios.get('/cart/' + businessid).then((res) =>{
+axios.get('/cart/business/' + businessid).then((res) =>{
   let r = res.data;
   if (r.code == 0) {
     for (const cart of r.data) {

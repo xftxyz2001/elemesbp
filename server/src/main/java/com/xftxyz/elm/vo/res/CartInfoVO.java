@@ -12,15 +12,15 @@ public class CartInfoVO {
     /**
      * 总数量
      */
-    private Integer totalQuantity;
+    private Integer totalQuantity = 0;
 
     /**
      * 总价格
      */
-    private BigDecimal totalPrice;
+    private BigDecimal totalPrice = BigDecimal.ZERO;
 
     /**
      * 总结算价
      */
-    private BigDecimal totalSettle;
+    private BigDecimal totalSettle = BigDecimal.ZERO;
 }

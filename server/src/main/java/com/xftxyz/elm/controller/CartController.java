@@ -16,6 +16,7 @@ import com.xftxyz.elm.domain.Cart;
 import com.xftxyz.elm.domain.User;
 import com.xftxyz.elm.service.CartService;
 import com.xftxyz.elm.vo.req.CartUpdateVO;
+import com.xftxyz.elm.vo.res.CartInfoVO;
 
 /**
  * 购物车相关
@@ -35,15 +36,15 @@ public class CartController {
     }
 
     // 当前用户在指定店家的购物车
-    @GetMapping("/{businessid}")
+    @GetMapping("/business/{businessid}")
     public List<Cart> listCart(@RequestAttribute(ElmProperties.requestUser) User user,
             @PathVariable("businessid") Integer businessid) {
         return cartService.listCart(user.getUserid(), businessid);
-    }
+    }   
 
     // 当前用户在指定店家的购物车信息
     @GetMapping("/info/{businessid}")
-    public Object getCartInfo(@RequestAttribute(ElmProperties.requestUser) User user,
+    public CartInfoVO getCartInfo(@RequestAttribute(ElmProperties.requestUser) User user,
             @PathVariable("businessid") Integer businessid) {
         return cartService.getCartInfo(user.getUserid(), businessid);
     }

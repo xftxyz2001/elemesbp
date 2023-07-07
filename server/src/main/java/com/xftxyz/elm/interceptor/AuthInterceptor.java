@@ -27,7 +27,6 @@ public class AuthInterceptor implements HandlerInterceptor {
         String token = null;
         if (cookies != null) {
             for (Cookie cookie : cookies) {
-                System.out.println(cookie.getName() + " " + cookie.getValue());
                 if (ElmProperties.cookieToken.equals(cookie.getName())) {
                     token = cookie.getValue();
                     break;

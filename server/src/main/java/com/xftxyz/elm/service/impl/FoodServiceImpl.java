@@ -1,5 +1,6 @@
 package com.xftxyz.elm.service.impl;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,6 +10,7 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.xftxyz.elm.domain.Food;
 import com.xftxyz.elm.mapper.FoodMapper;
 import com.xftxyz.elm.service.FoodService;
+import com.xftxyz.elm.vo.res.FoodWithQuantityVO;
 
 /**
  * @author 25810
@@ -23,8 +25,16 @@ public class FoodServiceImpl extends ServiceImpl<FoodMapper, Food>
     private FoodMapper foodMapper;
 
     @Override
-    public List<Food> findFoodByBusinessid(Integer businessid) {
+    public List<Food> getFoodList(Integer businessid) {
         return foodMapper.selectAllByBusinessid(businessid);
+    }
+
+    @Override
+    public List<FoodWithQuantityVO> getFoodListWithQuantity(Integer businessid) {
+        List<Food> foodList = getFoodList(businessid);
+        List<FoodWithQuantityVO> foodWithQuantityList = new ArrayList<>();
+        
+        return foodWithQuantityList;
     }
 
 }

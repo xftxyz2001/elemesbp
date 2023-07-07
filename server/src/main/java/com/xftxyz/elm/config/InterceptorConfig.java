@@ -6,6 +6,7 @@ import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import com.xftxyz.elm.interceptor.AuthInterceptor;
+import com.xftxyz.elm.interceptor.LoggingInterceptor;
 
 /**
  * 拦截器配置
@@ -18,11 +19,18 @@ public class InterceptorConfig implements WebMvcConfigurer {
         return new AuthInterceptor();
     }
 
+    @Bean
+    LoggingInterceptor loggingInterceptor() {
+        return new LoggingInterceptor();
+    }
+
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
         // 排除登录接口/login /register
         registry.addInterceptor(authInterceptor())
                 .addPathPatterns("/**")
-        .excludePathPatterns("/user/login", "/user/register");
+                .excludePathPatterns("/user/login", "/user/register");
+
+        registry.addInterceptor(loggingInterceptor()).addPathPatterns("/**");
     }
 }
