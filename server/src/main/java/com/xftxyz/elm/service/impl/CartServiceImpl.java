@@ -49,6 +49,10 @@ public class CartServiceImpl extends ServiceImpl<CartMapper, Cart>
     public CartInfoVO getCartInfo(String userid, Integer businessid) {
         List<Cart> carts = listCart(userid, businessid);
         CartInfoVO cartInfoVO = new CartInfoVO();
+        // 如果购物车为空
+        if (carts.size() == 0) {
+            return cartInfoVO;
+        }
         for (Cart cart : carts) {
             // 加数量
             cartInfoVO.setTotalQuantity(cartInfoVO.getTotalQuantity() + cart.getQuantity());
@@ -104,6 +108,15 @@ public class CartServiceImpl extends ServiceImpl<CartMapper, Cart>
             cart.setQuantity(quantity);
             return cartMapper.updateById(cart) > 0;
         }
+    }
+
+    @Override
+    public Integer getQuantity(String userid, Integer businessid, Integer foodid) {
+        Cart cart = cartMapper.selectOneByUseridAndBusinessidAndFoodid(userid, businessid, foodid);
+        if (cart == null) {
+            return 0;
+        }
+        return cart.getQuantity();
     }
 
 }

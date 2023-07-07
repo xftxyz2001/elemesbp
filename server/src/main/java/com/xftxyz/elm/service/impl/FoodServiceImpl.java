@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.xftxyz.elm.domain.Food;
 import com.xftxyz.elm.mapper.FoodMapper;
+import com.xftxyz.elm.service.CartService;
 import com.xftxyz.elm.service.FoodService;
 import com.xftxyz.elm.vo.res.FoodWithQuantityVO;
 
@@ -24,16 +25,33 @@ public class FoodServiceImpl extends ServiceImpl<FoodMapper, Food>
     @Autowired
     private FoodMapper foodMapper;
 
+    @Autowired
+    private CartService cartService;
+
     @Override
     public List<Food> getFoodList(Integer businessid) {
         return foodMapper.selectAllByBusinessid(businessid);
     }
 
     @Override
-    public List<FoodWithQuantityVO> getFoodListWithQuantity(Integer businessid) {
+    public List<FoodWithQuantityVO> getFoodListWithQuantity(String userid, Integer businessid) {
         List<Food> foodList = getFoodList(businessid);
         List<FoodWithQuantityVO> foodWithQuantityList = new ArrayList<>();
-        
+        for (Food food : foodList) {
+            FoodWithQuantityVO foodWithQuantity = new FoodWithQuantityVO();
+            foodWithQuantity.setFoodid(food.getFoodid());
+            foodWithQuantity.setFoodname(food.getFoodname());
+            foodWithQuantity.setFoodexplain(food.getFoodexplain());
+            foodWithQuantity.setFoodimg(food.getFoodimg());
+            foodWithQuantity.setFoodprice(food.getFoodprice());
+            foodWithQuantity.setBusinessid(food.getBusinessid());
+            foodWithQuantity.setRemarks(food.getRemarks());
+
+            // 更新购物车中的数量
+            Integer quantity = cartService.getQuantity(userid, businessid, food.getFoodid());
+            foodWithQuantity.setQuantity(quantity);
+            foodWithQuantityList.add(foodWithQuantity);
+        }
         return foodWithQuantityList;
     }
 

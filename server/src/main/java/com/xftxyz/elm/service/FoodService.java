@@ -15,6 +15,6 @@ public interface FoodService extends IService<Food> {
 
     List<Food> getFoodList(Integer businessid);
 
-    List<FoodWithQuantityVO> getFoodListWithQuantity(Integer businessid);
+    List<FoodWithQuantityVO> getFoodListWithQuantity(String userid, Integer businessid);
 
 }

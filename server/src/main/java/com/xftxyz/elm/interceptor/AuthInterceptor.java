@@ -22,6 +22,11 @@ public class AuthInterceptor implements HandlerInterceptor {
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
             throws Exception {
+        // 如果请求方式为OPTIONS
+        if (request.getMethod().equals("OPTIONS")) {
+            return true;
+        }
+
         // 尝试从cookie中获取token
         Cookie[] cookies = request.getCookies();
         String token = null;

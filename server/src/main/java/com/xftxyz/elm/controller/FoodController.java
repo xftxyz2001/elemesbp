@@ -46,6 +46,6 @@ public class FoodController {
     public List<FoodWithQuantityVO> getFoodListWithQuantity(
             @RequestAttribute(ElmProperties.requestUser) User user,
             @PathVariable("businessid") Integer businessid) {
-        return foodService.getFoodListWithQuantity(businessid);
+        return foodService.getFoodListWithQuantity(user.getUserid(), businessid);
     }
 }
