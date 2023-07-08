@@ -1,24 +1,154 @@
 <script setup lang="ts">
+
 import FooterSection from '@/components/FooterSection.vue';
+import {Ref} from "vue/dist/vue.js";
+import axios from 'axios';
+import {onBeforeMount, ref} from 'vue';
+interface BusinessItem {
+  businessid: number; // 商家编号
+  businessname: string; // 商家名称
+  businessaddress: string; // 商家地址
+  businessexplain: string; // 商家介绍
+  businessimg: string; // 商家图片（base64）
+  ordertypeid: number; // 点餐分类
+  starprice: number; // 起送费
+  deliveryprice: number; // 配送费
+  remarks: string; // 备注
+}
+interface FoodItem {
+  foodid: number; // 食品编号
+  foodname: string; // 食品名称
+  foodexplain: string; // 食品介绍
+  foodimg: string; // 食品图片（base64）
+  foodprice: number; // 食品价格
+  businessid: number; // 商家编号
+  remarks: string; // 备注
+
+  quantity: number; // 食品数量
+}
+interface OrderItem{
+  orderid:number;
+  userid:string;
+  businessid:number;
+  orderdate:string;
+  ordertotal:number;
+  daid:number;
+  orderstate:number;
+  foodList:FoodItem[];
+  business:BusinessItem;
+  isShowDetailet:boolean;
+}
+
+const orderList : Ref<OrderItem[] | null> = ref(null);
+
+onBeforeMount(()=>{
+  axios.get('/orders/list').then((res)=>{
+    let r = res.data;
+    if(r.code == 0){
+      orderList.value = r.data;
+      if(orderList.value){
+        for(let i = 0;i < orderList.value?.length;i++){
+          axios.get('/orders/detailet/' + orderList.value[i].orderid).then((res) => {
+            let a = res.data;
+            if(a.code == 0){
+              if(orderList.value){
+                orderList.value[i] = a.data;
+                orderList.value[i].isShowDetailet = false;
+                console.log(orderList.value[i]);
+              }
+            }
+          })
+        }
+      }
+    }
+  })
+})
+
+
+
+function detailetShow(item:OrderItem){
+  item.isShowDetailet = !item.isShowDetailet;
+
+}
+
 </script>
 
 <template>
   <div class="wrapper">
+    <el-container>
+      <el-header>
+        <!-- header部分 -->
+        <header>
+          <p>我的订单</p>
+        </header>
+      </el-header>
+      <el-main style="padding-bottom: 14vw">
+        <!-- 订单列表部分 -->
+        <h3>未支付订单信息：</h3>
+        <ul class="order">
 
-    <!-- header部分 -->
-    <header>
-      <p>我的订单</p>
-    </header>
+          <li v-for="item in orderList" key="item.orderid">
+            <div class="order-info" v-if="item.orderstate==0">
+              <p>
+                {{item.business.businessname}}
+                <i v-show="item.isShowDetailet" class="fa fa-caret-up" @click="detailetShow(item)"></i>
+                <i v-show="!item.isShowDetailet" class="fa fa-caret-down" @click="detailetShow(item)"></i>
+              </p>
+              <div class="order-info-right">
+                <p>&#165;{{item.ordertotal}}</p>
+                <div class="order-info-right-icon" @click="toPayment(item.orderid)">去支付</div>
+              </div>
+            </div>
+            <ul class="order-detailet" v-show="item.isShowDetailet">
+              <li v-for="odItem in item.foodList">
+                <p>{{odItem.foodname}} x {{odItem.quantity}}</p>
+                <p>&#165;{{odItem.foodprice*odItem.quantity}}</p>
+              </li>
+              <li>
+                <p>配送费</p>
+                <p>&#165;{{item.business.deliveryprice}}</p>
+              </li>
+            </ul>
+          </li>
+        </ul>
 
-    <!-- 订单列表部分 -->
-    <h3>未支付订单信息：</h3>
+        <h3>已支付订单信息：</h3>
+        <ul class="order"> <!-- v-if="item.commentState==1"-->
+          <li v-for="item in orderList" >
+            <div class="order-info" v-if="item.orderstate==1">
+              <p>
+                {{item.business.businessname}}
+                <i v-show="item.isShowDetailet" class="fa fa-caret-up" @click="detailetShow(item)"></i>
+                <i v-show="!item.isShowDetailet" class="fa fa-caret-down" @click="detailetShow(item)"></i>
+              </p>
+              <div class="order-info-right">
+                <p>&#165;{{item.ordertotal}}</p>
+                <div class="order-info-right-icon3" >已完成
+                </div>
+              </div>
+            </div>
+            <ul class="order-detailet" v-show="item.isShowDetailet">
+              <li v-for="odItem in item.foodList">
+                <p>{{odItem.foodName}} x {{odItem.quantity}}</p>
+                <p>&#165;{{odItem.foodprice*odItem.quantity}}</p>
+              </li>
+              <li>
+                <p>配送费</p>
+                <p>&#165;{{item.business.deliveryprice}}</p>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </el-main>
+      <el-footer height="0">
+        <!-- 底部菜单部分 -->
+        <FooterSection />
+      </el-footer>
+    </el-container>
 
-    <h3>未评价订单信息：</h3>
 
-    <h3>已完成订单信息：</h3>
 
-    <!-- 底部菜单部分 -->
-    <FooterSection />
+
 
   </div>
 </template>
