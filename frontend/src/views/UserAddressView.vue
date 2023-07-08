@@ -33,6 +33,7 @@ updateList();
 
 function setDeliveryAddress(da: DeliveryAddressItem) {
   localStorage.setItem('daid',da.daid.toString());
+  router.push({name:'order'});
 }
 function editUserAddress(da: DeliveryAddressItem) {
   router.push({name:'editAddress',params:{id:da.daid}});
@@ -72,7 +73,7 @@ function toAddUserAddress() {
     <ul class="addresslist">
       <li v-for="item in deliveryAddressList" :key="item.daid">
         <div class="addresslist-left" @click="setDeliveryAddress(item)">
-          <h3>{{ item.contactname }}{{ item.contactsex | sexFilter }} {{ item.contacttel }}</h3>
+          <h3>{{ item.contactname }}{{ item.contactsex == 1 ? '先生' : '女士' }} {{ item.contacttel }}</h3>
           <p>{{ item.address }}</p>
         </div>
         <div class="addresslist-right">

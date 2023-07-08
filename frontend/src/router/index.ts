@@ -83,7 +83,7 @@ const router = createRouter({
     },
     {
       // 支付页
-      path: '/payment',
+      path: '/payment/:id',
       name: 'payment',
       component: PaymentView
     }
