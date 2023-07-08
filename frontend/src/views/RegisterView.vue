@@ -31,9 +31,9 @@ function checkUserId() {
   // 测试太费劲，先注释掉
   // if (!phoneVerify(userid.value)) {
   //   ElMessage({
-    message: '手机号码格式不正确',
-    type: 'warning'
-  });
+  //   message: '手机号码格式不正确',
+  //   type: 'warning'
+  // });
   //   return;
   // }
   // 发送请求
@@ -80,14 +80,13 @@ function register() {
   });
     return;
   }
-  // 测试太费劲，先注释掉
-  // if (!phoneVerify(userid.value)) {
-  //   ElMessage({
+  if (!phoneVerify(registerForm.value.userId)) {
+    ElMessage({
     message: '手机号码格式不正确',
     type: 'warning'
   });
-  //   return;
-  // }
+    return;
+  }
   if (registerForm.value.password.length < 1) {
     ElMessage({
     message: '密码不能为空',

@@ -24,13 +24,13 @@ function login() {
     return;
   }
   // 测试太费劲，先注释掉
-  // if (!phoneVerify(userid.value)) {
-  //   ElMessage({
+   if (!phoneVerify(userid.value)) {
+     ElMessage({
     message: '手机号码格式不正确',
     type: 'warning'
   });
-  //   return;
-  // }
+     return;
+   }
   if (password.value.length < 1) {
     ElMessage({
     message: '密码不能为空',
