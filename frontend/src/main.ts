@@ -8,7 +8,7 @@ import App from './App.vue'
 import router from './router'
 import 'font-awesome/css/font-awesome.min.css'
 
-axios.defaults.baseURL = 'http://192.168.137.181:8080'
+axios.defaults.baseURL = 'http://localhost:8080'
 axios.defaults.withCredentials = true
 // axios.defaults.headers.common['Authorization'] = 'Bearer ' + localStorage.getItem('token')
 const app = createApp(App)

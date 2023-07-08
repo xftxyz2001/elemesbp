@@ -33,6 +33,9 @@ function logout() {
   })
 }
 
+function toMyOrder() {
+  router.push({ name: "myorder" })
+}
 </script>
 
 <template>

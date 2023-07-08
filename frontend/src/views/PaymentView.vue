@@ -127,16 +127,17 @@ function payment() {
           <!-- <span id="closeBtn" class="close">×</span> -->
         </div>
         <div class="modal-body">
-          <div class="payway" style="border-bottom:1px solid #f5f5f5">
-            <span>支付宝支付</span>
+          <label class="payway clear-float" for="zhifubao">
             <img src="../assets/zhifubao.png">
-            <input type="radio" name="pay" value="" checked style="float:right" />
-          </div>
-          <div class="payway" style="margin-bottom:2vh;">
-            <span>微信支付</span>
+            <input type="radio" name="pay" id="zhifubao" value="zhifubao" checked class="right-float" />
+          </label>
+          <!-- 分割线 -->
+          <div class="fenge"></div>
+          
+          <label class="payway clear-float" for="wechat">
             <img src="../assets/wechat.png">
-            <input type="radio" name="pay" value="" style="float:right" />
-          </div>
+            <input type="radio" name="pay" id="wechat" value="wechat" class="right-float" />
+          </label>
         </div>
         <div class="bottom_pay_btn" id="payBtn" @click="confirmPayment()">确认支付</div>
       </div>
@@ -170,6 +171,27 @@ function payment() {
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+/* 左浮动 */
+.left-float {
+  float: left;
+}
+
+/* 右浮动 */
+.right-float {
+  float: right;
+}
+
+/* 消除浮动 */
+.clear-float {
+  clear: both;
+}
+
+.fenge {
+  width: 100%;
+  height: 1px;
+  background-color: #f5f5f5;
 }
 
 /****订单信息部分***/
@@ -290,7 +312,12 @@ function payment() {
 
 .wrapper .payway {
   padding: 2vh 0;
-  font-size: 13px;
+  font-size: 20px;
+  /* 内部元素垂直居中 */
+  display: flex;
+  /* position: relative; */
+  justify-content: center;
+
 }
 
 /* -----------------------------模态框样式-------------------------------- */
