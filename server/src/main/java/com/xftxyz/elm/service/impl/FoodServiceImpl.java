@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.xftxyz.elm.domain.Food;
@@ -19,6 +20,7 @@ import com.xftxyz.elm.vo.res.FoodWithQuantityVO;
  * @createDate 2023-06-15 16:16:07
  */
 @Service
+@Transactional
 public class FoodServiceImpl extends ServiceImpl<FoodMapper, Food>
         implements FoodService {
 
@@ -39,13 +41,6 @@ public class FoodServiceImpl extends ServiceImpl<FoodMapper, Food>
         List<FoodWithQuantityVO> foodWithQuantityList = new ArrayList<>();
         for (Food food : foodList) {
             FoodWithQuantityVO foodWithQuantity = new FoodWithQuantityVO(food);
-            // foodWithQuantity.setFoodid(food.getFoodid());
-            // foodWithQuantity.setFoodname(food.getFoodname());
-            // foodWithQuantity.setFoodexplain(food.getFoodexplain());
-            // foodWithQuantity.setFoodimg(food.getFoodimg());
-            // foodWithQuantity.setFoodprice(food.getFoodprice());
-            // foodWithQuantity.setBusinessid(food.getBusinessid());
-            // foodWithQuantity.setRemarks(food.getRemarks());
 
             // 更新购物车中的数量
             Integer quantity = cartService.getQuantity(userid, businessid, food.getFoodid());

@@ -2,6 +2,7 @@ package com.xftxyz.elm.service.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.xftxyz.elm.domain.User;
@@ -15,6 +16,7 @@ import com.xftxyz.elm.vo.res.UserVO;
  * @createDate 2023-06-15 16:16:07
  */
 @Service
+@Transactional
 public class UserServiceImpl extends ServiceImpl<UserMapper, User>
         implements UserService {
 

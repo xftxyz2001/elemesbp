@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.xftxyz.elm.domain.Cart;
@@ -18,6 +19,7 @@ import com.xftxyz.elm.service.OrderdetailetService;
  * @createDate 2023-06-15 16:16:07
  */
 @Service
+@Transactional
 public class OrderdetailetServiceImpl extends ServiceImpl<OrderdetailetMapper, Orderdetailet>
         implements OrderdetailetService {
 
