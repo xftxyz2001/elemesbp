@@ -8,6 +8,7 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.xftxyz.elm.domain.User;
 import com.xftxyz.elm.mapper.UserMapper;
 import com.xftxyz.elm.service.UserService;
+import com.xftxyz.elm.utils.Text2Img;
 import com.xftxyz.elm.vo.res.UserVO;
 
 /**
@@ -56,6 +57,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
         user.setPassword(password);
         user.setUsername(username);
         user.setUsersex(usersex);
+        user.setUserimg(Text2Img.getAvatar(username));
         return save(user);
     }
 
