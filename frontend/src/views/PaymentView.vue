@@ -4,6 +4,8 @@ import {onBeforeMount, ref} from 'vue';
 import type { Ref } from 'vue/dist/vue.js';
 import {useRoute} from "vue-router";
 import FooterSection from "@/components/FooterSection.vue";
+import router from '@/router';
+
 const isShowDetailet = ref(false);
 const route =  useRoute();
 interface BusinessItem {
@@ -57,8 +59,46 @@ onBeforeMount(()=>{
 })
 // 确认支付
 function confirmPayment() {
-
+  alert("支付成功");
+  router.push("/myorder");
 }
+
+interface ModalBox {
+  modal: HTMLElement;
+  triggerBtn: HTMLElement;
+  show: () => void;
+  close: () => void;
+  outsideClick: () => void;
+  init: () => void;
+}
+
+const modalBox: ModalBox = {
+  modal: document.getElementById("myModal")!,
+  triggerBtn: document.getElementById("triggerBtn")!,
+  show() {
+    this.modal.style.display = "block";
+  },
+  close() {
+    this.modal.style.display = "none";
+  },
+  outsideClick() {
+    const modal = this.modal;
+    window.onclick = function (event: MouseEvent) {
+      if (event.target === modal) {
+        modal.style.display = "none";
+      }
+    };
+  },
+  init() {
+    const that = this;
+    this.triggerBtn.onclick = function () {
+      that.show();
+    };
+    this.outsideClick();
+  },
+};
+
+modalBox.init();
 </script>
 
 <template>
