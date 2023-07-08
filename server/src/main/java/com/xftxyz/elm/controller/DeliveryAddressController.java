@@ -37,7 +37,6 @@ public class DeliveryAddressController {
     // 根据配送地址编号查询配送地址
     @GetMapping("/{daid}")
     public Deliveryaddress getDeliveryAddressById(@PathVariable("daid") Integer daid) {
-        System.out.println(daid);
         return deliveryaddressService.getById(daid);
     }
 
