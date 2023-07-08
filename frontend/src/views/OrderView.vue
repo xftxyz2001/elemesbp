@@ -44,6 +44,7 @@ interface CartItem {
 }
 
 const lbid = localStorage.getItem('businessid');
+const daid = localStorage.getItem('daid'); //送货地址编号
 const businessid = lbid && parseInt(lbid); // 商家编号
 const business = ref<BusinessItem | null>(null); // 商家信息
 
@@ -67,14 +68,17 @@ onBeforeMount(() => {
       alert(r.msg);
     }
   });
-  axios.get('/deliveryaddress/deliveryaddress/' + 1).then((res) => {
-    let r = res.data;
-    if (r.code == 0) {
-      deliveryaddress.value = r.data;
-    } else {
-      alert(r.msg);
-    }
-  });
+  if(daid){
+    axios.get('/daddress/' + daid).then((res) => {
+      let r = res.data;
+      if (r.code == 0) {
+        deliveryaddress.value = r.data;
+      } else {
+        alert(r.msg);
+      }
+    });
+  }
+
   // 刷新购物车
   axios.get('/cart/info/' + businessid).then((res) => {
     let r = res.data;
@@ -103,7 +107,23 @@ function toUserAddress() {
 
 // 去支付
 function toPayment() {
-  
+  if(localStorage.getItem('daid') != null){
+
+    let param = {
+      businessid : localStorage.getItem('businessid'),
+      daid : localStorage.getItem('daid')
+    }
+    axios.post('/orders/new',param).then((res) =>{
+      let r = res.data;
+      if(r.code == 0){
+        console.log(r);
+        router.push({name:'payment',params:{id:r.data.orderid}});
+      }
+    })
+  }else{
+    alert('请选择收货地址');
+  }
+
 }
 
 
@@ -125,7 +145,7 @@ function getCartList() {
     <!-- header部分 -->
     <header>
       <i class="fa fa-angle-left" @click="goback()"></i>
-      <p>确认订单</p>
+      <p class="head-title">确认订单</p>
     </header>
     <!-- 订单信息部分 -->
     <div class="order-info">
@@ -135,7 +155,7 @@ function getCartList() {
         <i class="fa fa-angle-right"></i>
       </div>
       <p>{{ deliveryaddress != null ? deliveryaddress.contactname : '' }}
-        {{ deliveryaddress != null ? (deliveryaddress.contactsex ? '先生' : '女士') : '' }}
+        {{ deliveryaddress != null ? (deliveryaddress.contactsex == 1 ? '先生' : '女士') : '' }}
         {{ deliveryaddress != null ? deliveryaddress.contacttel : '' }}
       </p>
     </div>
@@ -189,8 +209,17 @@ function getCartList() {
   z-index: 1000;
 
   display: flex;
-  justify-content: center;
+  /*justify-content: center;*/
   align-items: center;
+}
+.wrapper header .head-title{
+  margin:0 auto;
+}
+.wrapper header .fa-angle-left {
+  color: #fff;
+  margin-left: 10px;
+  font-weight: 600;
+  font-size: 5.5vw;
 }
 
 /****************** 订单信息部分 ******************/
@@ -258,7 +287,6 @@ function getCartList() {
   justify-content: space-between;
   align-items: center;
 }
-
 .wrapper .order-detailed li .order-detailed-left {
   display: flex;
   align-items: center;

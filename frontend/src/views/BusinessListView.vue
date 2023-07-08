@@ -2,7 +2,7 @@
 import FooterSection from '@/components/FooterSection.vue';
 import { useRoute } from 'vue-router';
 import axios from 'axios';
-import { ref } from 'vue';
+import {onMounted, ref} from 'vue';
 import type { Ref } from 'vue/dist/vue.js';
 import router from '@/router';
 const route = useRoute();
@@ -34,12 +34,17 @@ function getCartItemCountForUserInStore(businessid: number): number {
   });
   return -1;
 }
-
+const hasBusiness = ref(true);
 // 根据点餐分类编号获取商家列表
 axios.get('/business/ordertype/' + ordertypeid).then((res) => {
   let r = res.data;
   if (r.code == 0) {
     businessList.value = r.data;
+    if(businessList.value?.length == 0){
+      // hasBusiness.value = true;
+      // console.log(hasBusiness.value);
+    }
+    console.log(businessList);
     // 获取当前用户在指定店家的购物车项数
     if (businessList.value && businessList.value.length > 0) {
       for (let i = 0; i < businessList.value.length; i++) {
@@ -68,7 +73,7 @@ function toBusinessInfo(businessid: number) {
     <header>
       <p>商家列表</p>
     </header>
-
+    <div v-show="hasBusiness" :key="hasBusiness">该分类下暂无商家</div>
     <!-- 商家列表部分 -->
     <ul class="business">
       <li v-for="item in businessList" :key="item.businessid" @click="toBusinessInfo(item.businessid)">

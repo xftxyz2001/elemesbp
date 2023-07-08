@@ -1,12 +1,60 @@
 <script setup lang="ts">
 import axios from 'axios';
-import { ref } from 'vue';
-
+import {onBeforeMount, ref} from 'vue';
+import type { Ref } from 'vue/dist/vue.js';
+import {useRoute} from "vue-router";
+import FooterSection from "@/components/FooterSection.vue";
 const isShowDetailet = ref(false);
+const route =  useRoute();
+interface BusinessItem {
+  businessid: number; // 商家编号
+  businessname: string; // 商家名称
+  businessaddress: string; // 商家地址
+  businessexplain: string; // 商家介绍
+  businessimg: string; // 商家图片（base64）
+  ordertypeid: number; // 点餐分类
+  starprice: number; // 起送费
+  deliveryprice: number; // 配送费
+  remarks: string; // 备注
+}
+interface FoodItem {
+  foodid: number; // 食品编号
+  foodname: string; // 食品名称
+  foodexplain: string; // 食品介绍
+  foodimg: string; // 食品图片（base64）
+  foodprice: number; // 食品价格
+  businessid: number; // 商家编号
+  remarks: string; // 备注
+
+  quantity: number; // 食品数量
+}
+interface OrderItem{
+  orderid:number;
+  userid:string;
+  businessid:number;
+  orderdate:string;
+  ordertotal:number;
+  daid:number;
+  orderState:number;
+  foodList:FoodItem[];
+  business:BusinessItem;
+
+}
+
+const orderid = route.params.id;
+const orderList : Ref<OrderItem | null> = ref(null);
 function detailetShow() {
   isShowDetailet.value = !isShowDetailet.value;
 }
+onBeforeMount(()=>{
+  axios.get('/orders/detailet/' + orderid).then((res) => {
+    let r = res.data;
+    if(r.code == 0){
+      orderList.value = r.data;
+    }
 
+  })
+})
 // 确认支付
 function confirmPayment() {
 
@@ -25,21 +73,23 @@ function confirmPayment() {
     <h3>订单信息：</h3>
     <div class="order-info">
       <p>
-        {{ orders.business.businessName }}
-        <i class="fa fa-caret-down" @click="detailetShow"></i>
+        {{ orderList?.business.businessname }}
+        <i v-show="isShowDetailet" class="fa fa-caret-up" @click="detailetShow"></i>
+        <i v-show="!isShowDetailet" class="fa fa-caret-down" @click="detailetShow"></i>
+
       </p>
-      <p>&#165;{{ orders.orderTotal }}</p>
+      <p>&#165;{{ orderList?.ordertotal }}</p>
     </div>
 
     <!-- 订单明细部分 -->
     <ul class="order-detailet" v-show="isShowDetailet">
-      <li v-for="item in orders.list" :key="item">
-        <p>{{ item.food.foodName }} x {{ item.quantity }}</p>
-        <p>&#165;{{ item.food.foodPrice * item.quantity }}</p>
+      <li v-for="food in orderList?.foodList" :key="food.foodid">
+        <p>{{ food.foodname }} x {{ food.quantity }}</p>
+        <p>&#165;{{ food.foodprice * food.quantity }}</p>
       </li>
       <li>
         <p>配送费</p>
-        <p>&#165;{{ orders.business.deliveryPrice }}</p>
+        <p>&#165;{{ orderList?.business.deliveryprice }}</p>
       </li>
     </ul>
 
@@ -83,7 +133,7 @@ function confirmPayment() {
     </div>
 
     <!-- 底部菜单部分 -->
-    <Footer></Footer>
+    <FooterSection/>
   </div>
 </template>
 
@@ -139,11 +189,11 @@ function confirmPayment() {
 }
 
 /****订单明细部分***/
-.wrapper .order-detailed {
+.wrapper .order-detailet {
   width: 100%;
 }
 
-.wrapper .order-detailed li {
+.wrapper .order-detailet li {
   width: 100%;
   box-sizing: border-box;
   padding: 1vw 4vw;
@@ -153,7 +203,7 @@ function confirmPayment() {
   align-items: center;
 }
 
-.wrapper .order-detailed li p {
+.wrapper .order-detailet li p {
   font-size: 3vw;
   color: #666;
 }

@@ -25,16 +25,17 @@ axios.get('/daddress/' + daid).then((res) => {
     deliveryAddress.value = r.data;
   }
 });
+function phoneVerify(phone: string) {
+  return /^((13\d)|(14[5,7,9])|(15[0-3,5-9])|(166)|(17[0,1,3,5,7,8])|(18[0-9])|(19[8,9]))\d{8}/.test(phone);
+}
 //daddress/save
 function saveUserAddress() {
+  if(!phoneVerify(deliveryAddress.value.contacttel)){
+    alert("号码格式不对,请重新输入");
+    return;
+  }
   console.log(deliveryAddress.value);
-  let param = {
-    contactname: deliveryAddress.value.contactname,
-    contactsex: deliveryAddress.value.contactsex,
-    contacttel: deliveryAddress.value.contacttel,
-    address: deliveryAddress.value.address
-  };
-  axios.post('/daddress/save', param).then(res => {
+  axios.post('/daddress/save', deliveryAddress.value).then(res => {
     let r = res.data;
     if (r.code == 0) {
       router.push({name:'userAddress'});
