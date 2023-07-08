@@ -20,12 +20,16 @@ interface DeliveryAddressItem {
 }
 
 const deliveryAddressList = ref<DeliveryAddressItem[]>([]);
-axios.get('/').then((res) => {
-  let r = res.data;
-  if (r.code == 0) {
-    deliveryAddressList.value = r.data;
-  }
-});
+
+function updateList(){
+  axios.get('/daddress/list').then((res) => {
+    let r = res.data;
+    if (r.code == 0) {
+      deliveryAddressList.value = r.data;
+    }
+  });
+}
+updateList();
 
 function setDeliveryAddress(da: DeliveryAddressItem) {
   localStorage.setItem('daid',da.daid.toString());
@@ -42,13 +46,15 @@ function removeUserAddress(da: DeliveryAddressItem) {
     let r = res.data;
     if (r.code == 0) {
       alert('删除成功');
+      updateList();
     } else {
       alert(r.msg);
     }
   });
+
 }
 function toAddUserAddress() {
-  router.push({name:'editAddress'});
+  router.push({name:'editAddress',params:{id:0}});
 }
 
 </script>

@@ -3,10 +3,11 @@ import FooterSection from '@/components/FooterSection.vue';
 import axios from 'axios';
 import { ref } from 'vue';
 import { useRoute } from 'vue-router';
+import router from "@/router";
 
 const route = useRoute();
 
-const daid = route.params.daid;
+const daid = route.params.id;
 
 const deliveryAddress = ref({
   daid: 0,
@@ -17,14 +18,16 @@ const deliveryAddress = ref({
   userid: '',
 });
 
-axios.get('/dadress/' + daid).then((res) => {
+axios.get('/daddress/' + daid).then((res) => {
   let r = res.data;
   if (r.code == 0) {
+    if(r.data)
     deliveryAddress.value = r.data;
   }
 });
 //daddress/save
 function saveUserAddress() {
+  console.log(deliveryAddress.value);
   let param = {
     contactname: deliveryAddress.value.contactname,
     contactsex: deliveryAddress.value.contactsex,
@@ -34,6 +37,7 @@ function saveUserAddress() {
   axios.post('/daddress/save', param).then(res => {
     let r = res.data;
     if (r.code == 0) {
+      router.push({name:'userAddress'});
       console.log('更新成功');
     } else {
       alert(r.msg);
@@ -65,8 +69,8 @@ function saveUserAddress() {
           性别：
         </div>
         <div class="content" style="font-size: 3vw;">
-          <input type="radio" v-model="deliveryAddress.contactsex" value="1" style="width:6vw;height:3.2vw;" checked>男
-          <input type="radio" v-model="deliveryAddress.contactsex" value="0" style="width:6vw;height:3.2vw;">女
+          <input type="radio" name="gender" v-model="deliveryAddress.contactsex" value="1" style="width:6vw;height:3.2vw;">男
+          <input type="radio" name="gender" v-model="deliveryAddress.contactsex" value="0" style="width:6vw;height:3.2vw;">女
         </div>
       </li>
       <li>
