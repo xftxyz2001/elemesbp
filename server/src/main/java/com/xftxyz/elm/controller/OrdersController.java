@@ -40,6 +40,17 @@ public class OrdersController {
     }
 
     /**
+     * 获取当前用户的订单
+     * 
+     * @param user 当前用户
+     * @return 订单列表
+     */
+    @GetMapping("/list")
+    public List<Orders> findOrdersByUserId(@RequestAttribute(ElmProperties.requestUser) User user) {
+        return ordersService.findOrdersByUserId(user.getUserid());
+    }
+
+    /**
      * 根据订单编号查询订单
      * 
      * @param orderId 订单编号
@@ -77,5 +88,10 @@ public class OrdersController {
 
     // 取消订单
     // 支付订单
+    @PostMapping("/pay/{orderid}")
+    public Boolean payOrder(@RequestAttribute(ElmProperties.requestUser) User user,
+            @PathVariable("orderid") int orderId) {
+        return ordersService.payOrder(user.getUserid(), orderId);
+    }
 
 }

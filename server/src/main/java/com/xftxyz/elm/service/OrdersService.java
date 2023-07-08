@@ -19,4 +19,6 @@ public interface OrdersService extends IService<Orders> {
 
     OrdersVO getDetailetById(Integer orderId);
 
+    Boolean payOrder(String userid, Integer orderId);
+
 }

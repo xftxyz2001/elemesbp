@@ -101,4 +101,17 @@ public class OrdersServiceImpl extends ServiceImpl<OrdersMapper, Orders>
         return orderVO;
     }
 
+    @Override
+    public Boolean payOrder(String userid, Integer orderId) {
+        Orders order = getById(orderId);
+        if (order == null) {
+            return false;
+        }
+        if (!order.getUserid().equals(userid)) {
+            return false;
+        }
+        order.setOrderstate(OrderStatus.PAID.getValue());
+        return updateById(order);
+    }
+
 }
