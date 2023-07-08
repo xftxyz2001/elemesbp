@@ -3,6 +3,7 @@ import FooterSection from '@/components/FooterSection.vue';
 import {onBeforeMount,ref} from "vue";
 import type { Ref } from 'vue/dist/vue.js';
 import axios from 'axios';
+import router from "@/router";
 interface User{
   userid:string
   username:string
@@ -20,6 +21,18 @@ onBeforeMount(()=>{
   })
 });
 
+function logout(){
+  axios.post('/user/logout').then((res) => {
+    let r = res.data;
+    if(r.code == 0){
+      ElMessage({
+        message:"退出成功",
+        type:"success"
+      })
+      router.push({name:"login"});
+    }
+  })
+}
 
 </script>
 
@@ -32,7 +45,7 @@ onBeforeMount(()=>{
         <!--header部分-->
         <header>
           <div class="userInfo">
-            <img src="../assets/头像.png">
+            <img :src="user?.userimg">
             <div class="location-text">
               <div class="name">
                 {{user?.username}}
@@ -43,8 +56,7 @@ onBeforeMount(()=>{
             </div>
           </div>
           <div class="modify">
-            <i class="fa fa-cog"></i>
-            <i2 class="fa fa-refresh"></i2>
+            <i class="fa fa-sign-out" @click="logout"></i>
           </div>
         </header>
       </el-header>
@@ -204,7 +216,7 @@ onBeforeMount(()=>{
   align-items: center;
 }
 
-.wrapper header .modify .fa-cog {
+.wrapper header .modify .fa-sign-out {
   margin-right: 2vw;
   font-size: 6vw;
 }

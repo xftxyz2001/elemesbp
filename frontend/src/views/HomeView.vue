@@ -1,7 +1,24 @@
 <script setup lang="ts">
 import FooterSection from '@/components/FooterSection.vue';
 import router from '@/router';
-import { onMounted, onBeforeUnmount } from 'vue';
+import {onMounted, onBeforeUnmount, Ref, ref} from 'vue';
+
+interface BusinessItem {
+  businessid: number; // 商家编号
+  businessname: string; // 商家名称
+  businessaddress: string; // 商家地址
+  businessexplain: string; // 商家介绍
+  businessimg: string; // 商家图片（base64）
+  ordertypeid: number; // 点餐分类
+  starprice: number; // 起送费
+  deliveryprice: number; // 配送费
+  remarks: string; // 备注
+
+  quantity: number; // 当前用户在指定店家的购物车项数
+}
+
+const businessList: Ref<BusinessItem[] | null> = ref(null); // 商家列表
+
 
 onMounted(() => {
   // 将搜索块固定到视口顶部
