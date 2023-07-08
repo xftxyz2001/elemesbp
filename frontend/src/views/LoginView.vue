@@ -17,16 +17,25 @@ function login() {
   console.log(userid.value, password.value);
   // 数据验证
   if (userid.value.length < 1) {
-    alert('手机号码不能为空');
+    ElMessage({
+    message: '手机号码不能为空',
+    type: 'warning'
+  });
     return;
   }
   // 测试太费劲，先注释掉
   // if (!phoneVerify(userid.value)) {
-  //   alert('手机号码格式不正确');
+  //   ElMessage({
+    message: '手机号码格式不正确',
+    type: 'warning'
+  });
   //   return;
   // }
   if (password.value.length < 1) {
-    alert('密码不能为空');
+    ElMessage({
+    message: '密码不能为空',
+    type: 'warning'
+  });
     return;
   }
 
@@ -39,11 +48,17 @@ function login() {
   axios.post('/user/login', data).then(res => {
     let r = res.data;
     if (r.code == 0) {
-      alert('登录成功');
+      ElMessage({
+    message: '登录成功',
+    type: 'warning'
+  });
       // 跳转到首页
       router.push('/');
     } else {
-      alert(r.msg);
+      ElMessage({
+    message: r.msg,
+    type: 'warning'
+  });
     }
   })
 

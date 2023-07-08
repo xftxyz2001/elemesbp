@@ -41,7 +41,10 @@ function saveUserAddress() {
       router.push({name:'userAddress'});
       console.log('更新成功');
     } else {
-      alert(r.msg);
+      ElMessage({
+    message: r.msg,
+    type: 'warning'
+  });
     }
   });
 }

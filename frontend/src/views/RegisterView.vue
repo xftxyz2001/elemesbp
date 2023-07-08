@@ -22,23 +22,35 @@ function phoneVerify(phone: string) {
 function checkUserId() {
   console.log(registerForm.value.userId);
   if (registerForm.value.userId.length < 1) {
-    alert('手机号码不能为空');
+    ElMessage({
+    message: '手机号码不能为空',
+    type: 'warning'
+  });
     return;
   }
   // 测试太费劲，先注释掉
   // if (!phoneVerify(userid.value)) {
-  //   alert('手机号码格式不正确');
+  //   ElMessage({
+    message: '手机号码格式不正确',
+    type: 'warning'
+  });
   //   return;
   // }
   // 发送请求
   axios.post(`/user/${registerForm.value.userId}`).then(res => {
     let r = res.data;
     if (r.code == 0) {
-      alert('手机号码已存在');
+      ElMessage({
+    message: '手机号码已存在',
+    type: 'warning'
+  });
       // 跳转到登录页
       router.push('/login');
     } else {
-      alert(r.msg);
+      ElMessage({
+    message: r.msg,
+    type: 'warning'
+  });
     }
   })
 }
@@ -49,7 +61,10 @@ function checkPassword() { }
 // 确认密码验证（检查两次输入是否一致）
 function checkConfirmPassword() { 
   if (registerForm.value.password != confirmPassword.value) {
-    alert('两次输入的密码不一致');
+    ElMessage({
+    message: '两次输入的密码不一致',
+    type: 'warning'
+  });
     return;
   }
 }
@@ -59,16 +74,25 @@ function register() {
   console.log(registerForm.value);
   // 数据验证
   if (registerForm.value.userId.length < 1) {
-    alert('手机号码不能为空');
+    ElMessage({
+    message: '手机号码不能为空',
+    type: 'warning'
+  });
     return;
   }
   // 测试太费劲，先注释掉
   // if (!phoneVerify(userid.value)) {
-  //   alert('手机号码格式不正确');
+  //   ElMessage({
+    message: '手机号码格式不正确',
+    type: 'warning'
+  });
   //   return;
   // }
   if (registerForm.value.password.length < 1) {
-    alert('密码不能为空');
+    ElMessage({
+    message: '密码不能为空',
+    type: 'warning'
+  });
     return;
   }
   
@@ -84,11 +108,17 @@ function register() {
   axios.post('/user/register', data).then(res => {
     let r = res.data;
     if (r.code == 0) {
-      alert('注册成功');
+      ElMessage({
+    message: '注册成功',
+    type: 'warning'
+  });
       // 跳转到登录页
       router.push('/login');
     } else {
-      alert(r.msg);
+      ElMessage({
+    message: r.msg,
+    type: 'warning'
+  });
     }
   })
 

@@ -65,7 +65,10 @@ onBeforeMount(() => {
     if (r.code == 0) {
       business.value = r.data;
     } else {
-      alert(r.msg);
+      ElMessage({
+    message: r.msg,
+    type: 'warning'
+  });
     }
   });
   if(daid){
@@ -74,7 +77,10 @@ onBeforeMount(() => {
       if (r.code == 0) {
         deliveryaddress.value = r.data;
       } else {
-        alert(r.msg);
+        ElMessage({
+    message: r.msg,
+    type: 'warning'
+  });
       }
     });
   }
@@ -87,7 +93,10 @@ onBeforeMount(() => {
       totalPrice.value = r.data.totalPrice;
       totalSettle.value = r.data.totalSettle;
     } else {
-      alert(r.msg);
+      ElMessage({
+    message: r.msg,
+    type: 'warning'
+  });
     }
   });
   getCartList();
@@ -121,7 +130,10 @@ function toPayment() {
       }
     })
   }else{
-    alert('请选择收货地址');
+    ElMessage({
+    message: '请选择收货地址',
+    type: 'warning'
+  });
   }
 
 }
@@ -133,7 +145,10 @@ function getCartList() {
     if (r.code == 0) {
       cartList.value = r.data;
     } else {
-      alert(r.msg);
+      ElMessage({
+    message: r.msg,
+    type: 'warning'
+  });
     }
   });
 }

@@ -41,6 +41,13 @@ function toBusinessList(type: number) {
     }
   });
 }
+
+function nonsupport() {
+  ElMessage({
+    message: "暂不支持该功能",
+    type: 'warning'
+  });
+}
 </script>
 
 <template>
@@ -52,13 +59,13 @@ function toBusinessList(type: number) {
       <div class="icon-location-box">
         <div class="icon-location"></div>
       </div>
-      <div class="location-text">天津市天津大学北洋园校区<i class="fa fa-caret-down"></i></div>
+      <div class="location-text">西安市西北大学长安校区<i class="fa fa-caret-down"></i></div>
     </header>
 
     <!--search部分-->
     <div class="search">
       <div class="search-fixed-top" id="fixedBox" ref="fixedBox">
-        <div class="search-box">
+        <div class="search-box" @click="nonsupport()">
           <i class="fa fa-search"></i>搜索饿了么商家、商品名称
         </div>
       </div>

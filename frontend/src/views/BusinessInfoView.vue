@@ -46,7 +46,10 @@ onBeforeMount(()=>{
     if (r.code == 0) {
       business.value = r.data;
     } else {
-      alert(r.msg);
+      ElMessage({
+    message: r.msg,
+    type: 'warning'
+  });
     }
   });
   axios.get('/food/business/' + businessid).then((res) => {
@@ -58,7 +61,10 @@ onBeforeMount(()=>{
       }
       updateNum();
     } else {
-      alert(r.msg);
+      ElMessage({
+    message: r.msg,
+    type: 'warning'
+  });
     }
   });
 })
@@ -78,7 +84,10 @@ function updateCart() {
       totalPrice.value = r.data.totalPrice;
       totalSettle.value = r.data.totalSettle;
     } else {
-      alert(r.msg);
+      ElMessage({
+    message: r.msg,
+    type: 'warning'
+  });
     }
   });
 }
@@ -96,7 +105,10 @@ function updateNum(){
       }
       updateCart();
     } else {
-      alert(r.msg);
+      ElMessage({
+    message: r.msg,
+    type: 'warning'
+  });
     }
   })
 }
@@ -119,7 +131,10 @@ function updateQuantity(food: FoodItem){
       console.log('更新成功');
       updateCart();
     } else {
-      alert(r.msg);
+      ElMessage({
+    message: r.msg,
+    type: 'warning'
+  });
     }
   });
 

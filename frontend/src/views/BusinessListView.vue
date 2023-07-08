@@ -52,7 +52,10 @@ axios.get('/business/ordertype/' + ordertypeid).then((res) => {
       }
     }
   } else {
-    alert(r.msg);
+    ElMessage({
+    message: r.msg,
+    type: 'warning'
+  });
   }
 });
 

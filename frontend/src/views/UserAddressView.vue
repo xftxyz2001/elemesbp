@@ -53,7 +53,10 @@ function removeUserAddress(da: DeliveryAddressItem) {
       })
       updateList();
     } else {
-      alert(r.msg);
+      ElMessage({
+    message: r.msg,
+    type: 'warning'
+  });
     }
   });
 
