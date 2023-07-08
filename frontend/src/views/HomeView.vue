@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import FooterSection from '@/components/FooterSection.vue';
 import router from '@/router';
-import {onMounted, onBeforeUnmount, Ref, ref} from 'vue';
+import { onBeforeUnmount, onMounted, ref } from 'vue';
 
 interface BusinessItem {
   businessid: number; // 商家编号
@@ -17,8 +17,7 @@ interface BusinessItem {
   quantity: number; // 当前用户在指定店家的购物车项数
 }
 
-const businessList: Ref<BusinessItem[] | null> = ref(null); // 商家列表
-
+const businessList = ref<BusinessItem[] | null>(null); // 商家列表
 
 onMounted(() => {
   // 将搜索块固定到视口顶部
@@ -63,6 +62,16 @@ function nonsupport() {
   ElMessage({
     message: "暂不支持该功能",
     type: 'warning'
+  });
+}
+
+function toBusinessInfo(id: number) {
+  // 路由跳转
+  router.push({
+    name: 'businessInfo',
+    params: {
+      id
+    }
   });
 }
 </script>

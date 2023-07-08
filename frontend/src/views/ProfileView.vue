@@ -1,35 +1,34 @@
 <script setup lang="ts">
 import FooterSection from '@/components/FooterSection.vue';
-import {onBeforeMount,ref} from "vue";
-import type { Ref } from 'vue/dist/vue.js';
-import axios from 'axios';
 import router from "@/router";
-interface User{
-  userid:string
-  username:string
-  usersex:number
-  userimg:string
+import axios from 'axios';
+import { onBeforeMount, ref } from "vue";
+interface User {
+  userid: string
+  username: string
+  usersex: number
+  userimg: string
 }
-const user : Ref<User | null> = ref(null);
+const user = ref<User | null>(null);
 
-onBeforeMount(()=>{
-  axios.get('/user/info').then((res)=>{
+onBeforeMount(() => {
+  axios.get('/user/info').then((res) => {
     let r = res.data;
-    if(r.code == 0){
+    if (r.code == 0) {
       user.value = r.data;
     }
   })
 });
 
-function logout(){
+function logout() {
   axios.post('/user/logout').then((res) => {
     let r = res.data;
-    if(r.code == 0){
+    if (r.code == 0) {
       ElMessage({
-        message:"退出成功",
-        type:"success"
+        message: "退出成功",
+        type: "success"
       })
-      router.push({name:"login"});
+      router.push({ name: "login" });
     }
   })
 }
@@ -39,102 +38,91 @@ function logout(){
 <template>
   <!--总容器-->
   <div class="wrapper">
-    <el-container>
 
-      <el-header>
-        <!--header部分-->
-        <header>
-          <div class="userInfo">
-            <img :src="user?.userimg">
-            <div class="location-text">
-              <div class="name">
-                {{user?.username}}
-              </div>
-              <div class="phone">
-                {{user?.userid}}
-              </div>
-            </div>
+    <!--header部分-->
+    <header>
+      <div class="userInfo">
+        <img :src="user?.userimg">
+        <div class="location-text">
+          <div class="name">
+            {{ user?.username }}
           </div>
-          <div class="modify">
-            <i class="fa fa-sign-out" @click="logout"></i>
+          <div class="phone">
+            {{ user?.userid }}
           </div>
-        </header>
-      </el-header>
+        </div>
+      </div>
+      <div class="modify">
+        <i class="fa fa-sign-out" @click="logout"></i>
+      </div>
+    </header>
 
-      <el-main style="padding:0 0 14vw 0">
-        <!--用户信息部分-->
-        <ul class="userinfo">
-          <li>
-            <img src="../assets/收藏.png">
-            <p>收藏</p>
-          </li>
-          <li>
-            <img src="../assets/足迹.png">
-            <p>足迹</p>
-          </li>
-          <li>
-            <img src="../assets/红包卡券.png">
-            <p>红包卡券</p>
-          </li>
-          <li>
-            <img src="../assets/余额.png">
-            <p>余额</p>
-          </li>
-        </ul>
+    <!--用户信息部分-->
+    <ul class="userinfo">
+      <li>
+        <img src="../assets/收藏.png">
+        <p>收藏</p>
+      </li>
+      <li>
+        <img src="../assets/足迹.png">
+        <p>足迹</p>
+      </li>
+      <li>
+        <img src="../assets/红包卡券.png">
+        <p>红包卡券</p>
+      </li>
+      <li>
+        <img src="../assets/余额.png">
+        <p>余额</p>
+      </li>
+    </ul>
 
-        <!--我的订单部分-->
-        <ul class="listinfo">
-          <p>
-            我的订单
-            <p2>
-              全部订单 <i class="fa fa-angle-right"></i>
-            </p2>
-          </p>
-        </ul>
-        <ul class="listinfo">
-          <pic>
-            <li>
-              <img src="../assets/待付款.png">
-              <p>待付款</p>
-            </li>
-            <li>
-              <img src="../assets/足迹.png">
-              <p>待收货</p>
-            </li>
-            <li>
-              <img src="../assets/待使用.png">
-              <p>待使用</p>
-            </li>
-            <li>
-              <img src="../assets/红包卡券.png">
-              <p>待评价</p>
-            </li>
-            <li>
-              <img src="../assets/余额.png">
-              <p>退款售后</p>
-            </li>
-          </pic>
-        </ul>
+    <!--我的订单部分-->
+    <ul class="listinfo">
+      <p>
+        我的订单
+        <p2>
+          全部订单 <i class="fa fa-angle-right"></i>
+        </p2>
+      </p>
+    </ul>
+    <ul class="listinfo">
+      <pic>
+        <li>
+          <img src="../assets/待付款.png">
+          <p>待付款</p>
+        </li>
+        <li>
+          <img src="../assets/足迹.png">
+          <p>待收货</p>
+        </li>
+        <li>
+          <img src="../assets/待使用.png">
+          <p>待使用</p>
+        </li>
+        <li>
+          <img src="../assets/红包卡券.png">
+          <p>待评价</p>
+        </li>
+        <li>
+          <img src="../assets/余额.png">
+          <p>退款售后</p>
+        </li>
+      </pic>
+    </ul>
 
-        <!--会员广告部分-->
-        <div class="banner"></div>
+    <!--会员广告部分-->
+    <div class="banner"></div>
 
-        <!--吃货豆部分-->
-        <div class="banner2"></div>
+    <!--吃货豆部分-->
+    <div class="banner2"></div>
 
     <div style="height: 14vw;"></div>
 
-      </el-main>
-
-      <el-footer style="height: 0">
-        <!-- 底部菜单部分 -->
-        <FooterSection />
-      </el-footer>
-
-    </el-container>
+    <!-- 底部菜单部分 -->
+    <FooterSection />
 
   </div>
-
 </template>
 
 <style scoped>

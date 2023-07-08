@@ -1,7 +1,6 @@
 <script setup lang="ts">
 
 import FooterSection from '@/components/FooterSection.vue';
-import {Ref} from "vue/dist/vue.js";
 import axios from 'axios';
 import {onBeforeMount, ref} from 'vue';
 import router from "@/router";
@@ -40,7 +39,7 @@ interface OrderItem{
   isShowDetailet:boolean;
 }
 
-const orderList : Ref<OrderItem[] | null> = ref(null);
+const orderList = ref<OrderItem[] | null>(null);
 
 onBeforeMount(()=>{
   axios.get('/orders/list').then((res)=>{
@@ -90,7 +89,7 @@ function toPayment(orderid:number){
         <h3>未支付订单信息：</h3>
         <ul class="order">
 
-          <li v-for="item in orderList" key="item.orderid">
+          <li v-for="item in orderList" :key="item.orderid">
             <div class="order-info" v-if="item.orderstate==0">
               <p>
                 {{item.business.businessname}}
@@ -103,7 +102,7 @@ function toPayment(orderid:number){
               </div>
             </div>
             <ul class="order-detailet" v-show="item.isShowDetailet">
-              <li v-for="odItem in item.foodList">
+              <li v-for="odItem in item.foodList" :key="odItem.foodid">
                 <p>{{odItem.foodname}} x {{odItem.quantity}}</p>
                 <p>&#165;{{odItem.foodprice*odItem.quantity}}</p>
               </li>
@@ -117,7 +116,7 @@ function toPayment(orderid:number){
 
         <h3>已支付订单信息：</h3>
         <ul class="order"> <!-- v-if="item.commentState==1"-->
-          <li v-for="item in orderList" >
+          <li v-for="item in orderList" :key="item.orderid">
             <div class="order-info" v-if="item.orderstate==1">
               <p>
                 {{item.business.businessname}}
@@ -131,8 +130,8 @@ function toPayment(orderid:number){
               </div>
             </div>
             <ul class="order-detailet" v-show="item.isShowDetailet">
-              <li v-for="odItem in item.foodList">
-                <p>{{odItem.foodName}} x {{odItem.quantity}}</p>
+              <li v-for="odItem in item.foodList" :key="odItem.foodid">
+                <p>{{odItem.foodname}} x {{odItem.quantity}}</p>
                 <p>&#165;{{odItem.foodprice*odItem.quantity}}</p>
               </li>
               <li>

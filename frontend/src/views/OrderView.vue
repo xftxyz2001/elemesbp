@@ -1,10 +1,7 @@
 <script setup lang="ts">
-import axios from 'axios';
-import {ref, onMounted, onBeforeMount} from 'vue';
-import { useRoute } from 'vue-router';
 import router from "@/router";
-
-const route = useRoute();
+import axios from 'axios';
+import { onBeforeMount, ref } from 'vue';
 
 interface BusinessItem {
   businessid: number; // 商家编号
@@ -20,7 +17,7 @@ interface BusinessItem {
 interface DeliveryAddressItem {
   daid: number; // 收货地址编号
   contactname: string; // 联系人姓名
-  contactsex: boolean; // 联系人性别
+  contactsex: number; // 联系人性别
   contacttel: string; // 联系人电话
   address: string; // 收货地址
   userid: number; // 用户编号
@@ -54,9 +51,7 @@ const totalQuantity = ref(0); // 总数量
 const totalPrice = ref(0); // 总价格
 const totalSettle = ref(0); // 总结算价
 
-
 const cartList = ref<CartItem[]>([]); // 购物车列表
-
 
 onBeforeMount(() => {
   // 根据商家编号获取商家信息
@@ -178,7 +173,7 @@ function getCartList() {
 
     <!-- 订单明细部分 -->
     <ul class="order-detailed">
-      <li v-for="cart in cartList">
+      <li v-for="cart in cartList" :key="cart.cartid">
         <div class="order-detailed-left">
           <img :src="cart.food.foodimg">
           <p>{{ cart.food.foodname }} x {{ cart.quantity }}</p>

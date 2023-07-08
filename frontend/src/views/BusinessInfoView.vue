@@ -256,12 +256,12 @@ function toOrder() {
       </div>
       <div class="cart-right">
         <!-- 不够起送费 -->
-        <div class="cart-right-item" v-if="totalSettle < business?.starprice"
+        <div class="cart-right-item" v-if="totalSettle < business?.starprice!"
           style="background-color: #535356;cursor: default;">
           &#165;{{ business?.starprice }}起送
         </div>
         <!-- 达到起送费 -->
-        <div class="cart-right-item" @click="toOrder" v-if="totalSettle >= business?.starprice">
+        <div class="cart-right-item" @click="toOrder" v-if="totalSettle >= business?.starprice!">
           去结算
         </div>
       </div>

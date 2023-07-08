@@ -1,10 +1,10 @@
 <script setup lang="ts">
 import FooterSection from '@/components/FooterSection.vue';
-import { useRoute } from 'vue-router';
-import axios from 'axios';
-import {onMounted, ref} from 'vue';
-import type { Ref } from 'vue/dist/vue.js';
 import router from '@/router';
+import axios from 'axios';
+import { ref } from 'vue';
+import { useRoute } from 'vue-router';
+import type { Ref } from 'vue/dist/vue.js';
 const route = useRoute();
 
 interface BusinessItem {
@@ -76,7 +76,7 @@ function toBusinessInfo(businessid: number) {
     <header>
       <p>商家列表</p>
     </header>
-    <div v-show="hasBusiness" :key="hasBusiness">该分类下暂无商家</div>
+    <div v-show="hasBusiness">该分类下暂无商家</div>
     <!-- 商家列表部分 -->
     <ul class="business">
       <li v-for="item in businessList" :key="item.businessid" @click="toBusinessInfo(item.businessid)">

@@ -1,15 +1,9 @@
 <script setup lang="ts">
-import axios from 'axios';
 import FooterSection from '@/components/FooterSection.vue';
-import { ref, onMounted } from 'vue';
 import router from "@/router";
+import axios from 'axios';
+import { ref } from 'vue';
 
-// Integer daid
-// String contactname
-// Integer contactsex
-// String contacttel
-// String address
-// String userid
 interface DeliveryAddressItem {
   daid: number;
   contactname: string;

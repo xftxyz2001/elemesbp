@@ -4,7 +4,7 @@ import FooterSection from '@/components/FooterSection.vue';
 
 <template>
   <div class="wrapper">
-    <i class="fa fa-wheelchair-alt" aria-hidden="true" />
+    <i class="fa fa-wheelchair-alt" aria-hidden="true"></i>
     <!-- 底部菜单部分 -->
     <FooterSection />
 

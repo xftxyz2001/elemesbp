@@ -1,13 +1,13 @@
 <script setup lang="ts">
 import axios from 'axios';
-import {onBeforeMount, ref} from 'vue';
+import { onBeforeMount, ref } from 'vue';
 import type { Ref } from 'vue/dist/vue.js';
-import {useRoute} from "vue-router";
+import { useRoute } from "vue-router";
 import FooterSection from "@/components/FooterSection.vue";
 import router from '@/router';
 
 const isShowDetailet = ref(false);
-const route =  useRoute();
+const route = useRoute();
 interface BusinessItem {
   businessid: number; // 商家编号
   businessname: string; // 商家名称
@@ -30,28 +30,28 @@ interface FoodItem {
 
   quantity: number; // 食品数量
 }
-interface OrderItem{
-  orderid:number;
-  userid:string;
-  businessid:number;
-  orderdate:string;
-  ordertotal:number;
-  daid:number;
-  orderState:number;
-  foodList:FoodItem[];
-  business:BusinessItem;
+interface OrderItem {
+  orderid: number;
+  userid: string;
+  businessid: number;
+  orderdate: string;
+  ordertotal: number;
+  daid: number;
+  orderState: number;
+  foodList: FoodItem[];
+  business: BusinessItem;
 
 }
 
 const orderid = route.params.id;
-const orderList : Ref<OrderItem | null> = ref(null);
+const orderList: Ref<OrderItem | null> = ref(null);
 function detailetShow() {
   isShowDetailet.value = !isShowDetailet.value;
 }
-onBeforeMount(()=>{
+onBeforeMount(() => {
   axios.get('/orders/detailet/' + orderid).then((res) => {
     let r = res.data;
-    if(r.code == 0){
+    if (r.code == 0) {
       orderList.value = r.data;
     }
 
@@ -59,59 +59,22 @@ onBeforeMount(()=>{
 })
 // 确认支付
 function confirmPayment() {
-  axios.post('/orders/pay/'+orderid).then((res) => {
+  axios.post('/orders/pay/' + orderid).then((res) => {
     let r = res.data;
-    if(r.code == 0){
+    if (r.code == 0) {
       ElMessage({
-        message:"支付成功",
-        type:"success"
+        message: "支付成功",
+        type: "success"
       })
       router.push("/myorder");
     }
   })
 }
 
-// interface ModalBox {
-//   modal: HTMLElement;
-//   triggerBtn: HTMLElement;
-//   show: () => void;
-//   close: () => void;
-//   outsideClick: () => void;
-//   init: () => void;
-// }
-
-// const modalBox: ModalBox = {
-//   modal: document.getElementById("myModal")!,
-//   triggerBtn: document.getElementById("triggerBtn")!,
-//   show() {
-//     this.modal.style.display = "block";
-//   },
-//   close() {
-//     this.modal.style.display = "none";
-//   },
-//   outsideClick() {
-//     const modal = this.modal;
-//     window.onclick = function (event: MouseEvent) {
-//       if (event.target === modal) {
-//         modal.style.display = "none";
-//       }
-//     };
-//   },
-//   init() {
-//     const that = this;
-//     this.triggerBtn.onclick = function () {
-//       that.show();
-//     };
-//     this.outsideClick();
-//   },
-// };
-
-// modalBox.init();
-
-function payment(){
+function payment() {
   let modal = document.getElementById("myModal")!;
   modal.style.display = "block";
-  window.onclick = function(event: MouseEvent) {
+  window.onclick = function (event: MouseEvent) {
     if (event.target == modal) {
       modal.style.display = "none";
     }
@@ -151,19 +114,6 @@ function payment(){
       </li>
     </ul>
 
-    <!-- 支付方式部分 
-		<ul class="payment-type">
-			<li>
-				<img src="../assets/zhifubao.png">
-				<i class="fa fa-check-circle"></i>
-			</li>
-			<li>
-				<img src="../assets/wechat.png">
-			</li>
-		</ul>
-		<div class="payment-button">
-			<button>确认支付</button>
-		</div>-->
 
     <div class="payment-button">
       <button id="triggerBtn" @click="payment()">支付</button>
@@ -179,10 +129,12 @@ function payment(){
         <div class="modal-body">
           <div class="payway" style="border-bottom:1px solid #f5f5f5">
             <span>支付宝支付</span>
+            <img src="../assets/zhifubao.png">
             <input type="radio" name="pay" value="" checked style="float:right" />
           </div>
           <div class="payway" style="margin-bottom:2vh;">
             <span>微信支付</span>
+            <img src="../assets/wechat.png">
             <input type="radio" name="pay" value="" style="float:right" />
           </div>
         </div>
@@ -191,7 +143,7 @@ function payment(){
     </div>
 
     <!-- 底部菜单部分 -->
-    <FooterSection/>
+    <FooterSection />
   </div>
 </template>
 
