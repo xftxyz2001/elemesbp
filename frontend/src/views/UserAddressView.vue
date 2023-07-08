@@ -46,7 +46,11 @@ function removeUserAddress(da: DeliveryAddressItem) {
   axios.delete('/daddress/' + da.daid).then((res) => {
     let r = res.data;
     if (r.code == 0) {
-      alert('删除成功');
+      ElMessage({
+        message:"删除成功",
+        type:"success",
+        center:true
+      })
       updateList();
     } else {
       alert(r.msg);
@@ -62,7 +66,6 @@ function toAddUserAddress() {
 
 <template>
   <div class="wrapper">
-
     <!-- header部分 -->
     <header>
       <!-- <i class="fa fa-angle-left" @click="toindex()"></i> -->
