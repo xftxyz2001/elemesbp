@@ -84,6 +84,8 @@ import FooterSection from '@/components/FooterSection.vue';
     <!--吃货豆部分-->
     <div class="banner2"></div>
 
+    <div style="height: 14vw;"></div>
+
     <!-- 底部菜单部分 -->
     <FooterSection />
   </div>
