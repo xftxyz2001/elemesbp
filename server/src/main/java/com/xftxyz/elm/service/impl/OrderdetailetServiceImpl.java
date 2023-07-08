@@ -38,4 +38,9 @@ public class OrderdetailetServiceImpl extends ServiceImpl<OrderdetailetMapper, O
         return saveBatch(orderdetailets);
     }
 
+    @Override
+    public List<Orderdetailet> listOrderdetailet(Integer orderid) {
+        return orderdetailetMapper.selectAllByOrderid(orderid);
+    }
+
 }

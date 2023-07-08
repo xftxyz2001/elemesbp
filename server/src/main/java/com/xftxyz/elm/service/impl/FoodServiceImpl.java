@@ -38,14 +38,14 @@ public class FoodServiceImpl extends ServiceImpl<FoodMapper, Food>
         List<Food> foodList = getFoodList(businessid);
         List<FoodWithQuantityVO> foodWithQuantityList = new ArrayList<>();
         for (Food food : foodList) {
-            FoodWithQuantityVO foodWithQuantity = new FoodWithQuantityVO();
-            foodWithQuantity.setFoodid(food.getFoodid());
-            foodWithQuantity.setFoodname(food.getFoodname());
-            foodWithQuantity.setFoodexplain(food.getFoodexplain());
-            foodWithQuantity.setFoodimg(food.getFoodimg());
-            foodWithQuantity.setFoodprice(food.getFoodprice());
-            foodWithQuantity.setBusinessid(food.getBusinessid());
-            foodWithQuantity.setRemarks(food.getRemarks());
+            FoodWithQuantityVO foodWithQuantity = new FoodWithQuantityVO(food);
+            // foodWithQuantity.setFoodid(food.getFoodid());
+            // foodWithQuantity.setFoodname(food.getFoodname());
+            // foodWithQuantity.setFoodexplain(food.getFoodexplain());
+            // foodWithQuantity.setFoodimg(food.getFoodimg());
+            // foodWithQuantity.setFoodprice(food.getFoodprice());
+            // foodWithQuantity.setBusinessid(food.getBusinessid());
+            // foodWithQuantity.setRemarks(food.getRemarks());
 
             // 更新购物车中的数量
             Integer quantity = cartService.getQuantity(userid, businessid, food.getFoodid());

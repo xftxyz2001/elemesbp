@@ -16,4 +16,7 @@ public interface OrderdetailetService extends IService<Orderdetailet> {
 
     Boolean saveOrderdetailet(Integer orderid, List<Cart> carts);
 
+    // 获取订单所有的订单项
+    List<Orderdetailet> listOrderdetailet(Integer orderid);
+
 }

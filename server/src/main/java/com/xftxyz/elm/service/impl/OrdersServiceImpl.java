@@ -1,22 +1,28 @@
 package com.xftxyz.elm.service.impl;
 
 import java.math.BigDecimal;
-import java.text.DateFormat;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.xftxyz.elm.domain.Business;
 import com.xftxyz.elm.domain.Cart;
+import com.xftxyz.elm.domain.Orderdetailet;
 import com.xftxyz.elm.domain.Orders;
 import com.xftxyz.elm.enums.OrderStatus;
 import com.xftxyz.elm.mapper.OrdersMapper;
+import com.xftxyz.elm.service.BusinessService;
 import com.xftxyz.elm.service.CartService;
+import com.xftxyz.elm.service.FoodService;
 import com.xftxyz.elm.service.OrderdetailetService;
 import com.xftxyz.elm.service.OrdersService;
 import com.xftxyz.elm.utils.DateFormatUtils;
 import com.xftxyz.elm.vo.res.CartInfoVO;
+import com.xftxyz.elm.vo.res.FoodWithQuantityVO;
+import com.xftxyz.elm.vo.res.OrdersVO;
 
 /**
  * @author 25810
@@ -32,6 +38,12 @@ public class OrdersServiceImpl extends ServiceImpl<OrdersMapper, Orders>
 
     @Autowired
     private CartService cartService;
+
+    @Autowired
+    private FoodService foodService;
+
+    @Autowired
+    private BusinessService businessService;
 
     @Autowired
     private OrderdetailetService orderdetailetService;
@@ -64,6 +76,27 @@ public class OrdersServiceImpl extends ServiceImpl<OrdersMapper, Orders>
         cartService.deleteCart(userid, businessid);
         return orders;
 
+    }
+
+    @Override
+    public OrdersVO getDetailetById(Integer orderId) {
+        Orders order = getById(orderId);
+        OrdersVO orderVO = new OrdersVO(order);
+        // 获取订单的所有订单项
+        List<Orderdetailet> orderdetailetList = orderdetailetService.listOrderdetailet(orderId);
+
+        // 遍历订单项获取订单项对应的食物及数量
+        List<FoodWithQuantityVO> foodList = new ArrayList<>();
+        for (Orderdetailet od : orderdetailetList) {
+            Integer foodid = od.getFoodid();
+            FoodWithQuantityVO foodWithQuantityVO = new FoodWithQuantityVO(foodService.getById(foodid));
+            foodWithQuantityVO.setQuantity(od.getQuantity());
+            foodList.add(foodWithQuantityVO);
+        }
+        orderVO.setFoodList(foodList);
+        Business business = businessService.getById(order.getBusinessid());
+        orderVO.setBusiness(business);
+        return orderVO;
     }
 
 }
