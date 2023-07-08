@@ -65,7 +65,7 @@ function confirmPayment() {
 
 interface ModalBox {
   modal: HTMLElement;
-  triggerBtn: HTMLElement;
+  // triggerBtn: HTMLElement;
   show: () => void;
   close: () => void;
   outsideClick: () => void;
@@ -74,7 +74,7 @@ interface ModalBox {
 
 const modalBox: ModalBox = {
   modal: document.getElementById("myModal")!,
-  triggerBtn: document.getElementById("triggerBtn")!,
+  // triggerBtn: document.getElementById("triggerBtn")!,
   show() {
     this.modal.style.display = "block";
   },
@@ -89,16 +89,21 @@ const modalBox: ModalBox = {
       }
     };
   },
-  init() {
-    const that = this;
-    this.triggerBtn.onclick = function () {
-      that.show();
-    };
-    this.outsideClick();
-  },
+  // init() {
+  //   const that = this;
+  //   // this.triggerBtn.onclick = function () {
+  //   //   that.show();
+  //   // };
+  //   this.outsideClick();
+  // },
 };
 
-modalBox.init();
+
+// modalBox.init();
+
+function showPayment(){
+
+}
 </script>
 
 <template>
@@ -148,7 +153,7 @@ modalBox.init();
 		</div>-->
 
     <div class="payment-button">
-      <button id="triggerBtn">支付</button>
+      <button id="triggerBtn" @click="showPayment()">支付</button>
     </div>
     <!---新支付方式部分--->
     <!-- 模态框 -->
