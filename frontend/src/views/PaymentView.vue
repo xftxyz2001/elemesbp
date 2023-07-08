@@ -63,42 +63,52 @@ function confirmPayment() {
   router.push("/myorder");
 }
 
-interface ModalBox {
-  modal: HTMLElement;
-  triggerBtn: HTMLElement;
-  show: () => void;
-  close: () => void;
-  outsideClick: () => void;
-  init: () => void;
+// interface ModalBox {
+//   modal: HTMLElement;
+//   triggerBtn: HTMLElement;
+//   show: () => void;
+//   close: () => void;
+//   outsideClick: () => void;
+//   init: () => void;
+// }
+
+// const modalBox: ModalBox = {
+//   modal: document.getElementById("myModal")!,
+//   triggerBtn: document.getElementById("triggerBtn")!,
+//   show() {
+//     this.modal.style.display = "block";
+//   },
+//   close() {
+//     this.modal.style.display = "none";
+//   },
+//   outsideClick() {
+//     const modal = this.modal;
+//     window.onclick = function (event: MouseEvent) {
+//       if (event.target === modal) {
+//         modal.style.display = "none";
+//       }
+//     };
+//   },
+//   init() {
+//     const that = this;
+//     this.triggerBtn.onclick = function () {
+//       that.show();
+//     };
+//     this.outsideClick();
+//   },
+// };
+
+// modalBox.init();
+
+function payment(){
+  let modal = document.getElementById("myModal")!;
+  modal.style.display = "block";
+  window.onclick = function(event: MouseEvent) {
+    if (event.target == modal) {
+      modal.style.display = "none";
+    }
+  };
 }
-
-const modalBox: ModalBox = {
-  modal: document.getElementById("myModal")!,
-  triggerBtn: document.getElementById("triggerBtn")!,
-  show() {
-    this.modal.style.display = "block";
-  },
-  close() {
-    this.modal.style.display = "none";
-  },
-  outsideClick() {
-    const modal = this.modal;
-    window.onclick = function (event: MouseEvent) {
-      if (event.target === modal) {
-        modal.style.display = "none";
-      }
-    };
-  },
-  init() {
-    const that = this;
-    this.triggerBtn.onclick = function () {
-      that.show();
-    };
-    this.outsideClick();
-  },
-};
-
-modalBox.init();
 </script>
 
 <template>
@@ -148,7 +158,7 @@ modalBox.init();
 		</div>-->
 
     <div class="payment-button">
-      <button id="triggerBtn">支付</button>
+      <button id="triggerBtn" @click="payment()">支付</button>
     </div>
     <!---新支付方式部分--->
     <!-- 模态框 -->
@@ -354,7 +364,7 @@ modalBox.init();
   background-color: #fefefe;
   /* margin: 127% 0;  */
   padding: 20px;
-  width: 90%;
+  width: 100%;
   animation: topDown 0.4s;
   /*自定义动画，从模态框内容上到下出现*/
 }
