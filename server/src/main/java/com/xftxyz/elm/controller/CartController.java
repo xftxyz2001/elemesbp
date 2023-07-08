@@ -29,35 +29,65 @@ public class CartController {
     @Autowired
     private CartService cartService;
 
-    // 当前用户在指定店家的购物车项数
+    /**
+     * 统计当前用户在指定店家的购物车项数
+     * 
+     * @param user       当前用户
+     * @param businessid 商家编号
+     * @return 购物车项数
+     */
     @GetMapping("/count/{businessid}")
     public Integer getCartItemCountForUserInStore(@RequestAttribute(ElmProperties.requestUser) User user,
             @PathVariable("businessid") Integer businessid) {
         return cartService.getTotalQuantity(user.getUserid(), businessid);
     }
 
-    // 当前用户在指定店家的购物车
+    /**
+     * 当前用户在指定店家的购物车
+     * 
+     * @param user       当前用户
+     * @param businessid 商家编号
+     * @return 购物车列表
+     */
     @GetMapping("/business/{businessid}")
     public List<Cart> listCart(@RequestAttribute(ElmProperties.requestUser) User user,
             @PathVariable("businessid") Integer businessid) {
         return cartService.listCart(user.getUserid(), businessid);
     }
 
-    // 当前用户在指定店家的购物车（包含食品信息）
+    /**
+     * 当前用户在指定店家的购物车（包含食品信息）
+     * 
+     * @param user       当前用户
+     * @param businessid 商家编号
+     * @return 购物车列表（包含食品信息）
+     */
     @GetMapping("/business/{businessid}/with/food")
     public List<CartWithFoodVO> listCartWithFood(@RequestAttribute(ElmProperties.requestUser) User user,
             @PathVariable("businessid") Integer businessid) {
         return cartService.listCartWithFood(user.getUserid(), businessid);
     }
 
-    // 当前用户在指定店家的购物车信息
+    /**
+     * 当前用户在指定店家的购物车信息
+     * 
+     * @param user       当前用户
+     * @param businessid 商家编号
+     * @return 购物车信息（总价、总数）
+     */
     @GetMapping("/info/{businessid}")
     public CartInfoVO getCartInfo(@RequestAttribute(ElmProperties.requestUser) User user,
             @PathVariable("businessid") Integer businessid) {
         return cartService.getCartInfo(user.getUserid(), businessid);
     }
 
-    // 更新购物车
+    /**
+     * 更新购物车
+     * 
+     * @param user         当前用户
+     * @param cartUpdateVO 购物车更新信息
+     * @return 是否更新成功
+     */
     @PutMapping("/update")
     public Boolean updateCart(@RequestAttribute(ElmProperties.requestUser) User user,
             @RequestBody CartUpdateVO cartUpdateVO) {

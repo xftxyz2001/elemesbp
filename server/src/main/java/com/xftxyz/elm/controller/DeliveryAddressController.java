@@ -28,19 +28,35 @@ public class DeliveryAddressController {
     @Autowired
     private DeliveryaddressService deliveryaddressService;
 
-    // 列出用户的所有配送地址
+    /**
+     * 列出用户的所有配送地址
+     * 
+     * @param user 当前用户
+     * @return 配送地址列表
+     */
     @GetMapping("/list")
     public List<Deliveryaddress> listDeliveryAddressByUserId(@RequestAttribute(ElmProperties.requestUser) User user) {
         return deliveryaddressService.listDeliveryAddressByUser(user);
     }
 
-    // 根据配送地址编号查询配送地址
+    /**
+     * 根据配送地址编号查询配送地址
+     * 
+     * @param daid 配送地址编号
+     * @return 配送地址
+     */
     @GetMapping("/{daid}")
     public Deliveryaddress getDeliveryAddressById(@PathVariable("daid") Integer daid) {
         return deliveryaddressService.getById(daid);
     }
 
-    // 添加配送地址
+    /**
+     * 添加配送地址
+     * 
+     * @param user              当前用户
+     * @param deliveryaddressVO 配送地址信息
+     * @return 是否添加成功
+     */
     @PostMapping("/save")
     public Boolean saveDeliveryAddress(@RequestAttribute(ElmProperties.requestUser) User user,
             @RequestBody DeliveryaddressVO deliveryaddressVO) {
@@ -53,9 +69,14 @@ public class DeliveryAddressController {
                 deliveryaddressVO.getAddress());
     }
 
-    // 删除配送地址
+    /**
+     * 删除配送地址
+     * 
+     * @param daid 配送地址编号
+     * @return 是否删除成功
+     */
     @DeleteMapping("/{daid}")
-    public boolean removeDeliveryAddressById(@PathVariable("daid") Integer daid) {
+    public Boolean removeDeliveryAddressById(@PathVariable("daid") Integer daid) {
         return deliveryaddressService.removeById(daid);
     }
 
