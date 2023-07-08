@@ -6,10 +6,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.xftxyz.elm.domain.Business;
 import com.xftxyz.elm.service.BusinessService;
+import com.xftxyz.elm.validation.ValidInfo;
+
+import jakarta.validation.constraints.Min;
 
 /**
  * 商家相关
@@ -41,6 +47,15 @@ public class BusinessController {
     @GetMapping("/ordertype/{ordertypeid}")
     public List<Business> findBusinessByOrdertypeid(@PathVariable("ordertypeid") Integer ordertypeid) {
         return businessService.findBusinessByOrdertypeid(ordertypeid);
+    }
+
+    // 返回所有商家信息（分页）
+    @GetMapping("/list")
+    public IPage<Business> list(
+            @RequestParam(defaultValue = "1") @Min(value = 1, message = ValidInfo.PAGE_LESS_THAN_ONE) Integer pageNum,
+            @RequestParam(defaultValue = "5") Integer pageSize) {
+        Page<Business> page = new Page<>(pageNum, pageSize);
+        return businessService.page(page);
     }
 
     // 商家名称
