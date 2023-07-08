@@ -5,11 +5,17 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestAttribute;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.xftxyz.elm.config.ElmProperties;
 import com.xftxyz.elm.domain.Orders;
+import com.xftxyz.elm.domain.User;
 import com.xftxyz.elm.service.OrdersService;
+import com.xftxyz.elm.vo.req.OrdersNewVO;
 
 /**
  * 订单相关
@@ -44,6 +50,13 @@ public class OrdersController {
     }
 
     // 创建订单
+    @PostMapping("/new")
+    public Orders createOrders(@RequestAttribute(ElmProperties.requestUser) User user,
+            @RequestBody OrdersNewVO ordersNewVO) {
+        return ordersService.createOrders(user.getUserid(), ordersNewVO.getBusinessid(),
+                ordersNewVO.getDaid());
+    }
+
     // public Object createOrders(HttpServletRequest request) {
     // String userId = request.getParameter("userId");
     // int businessId = Integer.parseInt(request.getParameter("businessId"));

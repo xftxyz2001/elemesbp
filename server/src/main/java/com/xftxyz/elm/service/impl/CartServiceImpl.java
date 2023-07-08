@@ -48,8 +48,7 @@ public class CartServiceImpl extends ServiceImpl<CartMapper, Cart>
     }
 
     @Override
-    public CartInfoVO getCartInfo(String userid, Integer businessid) {
-        List<Cart> carts = listCart(userid, businessid);
+    public CartInfoVO getCartInfo(List<Cart> carts) {
         CartInfoVO cartInfoVO = new CartInfoVO();
         // 如果购物车为空
         if (carts.size() == 0) {
@@ -66,10 +65,17 @@ public class CartServiceImpl extends ServiceImpl<CartMapper, Cart>
                                     BigDecimal.valueOf(cart.getQuantity()))));
         }
         // 查配送费
+        Integer businessid = carts.get(0).getBusinessid();
         Business business = businessService.getById(businessid);
         // 总金额
         cartInfoVO.setTotalSettle(cartInfoVO.getTotalPrice().add(business.getDeliveryprice()));
         return cartInfoVO;
+    }
+
+    @Override
+    public CartInfoVO getCartInfo(String userid, Integer businessid) {
+        List<Cart> carts = listCart(userid, businessid);
+        return getCartInfo(carts);
     }
 
     @Override
@@ -136,6 +142,11 @@ public class CartServiceImpl extends ServiceImpl<CartMapper, Cart>
             cartWithFoodVOs.add(cartWithFoodVO);
         }
         return cartWithFoodVOs;
+    }
+
+    @Override
+    public Boolean deleteCart(String userid, Integer businessid) {
+        return cartMapper.deleteByUseridAndBusinessid(userid, businessid) > 0;
     }
 
 }

@@ -19,6 +19,8 @@ public interface CartMapper extends BaseMapper<Cart> {
     List<Cart> selectByUseridAndBusinessid(@Param("userid") String userid, @Param("businessid") Integer businessid);
 
     Cart selectOneByUseridAndBusinessidAndFoodid(@Param("userid") String userid, @Param("businessid") Integer businessid, @Param("foodid") Integer foodid);
+
+    int deleteByUseridAndBusinessid(@Param("userid") String userid, @Param("businessid") Integer businessid);
 }
 
 

@@ -1,14 +1,22 @@
 package com.xftxyz.elm.service.impl;
 
+import java.math.BigDecimal;
+import java.text.DateFormat;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.xftxyz.elm.domain.Cart;
 import com.xftxyz.elm.domain.Orders;
+import com.xftxyz.elm.enums.OrderStatus;
 import com.xftxyz.elm.mapper.OrdersMapper;
+import com.xftxyz.elm.service.CartService;
+import com.xftxyz.elm.service.OrderdetailetService;
 import com.xftxyz.elm.service.OrdersService;
+import com.xftxyz.elm.utils.DateFormatUtils;
+import com.xftxyz.elm.vo.res.CartInfoVO;
 
 /**
  * @author 25810
@@ -22,38 +30,40 @@ public class OrdersServiceImpl extends ServiceImpl<OrdersMapper, Orders>
     @Autowired
     private OrdersMapper ordersMapper;
 
+    @Autowired
+    private CartService cartService;
+
+    @Autowired
+    private OrderdetailetService orderdetailetService;
+
     @Override
     public List<Orders> findOrdersByUserId(String userId) {
         return ordersMapper.selectAllByUserid(userId);
     }
 
-    /*
-     * // 创建订单
-     * // 开启事务
-     * //1、查询当前用户购物车中当前商家的所有食品
-     * CartDaoImpl cartDao = new CartDaoImpl();
-     * List<Cart> carts = cartDao.listCart(userId, businessId);
-     * //2、查询商家信息（需要使用商家的配送费信息）
-     * BusinessDaoImpl businessDao = new BusinessDaoImpl();
-     * Business business = businessDao.getBusinessById(businessId);
-     * //3、获取订单总额
-     * for (Cart cart : carts) {
-     * orderTotal += cart.getFood().getFoodPrice() * cart.getQuantity();
-     * }
-     * //加上配送费
-     * orderTotal += business.getDeliveryPrice();
-     * //3、创建订单，并获取订单编号
-     * OrdersDaoImpl ordersDao = new OrdersDaoImpl();
-     * orderId = ordersDao.createOrders(userId, businessId, daId, orderTotal);
-     * //4、处理相关数据：获取订单明细集合
-     * OrderdetailetDaoImpl orderdetailetDao = new OrderdetailetDaoImpl();
-     * //5、批量添加订单明细
-     * for (Cart cart : carts) {
-     * orderdetailetDao.saveOrderdetailet(cart.getFoodId(), orderId,
-     * cart.getQuantity());
-     * }
-     * //6、清空当前用户购物车中当前商家的所有食品
-     * cartDao.removeCart1(userId, businessId);
-     * //提交事务
-     */
+    @Override
+    public Orders createOrders(String userid, Integer businessid, Integer daid) {
+        // 获取购物车
+        List<Cart> carts = cartService.listCart(userid, businessid);
+        CartInfoVO cartInfo = cartService.getCartInfo(carts);
+        BigDecimal totalSettle = cartInfo.getTotalSettle();
+
+        // 创建订单
+        Orders orders = new Orders();
+        orders.setUserid(userid);
+        orders.setBusinessid(businessid);
+        orders.setDaid(daid);
+        orders.setOrdertotal(totalSettle);
+        orders.setOrderdate(DateFormatUtils.currentTime());
+        orders.setOrderstate(OrderStatus.UNPAID.getValue());
+        ordersMapper.insert(orders);
+
+        // 添加订单明细
+        orderdetailetService.saveOrderdetailet(orders.getOrderid(), carts);
+        // 清空购物车
+        cartService.deleteCart(userid, businessid);
+        return orders;
+
+    }
+
 }

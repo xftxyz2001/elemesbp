@@ -26,8 +26,12 @@ public interface CartService extends IService<Cart> {
     
     CartInfoVO getCartInfo(String userid, Integer businessid);
 
+    CartInfoVO getCartInfo(List<Cart> carts);
+
     Boolean updateCart(String userid, Integer businessid, Integer foodid, Integer quantity);
 
     List<CartWithFoodVO> listCartWithFood(String userid, Integer businessid);
+
+    Boolean deleteCart(String userid, Integer businessid);
 
 }
