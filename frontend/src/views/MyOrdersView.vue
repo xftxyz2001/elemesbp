@@ -4,6 +4,7 @@ import FooterSection from '@/components/FooterSection.vue';
 import {Ref} from "vue/dist/vue.js";
 import axios from 'axios';
 import {onBeforeMount, ref} from 'vue';
+import router from "@/router";
 interface BusinessItem {
   businessid: number; // 商家编号
   businessname: string; // 商家名称
@@ -70,7 +71,9 @@ function detailetShow(item:OrderItem){
   item.isShowDetailet = !item.isShowDetailet;
 
 }
-
+function toPayment(orderid:number){
+  router.push({name:'payment',params:{id:orderid}});
+}
 </script>
 
 <template>

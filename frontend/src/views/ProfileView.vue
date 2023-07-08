@@ -1,94 +1,128 @@
 <script setup lang="ts">
 import FooterSection from '@/components/FooterSection.vue';
+import {onBeforeMount,ref} from "vue";
+import type { Ref } from 'vue/dist/vue.js';
+import axios from 'axios';
+interface User{
+  userid:string
+  username:string
+  usersex:number
+  userimg:string
+}
+const user : Ref<User | null> = ref(null);
+
+onBeforeMount(()=>{
+  axios.get('/user/info').then((res)=>{
+    let r = res.data;
+    if(r.code == 0){
+      user.value = r.data;
+    }
+  })
+});
+
+
 </script>
 
 <template>
   <!--总容器-->
   <div class="wrapper">
-    <!--header部分-->
-    <header>
-      <div class="userInfo">
-        <img src="../assets/头像.png">
-        <div class="location-text">
-          <div class="name">
-            用户9527
+    <el-container>
+
+      <el-header>
+        <!--header部分-->
+        <header>
+          <div class="userInfo">
+            <img src="../assets/头像.png">
+            <div class="location-text">
+              <div class="name">
+                {{user?.username}}
+              </div>
+              <div class="phone">
+                {{user?.userid}}
+              </div>
+            </div>
           </div>
-          <div class="phone">
-            138****1234
+          <div class="modify">
+            <i class="fa fa-cog"></i>
+            <i2 class="fa fa-refresh"></i2>
           </div>
-        </div>
-      </div>
-      <div class="modify">
-        <i class="fa fa-cog"></i>
-        <i2 class="fa fa-refresh"></i2>
-      </div>
-    </header>
+        </header>
+      </el-header>
 
-    <!--用户信息部分-->
-    <ul class="userinfo">
-      <li>
-        <img src="../assets/收藏.png">
-        <p>收藏</p>
-      </li>
-      <li>
-        <img src="../assets/足迹.png">
-        <p>足迹</p>
-      </li>
-      <li>
-        <img src="../assets/红包卡券.png">
-        <p>红包卡券</p>
-      </li>
-      <li>
-        <img src="../assets/余额.png">
-        <p>余额</p>
-      </li>
-    </ul>
+      <el-main style="padding:0 0 14vw 0">
+        <!--用户信息部分-->
+        <ul class="userinfo">
+          <li>
+            <img src="../assets/收藏.png">
+            <p>收藏</p>
+          </li>
+          <li>
+            <img src="../assets/足迹.png">
+            <p>足迹</p>
+          </li>
+          <li>
+            <img src="../assets/红包卡券.png">
+            <p>红包卡券</p>
+          </li>
+          <li>
+            <img src="../assets/余额.png">
+            <p>余额</p>
+          </li>
+        </ul>
 
-    <!--我的订单部分-->
-    <ul class="listinfo">
-      <p>
-        我的订单
-        <p2>
-          全部订单 <i class="fa fa-angle-right"></i>
-        </p2>
-      </p>
-    </ul>
-    <ul class="listinfo">
-      <pic>
-        <li>
-          <img src="../assets/待付款.png">
-          <p>待付款</p>
-        </li>
-        <li>
-          <img src="../assets/足迹.png">
-          <p>待收货</p>
-        </li>
-        <li>
-          <img src="../assets/待使用.png">
-          <p>待使用</p>
-        </li>
-        <li>
-          <img src="../assets/红包卡券.png">
-          <p>待评价</p>
-        </li>
-        <li>
-          <img src="../assets/余额.png">
-          <p>退款售后</p>
-        </li>
-      </pic>
-    </ul>
+        <!--我的订单部分-->
+        <ul class="listinfo">
+          <p>
+            我的订单
+            <p2>
+              全部订单 <i class="fa fa-angle-right"></i>
+            </p2>
+          </p>
+        </ul>
+        <ul class="listinfo">
+          <pic>
+            <li>
+              <img src="../assets/待付款.png">
+              <p>待付款</p>
+            </li>
+            <li>
+              <img src="../assets/足迹.png">
+              <p>待收货</p>
+            </li>
+            <li>
+              <img src="../assets/待使用.png">
+              <p>待使用</p>
+            </li>
+            <li>
+              <img src="../assets/红包卡券.png">
+              <p>待评价</p>
+            </li>
+            <li>
+              <img src="../assets/余额.png">
+              <p>退款售后</p>
+            </li>
+          </pic>
+        </ul>
 
-    <!--会员广告部分-->
-    <div class="banner"></div>
+        <!--会员广告部分-->
+        <div class="banner"></div>
 
-    <!--吃货豆部分-->
-    <div class="banner2"></div>
+        <!--吃货豆部分-->
+        <div class="banner2"></div>
 
     <div style="height: 14vw;"></div>
 
-    <!-- 底部菜单部分 -->
-    <FooterSection />
+      </el-main>
+
+      <el-footer style="height: 0">
+        <!-- 底部菜单部分 -->
+        <FooterSection />
+      </el-footer>
+
+    </el-container>
+
   </div>
+
 </template>
 
 <style scoped>
@@ -98,6 +132,12 @@ import FooterSection from '@/components/FooterSection.vue';
   height: 100%;
   background-color: #eee;
 }
+
+/*.wrapper :last-child::after{*/
+/*  content: "";*/
+/*  display: block;*/
+/*  padding-bottom: 14vw;*/
+/*}*/
 
 /****header部分***/
 .wrapper header {
