@@ -34,3 +34,9 @@ mybatis-plus:
       logic-delete-field: delTag
       logic-delete-value: 0
       logic-not-delete-value: 1
+
+logging:
+  level:
+    root: INFO
+  pattern:
+    console: "%d{HH:mm:ss.SSS} %-5level %logger{36} - %msg%n"

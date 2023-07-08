@@ -104,7 +104,7 @@ public class UserController {
     public Boolean deleteUser(@RequestAttribute(ElmProperties.requestUser) User user) {
         return userService.deleteUser(user);
     }
-
+    
     /**
      * 用户查询（根据id）
      * 

@@ -2,6 +2,8 @@ package com.xftxyz.elm.vo.res;
 
 import java.math.BigDecimal;
 
+import com.xftxyz.elm.domain.Food;
+
 import lombok.Data;
 
 @Data
@@ -45,4 +47,14 @@ public class FoodWithQuantityVO {
      * 购物车中的数量
      */
     private Integer quantity;
+
+    public FoodWithQuantityVO(Food food) {
+        this.foodid = food.getFoodid();
+        this.foodname = food.getFoodname();
+        this.foodexplain = food.getFoodexplain();
+        this.foodimg = food.getFoodimg();
+        this.foodprice = food.getFoodprice();
+        this.businessid = food.getBusinessid();
+        this.remarks = food.getRemarks();
+    }
 }

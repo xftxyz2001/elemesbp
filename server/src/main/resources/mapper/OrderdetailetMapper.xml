@@ -15,4 +15,11 @@
         odId,orderId,foodId,
         quantity
     </sql>
+    <select id="selectAllByOrderid" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from orderdetailet
+        where
+        orderId = #{orderid,jdbcType=NUMERIC}
+    </select>
 </mapper>

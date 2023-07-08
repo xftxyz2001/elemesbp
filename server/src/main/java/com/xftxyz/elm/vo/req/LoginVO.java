@@ -1,5 +1,7 @@
 package com.xftxyz.elm.vo.req;
 
+import com.xftxyz.elm.validation.ValidInfo;
+
 import jakarta.validation.constraints.NotBlank;
 import lombok.Data;
 
@@ -14,13 +16,13 @@ public class LoginVO {
     /**
      * 用户编号
      */
-    @NotBlank(message = "用户编号不能为空")
+    @NotBlank(message = ValidInfo.USER_ID_NOT_NULL)
     private String userid;
 
     /**
      * 密码
      */
-    @NotBlank(message = "密码不能为空")
+    @NotBlank(message = ValidInfo.PASSWORD_NOT_NULL)
     private String password;
 
 }

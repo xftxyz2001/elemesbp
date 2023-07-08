@@ -39,4 +39,10 @@
         AND businessId = #{businessid,jdbcType=NUMERIC}
         AND foodId = #{foodid,jdbcType=NUMERIC}
     </select>
+    <delete id="deleteByUseridAndBusinessid">
+        delete
+        from cart
+        where userId = #{userid,jdbcType=VARCHAR}
+          AND businessId = #{businessid,jdbcType=NUMERIC}
+    </delete>
 </mapper>
