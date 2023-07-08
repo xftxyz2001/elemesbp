@@ -59,8 +59,16 @@ onBeforeMount(()=>{
 })
 // 确认支付
 function confirmPayment() {
-  alert("支付成功");
-  router.push("/myorder");
+  axios.post('/orders/pay/'+orderid).then((res) => {
+    let r = res.data;
+    if(r.code == 0){
+      ElMessage({
+        message:"支付成功",
+        type:"success"
+      })
+      router.push("/myorder");
+    }
+  })
 }
 
 // interface ModalBox {
