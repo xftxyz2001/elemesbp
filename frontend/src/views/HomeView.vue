@@ -2,7 +2,7 @@
 import FooterSection from '@/components/FooterSection.vue';
 import router from '@/router';
 import axios from 'axios';
-import { onBeforeUnmount, onMounted, ref } from 'vue';
+import {onBeforeMount, onBeforeUnmount, onMounted, ref} from 'vue';
 
 interface BusinessItem {
   businessid: number; // 商家编号
@@ -19,6 +19,15 @@ interface BusinessItem {
 }
 
 const businessList = ref<BusinessItem[] | null>(null); // 商家列表
+
+onBeforeMount(()=>{
+  axios.get('/business/list').then((res)=>{
+    let r = res.data;
+    if(r.code == 0){
+      businessList.value = r.data.records;
+    }
+  })
+});
 
 onMounted(() => {
   // 将搜索块固定到视口顶部
@@ -41,6 +50,8 @@ onMounted(() => {
       search.style.position = 'static';
     }
   };
+
+
 });
 
 onBeforeUnmount(() => {
