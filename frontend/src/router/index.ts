@@ -1,4 +1,4 @@
-import { createRouter, createWebHistory } from 'vue-router'
+import { createRouter, createWebHashHistory } from 'vue-router'
 import HomeView from '../views/HomeView.vue' // 首页
 import LoginView from '../views/LoginView.vue' // 登录页
 import DiscoverView from '@/views/DiscoverView.vue' // 发现页
@@ -13,7 +13,9 @@ import UserAddressEditView from '@/views/UserAddressEditView.vue'; // 编辑地�
 import PaymentView from '@/views/PaymentView.vue'; // 支付页
 
 const router = createRouter({
-  history: createWebHistory(import.meta.env.BASE_URL),
+  // history: createWebHistory(import.meta.env.BASE_URL),
+  // history: createWebHashHistory(process.env.BASE_URL),
+  history: createWebHashHistory(import.meta.env.BASE_URL),
   routes: [
     {
       // 首页
