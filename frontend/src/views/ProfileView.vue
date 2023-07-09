@@ -80,14 +80,14 @@ function toMyOrder() {
     </ul>
 
     <!--我的订单部分-->
-    <ul class="listinfo">
+    <ul class="listinfo" @click="toMyOrder()">
       <p>
         我的订单
-        <p2> 全部订单 <i class="fa fa-angle-right"></i> </p2>
+        <span> 全部订单 <i class="fa fa-angle-right"></i> </span>
       </p>
     </ul>
     <ul class="listinfo">
-      <pic>
+      <div>
         <li>
           <img src="../assets/待付款.png" />
           <p>待付款</p>
@@ -108,7 +108,7 @@ function toMyOrder() {
           <img src="../assets/余额.png" />
           <p>退款售后</p>
         </li>
-      </pic>
+      </div>
     </ul>
 
     <!--会员广告部分-->
@@ -196,6 +196,7 @@ function toMyOrder() {
 }
 
 .wrapper header .modify {
+  width: 100%;
   margin-left: 38vw;
   display: flex;
   justify-content: center;
@@ -315,7 +316,7 @@ function toMyOrder() {
   align-items: center;
 }
 
-.wrapper .listinfo p p2 {
+.wrapper .listinfo p span {
   width: 25%;
   box-sizing: border-box;
   padding: 1vw 3.5vw;
@@ -327,11 +328,11 @@ function toMyOrder() {
   margin-right: -3vw;
 }
 
-.wrapper .listinfo p p2 i {
+.wrapper .listinfo p span i {
   font-size: 4vw;
 }
 
-.wrapper .listinfo pic {
+.wrapper .listinfo div {
   width: 100%;
   height: 23vw;
 
@@ -345,7 +346,7 @@ function toMyOrder() {
   padding: 2vw 2vw;
 }
 
-.wrapper .listinfo pic li {
+.wrapper .listinfo div li {
   width: 18vw;
   height: 20vw;
 
@@ -358,12 +359,12 @@ function toMyOrder() {
   cursor: pointer;
 }
 
-.wrapper .listinfo pic li img {
+.wrapper .listinfo div li img {
   width: 12vw;
   height: 10vw;
 }
 
-.wrapper .listinfo pic li p {
+.wrapper .listinfo div li p {
   font-size: 3.2vw;
   font-weight: 500;
   color: #666;
