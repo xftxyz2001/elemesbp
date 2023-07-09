@@ -140,7 +140,7 @@ function toPayment(orderid: number) {
                 <div class="order-info-right-icon3">已完成</div>
               </div>
             </div>
-            <ul class="order-detailet" v-show="item.isShowDetailet">
+            <ul class="order-detailet" v-show="item.orderstate == 1 && item.isShowDetailet">
               <li v-for="odItem in item.foodList" :key="odItem.foodid">
                 <p>{{ odItem.foodname }} x {{ odItem.quantity }}</p>
                 <p>&#165;{{ odItem.foodprice * odItem.quantity }}</p>
