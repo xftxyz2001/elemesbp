@@ -21,7 +21,7 @@ import com.xftxyz.elm.vo.req.CartUpdateVO;
 import com.xftxyz.elm.vo.res.CartInfoVO;
 import com.xftxyz.elm.vo.res.CartWithFoodVO;
 
-import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 
 /**
  * 购物车相关
@@ -43,7 +43,7 @@ public class CartController {
      */
     @GetMapping("/count/{businessid}")
     public Integer getCartItemCountForUserInStore(@RequestAttribute(ElmProperties.requestUser) User user,
-            @PathVariable("businessid") @NotBlank(message = ValidInfo.BUSINESS_ID_NOT_NULL) Integer businessid) {
+            @PathVariable("businessid") @NotNull(message = ValidInfo.BUSINESS_ID_NOT_NULL) Integer businessid) {
         return cartService.getTotalQuantity(user.getUserid(), businessid);
     }
 
@@ -56,7 +56,7 @@ public class CartController {
      */
     @GetMapping("/business/{businessid}")
     public List<Cart> listCart(@RequestAttribute(ElmProperties.requestUser) User user,
-            @PathVariable("businessid") @NotBlank(message = ValidInfo.BUSINESS_ID_NOT_NULL) Integer businessid) {
+            @PathVariable("businessid") @NotNull(message = ValidInfo.BUSINESS_ID_NOT_NULL) Integer businessid) {
         return cartService.listCart(user.getUserid(), businessid);
     }
 
@@ -69,7 +69,7 @@ public class CartController {
      */
     @GetMapping("/business/{businessid}/with/food")
     public List<CartWithFoodVO> listCartWithFood(@RequestAttribute(ElmProperties.requestUser) User user,
-            @PathVariable("businessid") @NotBlank(message = ValidInfo.BUSINESS_ID_NOT_NULL) Integer businessid) {
+            @PathVariable("businessid") @NotNull(message = ValidInfo.BUSINESS_ID_NOT_NULL) Integer businessid) {
         return cartService.listCartWithFood(user.getUserid(), businessid);
     }
 
@@ -82,7 +82,7 @@ public class CartController {
      */
     @GetMapping("/info/{businessid}")
     public CartInfoVO getCartInfo(@RequestAttribute(ElmProperties.requestUser) User user,
-            @PathVariable("businessid") @NotBlank(message = ValidInfo.BUSINESS_ID_NOT_NULL) Integer businessid) {
+            @PathVariable("businessid") @NotNull(message = ValidInfo.BUSINESS_ID_NOT_NULL) Integer businessid) {
         return cartService.getCartInfo(user.getUserid(), businessid);
     }
 

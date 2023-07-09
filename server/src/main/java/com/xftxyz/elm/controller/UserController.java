@@ -22,6 +22,7 @@ import com.xftxyz.elm.vo.res.UserVO;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 
 /**
  * 用户相关
@@ -73,7 +74,7 @@ public class UserController {
      * @return true:存在 false:不存在
      */
     @GetMapping("/check/{userid}")
-    public Boolean checkUserid(@PathVariable("userid") @NotBlank(message = ValidInfo.USER_ID_NOT_NULL) String userid) {
+    public Boolean checkUserid(@PathVariable("userid") @NotNull(message = ValidInfo.USER_ID_NOT_NULL) String userid) {
         return userService.checkUserid(userid);
     }
 

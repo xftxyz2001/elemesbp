@@ -17,7 +17,7 @@ import com.xftxyz.elm.service.FoodService;
 import com.xftxyz.elm.validation.ValidInfo;
 import com.xftxyz.elm.vo.res.FoodWithQuantityVO;
 
-import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 
 /**
  * 食品相关
@@ -38,7 +38,7 @@ public class FoodController {
      */
     @GetMapping("/business/{businessid}")
     public List<Food> getFoodList(
-            @PathVariable("businessid") @NotBlank(message = ValidInfo.BUSINESS_ID_NOT_NULL) Integer businessid) {
+            @PathVariable("businessid") @NotNull(message = ValidInfo.BUSINESS_ID_NOT_NULL) Integer businessid) {
         return foodService.getFoodList(businessid);
     }
 
@@ -51,7 +51,7 @@ public class FoodController {
     @GetMapping("/business/{businessid}/with/quantity")
     public List<FoodWithQuantityVO> getFoodListWithQuantity(
             @RequestAttribute(ElmProperties.requestUser) User user,
-            @PathVariable("businessid") @NotBlank(message = ValidInfo.BUSINESS_ID_NOT_NULL) Integer businessid) {
+            @PathVariable("businessid") @NotNull(message = ValidInfo.BUSINESS_ID_NOT_NULL) Integer businessid) {
         return foodService.getFoodListWithQuantity(user.getUserid(), businessid);
     }
 }

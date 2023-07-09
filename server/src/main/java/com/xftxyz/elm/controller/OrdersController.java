@@ -21,6 +21,7 @@ import com.xftxyz.elm.vo.req.OrdersNewVO;
 import com.xftxyz.elm.vo.res.OrdersVO;
 
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 
 /**
  * 订单相关
@@ -64,7 +65,7 @@ public class OrdersController {
      */
     @GetMapping("/{orderid}")
     public Orders findOrdersById(
-            @PathVariable("orderid") @NotBlank(message = ValidInfo.ORDER_ID_NOT_NULL) Integer orderId) {
+            @PathVariable("orderid") @NotNull(message = ValidInfo.ORDER_ID_NOT_NULL) Integer orderId) {
         return ordersService.getById(orderId);
     }
 
@@ -76,7 +77,7 @@ public class OrdersController {
      */
     @GetMapping("/detailet/{orderid}")
     public OrdersVO findOrderdetailetById(
-            @PathVariable("orderid") @NotBlank(message = ValidInfo.ORDER_ID_NOT_NULL) Integer orderId) {
+            @PathVariable("orderid") @NotNull(message = ValidInfo.ORDER_ID_NOT_NULL) Integer orderId) {
         return ordersService.getDetailetById(orderId);
     }
 
@@ -98,7 +99,7 @@ public class OrdersController {
     // 支付订单
     @PostMapping("/pay/{orderid}")
     public Boolean payOrder(@RequestAttribute(ElmProperties.requestUser) User user,
-            @PathVariable("orderid") @NotBlank(message = ValidInfo.ORDER_ID_NOT_NULL) Integer orderId) {
+            @PathVariable("orderid") @NotNull(message = ValidInfo.ORDER_ID_NOT_NULL) Integer orderId) {
         return ordersService.payOrder(user.getUserid(), orderId);
     }
 

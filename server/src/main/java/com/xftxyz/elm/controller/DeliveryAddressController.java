@@ -20,7 +20,7 @@ import com.xftxyz.elm.service.DeliveryaddressService;
 import com.xftxyz.elm.validation.ValidInfo;
 import com.xftxyz.elm.vo.req.DeliveryaddressVO;
 
-import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 
 /**
  * 配送地址相关
@@ -51,7 +51,8 @@ public class DeliveryAddressController {
      * @return 配送地址
      */
     @GetMapping("/{daid}")
-    public Deliveryaddress getDeliveryAddressById(@PathVariable("daid") Integer daid) {
+    public Deliveryaddress getDeliveryAddressById(
+            @PathVariable("daid") @NotNull(message = ValidInfo.DELIVERY_ADDRESS_ID_NOT_NULL) Integer daid) {
         return deliveryaddressService.getById(daid);
     }
 
@@ -82,7 +83,7 @@ public class DeliveryAddressController {
      */
     @DeleteMapping("/{daid}")
     public Boolean removeDeliveryAddressById(
-            @PathVariable("daid") @NotBlank(message = ValidInfo.DELIVERY_ADDRESS_ID_NOT_NULL) Integer daid) {
+            @PathVariable("daid") @NotNull(message = ValidInfo.DELIVERY_ADDRESS_ID_NOT_NULL) Integer daid) {
         return deliveryaddressService.removeById(daid);
     }
 

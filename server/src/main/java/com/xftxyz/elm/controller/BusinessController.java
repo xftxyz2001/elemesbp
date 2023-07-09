@@ -18,6 +18,7 @@ import com.xftxyz.elm.validation.ValidInfo;
 
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 
 /**
  * 商家相关
@@ -38,7 +39,7 @@ public class BusinessController {
      */
     @GetMapping("/business/{businessid}")
     public Business findBusinessByBusinessid(
-            @PathVariable("businessid") @NotBlank(message = ValidInfo.BUSINESS_ID_NOT_NULL) Integer businessid) {
+            @PathVariable("businessid") @NotNull(message = ValidInfo.BUSINESS_ID_NOT_NULL) Integer businessid) {
         return businessService.getById(businessid);
     }
 
@@ -50,7 +51,7 @@ public class BusinessController {
      */
     @GetMapping("/ordertype/{ordertypeid}")
     public List<Business> findBusinessByOrdertypeid(
-            @PathVariable("ordertypeid") @NotBlank(message = ValidInfo.ORDERTYPE_NOT_NULL) Integer ordertypeid) {
+            @PathVariable("ordertypeid") @NotNull(message = ValidInfo.ORDERTYPE_NOT_NULL) Integer ordertypeid) {
         return businessService.findBusinessByOrdertypeid(ordertypeid);
     }
 
