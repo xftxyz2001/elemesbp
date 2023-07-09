@@ -381,7 +381,7 @@ function toMyOrder() {
   margin: 0 auto;
   height: 35vw;
 
-  background-image: url(../assets/会员注册.png);
+  background-image: url(../assets/vipsignin.png);
   background-repeat: no-repeat;
   background-size: cover;
 

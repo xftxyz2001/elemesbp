@@ -46,6 +46,10 @@
   align-items: center;
 }
 
+.wrapper .footer .router-link-active li{
+  color: black;
+}
+
 .wrapper .footer li {
   display: flex;
   flex-direction: column;
