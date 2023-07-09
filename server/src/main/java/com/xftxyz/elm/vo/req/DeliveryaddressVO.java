@@ -3,6 +3,7 @@ package com.xftxyz.elm.vo.req;
 import com.xftxyz.elm.validation.ValidInfo;
 
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 
 @Data
@@ -21,7 +22,7 @@ public class DeliveryaddressVO {
     /**
      * 联系人性别
      */
-    @NotBlank(message = ValidInfo.CONTACT_SEX_NOT_NULL)
+    @NotNull(message = ValidInfo.CONTACT_SEX_NOT_NULL)
     private Integer contactsex;
 
     /**
