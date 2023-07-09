@@ -10,12 +10,13 @@ interface User {
   userimg: string;
 }
 const user = ref<User | null>(null);
-
+const ifLogin = ref(false);
 onBeforeMount(() => {
   axios.get('/user/info').then((res) => {
     let r = res.data;
     if (r.code == 0) {
       user.value = r.data;
+      ifLogin.value = true;
     }
   });
 });
@@ -39,6 +40,7 @@ function toMyOrder() {
 </script>
 
 <template>
+
   <!--总容器-->
   <div class="wrapper">
     <!--header部分-->
