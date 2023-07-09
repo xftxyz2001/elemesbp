@@ -104,7 +104,7 @@ function toPayment(orderid: number) {
                 <div class="order-info-right-icon" @click="toPayment(item.orderid)">去支付</div>
               </div>
             </div>
-            <ul class="order-detailet" v-show="item.isShowDetailet">
+            <ul class="order-detailet" v-show="item.orderstate == 0 && item.isShowDetailet">
               <li v-for="odItem in item.foodList" :key="odItem.foodid">
                 <p>{{ odItem.foodname }} x {{ odItem.quantity }}</p>
                 <p>&#165;{{ odItem.foodprice * odItem.quantity }}</p>
