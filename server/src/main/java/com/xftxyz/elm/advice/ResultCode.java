@@ -11,10 +11,10 @@ public enum ResultCode {
     // 用户错误1xx
     USER_NOT_LOGIN(100, "用户未登录"),
     CAPTCHA_ERROR(101, "验证码错误"),
-    EMAIL_OR_PASSWORD_ERROR(102, "邮箱或密码错误"),
+    NAME_OR_PASSWORD_ERROR(102, "用户名或密码错误"),
     PASSWORD_ERROR(103, "密码错误"),
     USER_NOT_EXIST(104, "用户不存在"),
-    EMAIL_EXIST(105, "邮箱已被注册"),
+    NAME_EXIST(105, "用户名已被注册"),
     ILLEGAL_OPERATION(106, "非法操作"),
     EMAIL_SEND_ERROR(107, "邮件发送失败"),
     CAPTCHA_SEND_FREQUENTLY(108, "验证码发送过于频繁"),

@@ -5,9 +5,7 @@ import java.awt.image.BufferedImage;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.w3c.dom.Text;
 
-import com.xftxyz.elm.domain.Deliveryaddress;
 import com.xftxyz.elm.service.DeliveryaddressService;
 import com.xftxyz.elm.service.UserService;
 import com.xftxyz.elm.utils.Text2Img;
