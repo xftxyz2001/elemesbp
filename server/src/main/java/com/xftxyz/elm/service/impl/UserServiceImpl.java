@@ -7,6 +7,7 @@ import org.springframework.util.StringUtils;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.xftxyz.elm.domain.User;
+import com.xftxyz.elm.exception.UesrNameOrPasswordException;
 import com.xftxyz.elm.mapper.UserMapper;
 import com.xftxyz.elm.service.UserService;
 import com.xftxyz.elm.utils.Text2Img;
@@ -32,6 +33,9 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
 
     @Override
     public String toToken(User user) {
+        if (user == null) {
+            return "";
+        }
         return user.getUserid() + ":" + user.getPassword();
     }
 
@@ -48,7 +52,11 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
 
     @Override
     public User login(String userid, String password) {
-        return userMapper.selectOneByUseridAndPassword(userid, password);
+        User user = userMapper.selectOneByUseridAndPassword(userid, password);
+        if (user == null) {
+            throw new UesrNameOrPasswordException();
+        }
+        return user;
     }
 
     @Override

@@ -21,4 +21,26 @@ public interface ValidInfo {
     // 用户性别不能为空
     String USER_SEX_NOT_NULL = "用户性别不能为空";
 
+    // 商家ID能为空
+    String BUSINESS_ID_NOT_NULL = "商家ID不能为空";
+
+    // 送货地址ID不能为空
+    String DELIVERY_ADDRESS_ID_NOT_NULL = "送货地址ID不能为空";
+
+    String FOOD_ID_NOT_NULL = "食品ID不能为空";
+
+    String QUANTITY_NOT_NULL = "数量不能为空";
+
+    // 联系人姓名不能为空
+    String CONTACT_NAME_NOT_NULL = "联系人姓名不能为空";
+
+    // 联系人性别不能为空
+    String CONTACT_SEX_NOT_NULL = "联系人性别不能为空";
+
+    // 联系人电话不能为空
+    String CONTACT_TEL_NOT_NULL = "联系人电话不能为空";
+
+    // 送货地址不能为空
+    String ADDRESS_NOT_NULL = "送货地址不能为空";
+
 }
