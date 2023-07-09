@@ -1,0 +1,16 @@
+{
+    "allInOne": true,
+    "outPath": "src/main/resources/static/doc",
+    "coverOld": true,
+    "createDebugPage": true,
+    "style": "xt256",
+    "framework": "spring",
+    "dataDictionaries": [
+        {
+            "title": "状态码字典",
+            "enumClassName": "com.xftxyz.elm.advice.ResultCode",
+            "codeField": "code",
+            "descField": "message"
+        }
+    ]
+}
