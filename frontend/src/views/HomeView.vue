@@ -40,7 +40,7 @@ onMounted(() => {
     } else {
       search.style.position = 'static';
     }
-  }
+  };
 });
 
 onBeforeUnmount(() => {
@@ -61,7 +61,7 @@ function toBusinessList(type: number) {
 
 function nonsupport() {
   ElMessage({
-    message: "暂不支持该功能",
+    message: '暂不支持该功能',
     type: 'warning'
   });
 }
@@ -80,22 +80,23 @@ function changeServer() {
   ElMessageBox.prompt('Please input your server address', 'Tip', {
     confirmButtonText: 'OK',
     cancelButtonText: 'Cancel',
-    inputErrorMessage: 'Invalid Email',
-  }).then((value: any) => {
-    if (!value.value.startsWith('http://')) {
-      value.value = 'http://' + value.value;
-    }
-    axios.defaults.baseURL = value.value;
-    ElMessage({
-      type: 'success',
-      message: `Server address changed to ${value.value}`,
-    })
+    inputErrorMessage: 'Invalid Email'
   })
+    .then((value: any) => {
+      if (!value.value.startsWith('http://')) {
+        value.value = 'http://' + value.value;
+      }
+      axios.defaults.baseURL = value.value;
+      ElMessage({
+        type: 'success',
+        message: `Server address changed to ${value.value}`
+      });
+    })
     .catch(() => {
       ElMessage({
         type: 'info',
-        message: 'Input canceled',
-      })
+        message: 'Input canceled'
+      });
     });
 }
 </script>
@@ -124,43 +125,43 @@ function changeServer() {
     <!--点餐分类部分-->
     <ul class="foodtype">
       <li @click="toBusinessList(1)">
-        <img src="../assets/1.png">
+        <img src="../assets/1.png" />
         <p>美食</p>
       </li>
       <li @click="toBusinessList(2)">
-        <img src="../assets/2.png">
+        <img src="../assets/2.png" />
         <p>早餐</p>
       </li>
       <li @click="toBusinessList(3)">
-        <img src="../assets/3.png">
+        <img src="../assets/3.png" />
         <p>跑腿代购</p>
       </li>
       <li @click="toBusinessList(4)">
-        <img src="../assets/4.png">
+        <img src="../assets/4.png" />
         <p>汉堡披萨</p>
       </li>
       <li @click="toBusinessList(5)">
-        <img src="../assets/5.png">
+        <img src="../assets/5.png" />
         <p>甜品饮品</p>
       </li>
       <li @click="toBusinessList(6)">
-        <img src="../assets/6.png">
+        <img src="../assets/6.png" />
         <p>速食简餐</p>
       </li>
       <li @click="toBusinessList(7)">
-        <img src="../assets/7.png">
+        <img src="../assets/7.png" />
         <p>地方小吃</p>
       </li>
       <li @click="toBusinessList(8)">
-        <img src="../assets/8.png">
+        <img src="../assets/8.png" />
         <p>米粉面馆</p>
       </li>
       <li @click="toBusinessList(9)">
-        <img src="../assets/9.png">
+        <img src="../assets/9.png" />
         <p>包子粥铺</p>
       </li>
       <li @click="toBusinessList(10)">
-        <img src="../assets/10.png">
+        <img src="../assets/10.png" />
         <p>炸鸡炸串</p>
       </li>
     </ul>
@@ -173,13 +174,11 @@ function changeServer() {
     <!--超级会员部分-->
     <div class="supermember">
       <div class="left">
-        <img src="../assets/king.png">
+        <img src="../assets/king.png" />
         <h3>超级会员</h3>
         <p>&#8226; 每月享超值权益</p>
       </div>
-      <div class="right" @click="changeServer()">
-        立即开通 &gt;
-      </div>
+      <div class="right" @click="changeServer()">立即开通 &gt;</div>
     </div>
     <!--推荐商家部分-->
     <div class="recommend">
@@ -196,10 +195,14 @@ function changeServer() {
     </ul>
     <!--推荐商家列表部分-->
     <ul class="business">
-      <li v-for="item in businessList" :key="item.businessid" @click="toBusinessInfo(item.businessid)">
+      <li
+        v-for="item in businessList"
+        :key="item.businessid"
+        @click="toBusinessInfo(item.businessid)"
+      >
         <div class="business-img">
-          <img :src="item.businessimg">
-          <div class="business-img-quantity" v-show="item.quantity > 0"> {{ item.quantity }} </div>
+          <img :src="item.businessimg" />
+          <div class="business-img-quantity" v-show="item.quantity > 0">{{ item.quantity }}</div>
         </div>
         <div class="business-info">
           <h3>{{ item.businessname }}</h3>
@@ -224,7 +227,7 @@ function changeServer() {
 .wrapper header {
   width: 100%;
   height: 12vw;
-  background-color: #0097FF;
+  background-color: #0097ff;
 
   display: flex;
   align-items: center;
@@ -256,7 +259,7 @@ function changeServer() {
 .wrapper .search .search-fixed-top {
   width: 100%;
   height: 13vw;
-  background-color: #0097FF;
+  background-color: #0097ff;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -273,7 +276,7 @@ function changeServer() {
   align-items: center;
 
   font-size: 3.5vw;
-  color: #AEAEAE;
+  color: #aeaeae;
   font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
   /*此样式是让文本选中状态无效 */
   user-select: none;
@@ -345,7 +348,7 @@ function changeServer() {
 
 .wrapper .banner a {
   font-size: 3vw;
-  color: #C79060;
+  color: #c79060;
   font-weight: 700;
 }
 
@@ -354,10 +357,10 @@ function changeServer() {
   width: 95%;
   margin: 0 auto;
   height: 11.5vw;
-  background-color: #FEEDC1;
+  background-color: #feedc1;
   margin-top: 1.3vw;
   border-radius: 2px;
-  color: #644F1B;
+  color: #644f1b;
 
   display: flex;
   justify-content: space-between;
@@ -439,9 +442,8 @@ function changeServer() {
   box-sizing: border-box;
   padding: 2.5vw;
   user-select: none;
-  border-bottom: solid 1px #DDD;
+  border-bottom: solid 1px #ddd;
   display: flex;
-
 }
 
 .wrapper .business li img {
@@ -494,7 +496,7 @@ function changeServer() {
 }
 
 .wrapper .business li .business-info .business-info-star .business-info-star-left .fa-star {
-  color: #FEC80E;
+  color: #fec80e;
   margin-right: 0.5vw;
 }
 
@@ -504,7 +506,7 @@ function changeServer() {
 }
 
 .wrapper .business li .business-info .business-info-star .business-info-star-right {
-  background-color: #0097FF;
+  background-color: #0097ff;
   color: #fff;
   font-size: 2.4vw;
   font-weight: 600;
@@ -526,11 +528,10 @@ function changeServer() {
   display: flex;
   align-items: center;
   margin-bottom: 3vw;
-
 }
 
 .wrapper .business li .business-info .business-info-explain div {
-  border: solid 1px #DDD;
+  border: solid 1px #ddd;
   font-size: 2.8vw;
   color: #666;
   border-radius: 3px;
@@ -547,13 +548,18 @@ function changeServer() {
 .wrapper .business li .business-info .business-info-promotion .business-info-promotion-left {
   display: flex;
   align-items: center;
-
 }
 
-.wrapper .business li .business-info .business-info-promotion .business-info-promotion-left .business-info-promotion-left-icon {
+.wrapper
+  .business
+  li
+  .business-info
+  .business-info-promotion
+  .business-info-promotion-left
+  .business-info-promotion-left-icon {
   width: 4vw;
   height: 4vw;
-  background-color: #70BC46;
+  background-color: #70bc46;
   border-radius: 3px;
   font-size: 3vw;
   font-weight: 500;
@@ -592,6 +598,6 @@ function changeServer() {
   border: none;
   resize: none;
   outline-color: skyblue;
-  background-color: #EEE;
+  background-color: #eee;
 }
 </style>

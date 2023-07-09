@@ -9,7 +9,9 @@ const password = ref('');
 
 // 手机号码验证
 function phoneVerify(phone: string) {
-  return /^((13\d)|(14[5,7,9])|(15[0-3,5-9])|(166)|(17[0,1,3,5,7,8])|(18[0-9])|(19[8,9]))\d{8}/.test(phone);
+  return /^((13\d)|(14[5,7,9])|(15[0-3,5-9])|(166)|(17[0,1,3,5,7,8])|(18[0-9])|(19[8,9]))\d{8}/.test(
+    phone
+  );
 }
 
 // 登录
@@ -18,56 +20,54 @@ function login() {
   // 数据验证
   if (userid.value.length < 1) {
     ElMessage({
-    message: '手机号码不能为空',
-    type: 'warning'
-  });
+      message: '手机号码不能为空',
+      type: 'warning'
+    });
     return;
   }
   // 测试太费劲，先注释掉
-   if (!phoneVerify(userid.value)) {
-     ElMessage({
-    message: '手机号码格式不正确',
-    type: 'warning'
-  });
-     return;
-   }
+  if (!phoneVerify(userid.value)) {
+    ElMessage({
+      message: '手机号码格式不正确',
+      type: 'warning'
+    });
+    return;
+  }
   if (password.value.length < 1) {
     ElMessage({
-    message: '密码不能为空',
-    type: 'warning'
-  });
+      message: '密码不能为空',
+      type: 'warning'
+    });
     return;
   }
 
   // 发送请求
   const data = {
     userid: userid.value,
-    password: password.value,
+    password: password.value
   };
 
-  axios.post('/user/login', data).then(res => {
+  axios.post('/user/login', data).then((res) => {
     let r = res.data;
     if (r.code == 0) {
       ElMessage({
-    message: '登录成功',
-    type: 'warning'
-  });
+        message: '登录成功',
+        type: 'warning'
+      });
       // 跳转到首页
       router.push('/');
     } else {
       ElMessage({
-    message: r.msg,
-    type: 'warning'
-  });
+        message: r.msg,
+        type: 'warning'
+      });
     }
-  })
-
+  });
 }
 </script>
 
 <template>
   <div class="wrapper">
-
     <!-- header部分 -->
     <header>
       <p>用户登录</p>
@@ -76,19 +76,15 @@ function login() {
     <!-- 表单部分 -->
     <ul class="form-box">
       <li>
-        <div class="title">
-          手机号码：
-        </div>
+        <div class="title">手机号码：</div>
         <div class="content">
-          <input type="text" v-model="userid" placeholder="手机号码">
+          <input type="text" v-model="userid" placeholder="手机号码" />
         </div>
       </li>
       <li>
-        <div class="title">
-          密码：
-        </div>
+        <div class="title">密码：</div>
         <div class="content">
-          <input type="password" v-model="password" placeholder="密码">
+          <input type="password" v-model="password" placeholder="密码" />
         </div>
       </li>
     </ul>
@@ -97,7 +93,6 @@ function login() {
       <button @click="login">登录</button>
     </div>
     <div class="button-register">
-
       <router-link to="/register">
         <button>去注册</button>
       </router-link>
@@ -119,7 +114,7 @@ function login() {
 .wrapper header {
   width: 100%;
   height: 12vw;
-  background-color: #0097FF;
+  background-color: #0097ff;
 
   color: #fff;
   font-size: 4.8vw;
@@ -179,7 +174,7 @@ function login() {
   font-size: 3.8vw;
   font-weight: 700;
   color: #fff;
-  background-color: #38CA73;
+  background-color: #38ca73;
   border-radius: 4px;
 
   border: none;
@@ -198,19 +193,19 @@ function login() {
   font-size: 3.8vw;
   font-weight: 700;
   color: #666;
-  background-color: #EEE;
+  background-color: #eee;
   border-radius: 4px;
 
   border: none;
   outline: none;
-  border: solid 1px #DDD;
+  border: solid 1px #ddd;
 }
 
 /******底部菜单部分*****/
 .wrapper .footer {
   width: 100%;
   height: 14vw;
-  border-top: solid 1px #DDD;
+  border-top: solid 1px #ddd;
   background-color: #fff;
 
   position: fixed;
@@ -220,7 +215,6 @@ function login() {
   display: flex;
   justify-content: space-around;
   align-items: center;
-
 }
 
 .wrapper .footer li {

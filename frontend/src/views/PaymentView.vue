@@ -2,8 +2,8 @@
 import axios from 'axios';
 import { onBeforeMount, ref } from 'vue';
 import type { Ref } from 'vue/dist/vue.js';
-import { useRoute } from "vue-router";
-import FooterSection from "@/components/FooterSection.vue";
+import { useRoute } from 'vue-router';
+import FooterSection from '@/components/FooterSection.vue';
 import router from '@/router';
 
 const isShowDetailet = ref(false);
@@ -40,7 +40,6 @@ interface OrderItem {
   orderState: number;
   foodList: FoodItem[];
   business: BusinessItem;
-
 }
 
 const orderid = route.params.id;
@@ -54,29 +53,28 @@ onBeforeMount(() => {
     if (r.code == 0) {
       orderList.value = r.data;
     }
-
-  })
-})
+  });
+});
 // 确认支付
 function confirmPayment() {
   axios.post('/orders/pay/' + orderid).then((res) => {
     let r = res.data;
     if (r.code == 0) {
       ElMessage({
-        message: "支付成功",
-        type: "success"
-      })
-      router.push("/myorder");
+        message: '支付成功',
+        type: 'success'
+      });
+      router.push('/myorder');
     }
-  })
+  });
 }
 
 function payment() {
-  let modal = document.getElementById("myModal")!;
-  modal.style.display = "block";
+  let modal = document.getElementById('myModal')!;
+  modal.style.display = 'block';
   window.onclick = function (event: MouseEvent) {
     if (event.target == modal) {
-      modal.style.display = "none";
+      modal.style.display = 'none';
     }
   };
 }
@@ -84,7 +82,6 @@ function payment() {
 
 <template>
   <div class="wrapper">
-
     <!-- header部分 -->
     <header>
       <p>在线支付</p>
@@ -97,7 +94,6 @@ function payment() {
         {{ orderList?.business.businessname }}
         <i v-show="isShowDetailet" class="fa fa-caret-up" @click="detailetShow"></i>
         <i v-show="!isShowDetailet" class="fa fa-caret-down" @click="detailetShow"></i>
-
       </p>
       <p>&#165;{{ orderList?.ordertotal }}</p>
     </div>
@@ -114,7 +110,6 @@ function payment() {
       </li>
     </ul>
 
-
     <div class="payment-button">
       <button id="triggerBtn" @click="payment()">支付</button>
     </div>
@@ -128,14 +123,21 @@ function payment() {
         </div>
         <div class="modal-body">
           <label class="payway clear-float" for="zhifubao">
-            <img src="../assets/zhifubao.png">
-            <input type="radio" name="pay" id="zhifubao" value="zhifubao" checked class="right-float" />
+            <img src="../assets/zhifubao.png" />
+            <input
+              type="radio"
+              name="pay"
+              id="zhifubao"
+              value="zhifubao"
+              checked
+              class="right-float"
+            />
           </label>
           <!-- 分割线 -->
           <div class="fenge"></div>
-          
+
           <label class="payway clear-float" for="wechat">
-            <img src="../assets/wechat.png">
+            <img src="../assets/wechat.png" />
             <input type="radio" name="pay" id="wechat" value="wechat" class="right-float" />
           </label>
         </div>
@@ -159,7 +161,7 @@ function payment() {
 .wrapper header {
   width: 100%;
   height: 12vw;
-  background-color: #0097FF;
+  background-color: #0097ff;
   color: #fff;
   font-size: 4.8vw;
 
@@ -277,7 +279,7 @@ function payment() {
   border: none;
   outline: none;
   border-radius: 4px;
-  background-color: #38CA73;
+  background-color: #38ca73;
   color: #fff;
 }
 
@@ -294,7 +296,7 @@ function payment() {
   padding: 1vh 0;
   color: #fff;
   border-radius: 3px;
-  float: left
+  float: left;
 }
 
 .wrapper .bottom_btns .res_btn {
@@ -317,7 +319,6 @@ function payment() {
   display: flex;
   /* position: relative; */
   justify-content: center;
-
 }
 
 /* -----------------------------模态框样式-------------------------------- */
@@ -379,7 +380,6 @@ function payment() {
   text-align: center;
   background: #57dcd8;
   border-radius: 4px;
-
 }
 
 /*模态框头部*/
@@ -411,7 +411,7 @@ function payment() {
 .wrapper .footer {
   width: 100%;
   height: 14vw;
-  border-top: solid 1px #DDD;
+  border-top: solid 1px #ddd;
   background-color: #fff;
 
   position: fixed;

@@ -7,7 +7,6 @@ import FooterSection from '@/components/FooterSection.vue';
     <i class="fa fa-wheelchair-alt" aria-hidden="true"></i>
     <!-- 底部菜单部分 -->
     <FooterSection />
-
   </div>
 </template>
 
@@ -32,13 +31,13 @@ import FooterSection from '@/components/FooterSection.vue';
 .wrapper header {
   width: 100%;
   height: 18vw;
-  background-color: #FFFFF3;
+  background-color: #fffff3;
 
   display: flex;
   align-items: center;
 }
-.wrapper .fa-wheelchair-alt{
-  margin:auto;
+.wrapper .fa-wheelchair-alt {
+  margin: auto;
   font-size: 50vw;
   vertical-align: middle;
 }

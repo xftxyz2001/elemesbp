@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import FooterSection from '@/components/FooterSection.vue';
-import router from "@/router";
+import router from '@/router';
 import axios from 'axios';
 import { ref } from 'vue';
 
@@ -15,7 +15,7 @@ interface DeliveryAddressItem {
 
 const deliveryAddressList = ref<DeliveryAddressItem[]>([]);
 
-function updateList(){
+function updateList() {
   axios.get('/daddress/list').then((res) => {
     let r = res.data;
     if (r.code == 0) {
@@ -26,39 +26,37 @@ function updateList(){
 updateList();
 
 function setDeliveryAddress(da: DeliveryAddressItem) {
-  localStorage.setItem('daid',da.daid.toString());
-  router.push({name:'order'});
+  localStorage.setItem('daid', da.daid.toString());
+  router.push({ name: 'order' });
 }
 function editUserAddress(da: DeliveryAddressItem) {
-  router.push({name:'editAddress',params:{id:da.daid}});
+  router.push({ name: 'editAddress', params: { id: da.daid } });
 }
 function removeUserAddress(da: DeliveryAddressItem) {
   let daid = localStorage.getItem('daid');
-  if(daid && parseInt(daid) == da.daid){
-    localStorage.setItem('daid',deliveryAddressList.value[0].daid.toString());
+  if (daid && parseInt(daid) == da.daid) {
+    localStorage.setItem('daid', deliveryAddressList.value[0].daid.toString());
   }
   axios.delete('/daddress/' + da.daid).then((res) => {
     let r = res.data;
     if (r.code == 0) {
       ElMessage({
-        message:"删除成功",
-        type:"success",
-        center:true
-      })
+        message: '删除成功',
+        type: 'success',
+        center: true
+      });
       updateList();
     } else {
       ElMessage({
-    message: r.msg,
-    type: 'warning'
-  });
+        message: r.msg,
+        type: 'warning'
+      });
     }
   });
-
 }
 function toAddUserAddress() {
-  router.push({name:'editAddress',params:{id:0}});
+  router.push({ name: 'editAddress', params: { id: 0 } });
 }
-
 </script>
 
 <template>
@@ -73,7 +71,9 @@ function toAddUserAddress() {
     <ul class="addresslist">
       <li v-for="item in deliveryAddressList" :key="item.daid">
         <div class="addresslist-left" @click="setDeliveryAddress(item)">
-          <h3>{{ item.contactname }}{{ item.contactsex == 1 ? '先生' : '女士' }} {{ item.contacttel }}</h3>
+          <h3>
+            {{ item.contactname }}{{ item.contactsex == 1 ? '先生' : '女士' }} {{ item.contacttel }}
+          </h3>
           <p>{{ item.address }}</p>
         </div>
         <div class="addresslist-right">
@@ -99,7 +99,7 @@ function toAddUserAddress() {
 .wrapper {
   width: 100%;
   height: 100%;
-  background-color: #F5F5F5;
+  background-color: #f5f5f5;
 }
 
 /*************** header ***************/
@@ -107,7 +107,7 @@ function toAddUserAddress() {
   width: 100%;
   height: 12vw;
   /* background-color: #0097FF; */
-  background-color: #0097FF;
+  background-color: #0097ff;
 
   color: #fff;
   font-size: 4.8vw;
@@ -143,7 +143,7 @@ function toAddUserAddress() {
 .wrapper .addresslist li {
   width: 100%;
   box-sizing: border-box;
-  border-bottom: solid 1px #DDD;
+  border-bottom: solid 1px #ddd;
   padding: 3vw;
   display: flex;
 }
@@ -180,15 +180,15 @@ function toAddUserAddress() {
 .wrapper .addbtn {
   width: 100%;
   height: 14vw;
-  border-top: solid 1px #DDD;
-  border-bottom: solid 1px #DDD;
+  border-top: solid 1px #ddd;
+  border-bottom: solid 1px #ddd;
   background-color: #fff;
   margin-top: 4vw;
   display: flex;
   justify-content: center;
   align-items: center;
   font-size: 4.5vw;
-  color: #0097FF;
+  color: #0097ff;
   user-select: none;
   cursor: pointer;
 }

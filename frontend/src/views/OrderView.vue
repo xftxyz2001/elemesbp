@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import router from "@/router";
+import router from '@/router';
 import axios from 'axios';
 import { onBeforeMount, ref } from 'vue';
 
@@ -22,11 +22,11 @@ interface DeliveryAddressItem {
   address: string; // 收货地址
   userid: number; // 用户编号
 }
-interface FoodItem{
+interface FoodItem {
   foodid: number;
   foodname: string;
   foodexplain: string;
-  foodimg : string;
+  foodimg: string;
   foodprice: number;
   businessid: number;
   remarks: string;
@@ -61,21 +61,21 @@ onBeforeMount(() => {
       business.value = r.data;
     } else {
       ElMessage({
-    message: r.msg,
-    type: 'warning'
-  });
+        message: r.msg,
+        type: 'warning'
+      });
     }
   });
-  if(daid){
+  if (daid) {
     axios.get('/daddress/' + daid).then((res) => {
       let r = res.data;
       if (r.code == 0) {
         deliveryaddress.value = r.data;
       } else {
         ElMessage({
-    message: r.msg,
-    type: 'warning'
-  });
+          message: r.msg,
+          type: 'warning'
+        });
       }
     });
   }
@@ -89,13 +89,13 @@ onBeforeMount(() => {
       totalSettle.value = r.data.totalSettle;
     } else {
       ElMessage({
-    message: r.msg,
-    type: 'warning'
-  });
+        message: r.msg,
+        type: 'warning'
+      });
     }
   });
   getCartList();
-})
+});
 
 // 返回上一页
 function goback() {
@@ -104,35 +104,31 @@ function goback() {
 
 // 添加收货地址
 function toUserAddress() {
-  console.log("添加收货地址");
-  router.push({name:'userAddress'});
-
+  console.log('添加收货地址');
+  router.push({ name: 'userAddress' });
 }
 
 // 去支付
 function toPayment() {
-  if(localStorage.getItem('daid') != null){
-
+  if (localStorage.getItem('daid') != null) {
     let param = {
-      businessid : localStorage.getItem('businessid'),
-      daid : localStorage.getItem('daid')
-    }
-    axios.post('/orders/new',param).then((res) =>{
+      businessid: localStorage.getItem('businessid'),
+      daid: localStorage.getItem('daid')
+    };
+    axios.post('/orders/new', param).then((res) => {
       let r = res.data;
-      if(r.code == 0){
+      if (r.code == 0) {
         console.log(r);
-        router.push({name:'payment',params:{id:r.data.orderid}});
+        router.push({ name: 'payment', params: { id: r.data.orderid } });
       }
-    })
-  }else{
+    });
+  } else {
     ElMessage({
-    message: '请选择收货地址',
-    type: 'warning'
-  });
+      message: '请选择收货地址',
+      type: 'warning'
+    });
   }
-
 }
-
 
 function getCartList() {
   axios.get('/cart/business/' + businessid + '/with/food').then((res) => {
@@ -141,13 +137,12 @@ function getCartList() {
       cartList.value = r.data;
     } else {
       ElMessage({
-    message: r.msg,
-    type: 'warning'
-  });
+        message: r.msg,
+        type: 'warning'
+      });
     }
   });
 }
-
 </script>
 
 <template>
@@ -164,7 +159,8 @@ function getCartList() {
         <p>{{ deliveryaddress != null ? deliveryaddress.address : '请选择送货地址' }}</p>
         <i class="fa fa-angle-right"></i>
       </div>
-      <p>{{ deliveryaddress != null ? deliveryaddress.contactname : '' }}
+      <p>
+        {{ deliveryaddress != null ? deliveryaddress.contactname : '' }}
         {{ deliveryaddress != null ? (deliveryaddress.contactsex == 1 ? '先生' : '女士') : '' }}
         {{ deliveryaddress != null ? deliveryaddress.contacttel : '' }}
       </p>
@@ -175,7 +171,7 @@ function getCartList() {
     <ul class="order-detailed">
       <li v-for="cart in cartList" :key="cart.cartid">
         <div class="order-detailed-left">
-          <img :src="cart.food.foodimg">
+          <img :src="cart.food.foodimg" />
           <p>{{ cart.food.foodname }} x {{ cart.quantity }}</p>
         </div>
         <p>&#165;{{ (cart.food.foodprice * cart.quantity).toFixed(2) }}</p>
@@ -188,12 +184,8 @@ function getCartList() {
 
     <!-- 合计部分 -->
     <div class="total">
-      <div class="total-left">
-        &#165;{{ totalSettle }}
-      </div>
-      <div class="total-right" @click="toPayment">
-        去支付
-      </div>
+      <div class="total-left">&#165;{{ totalSettle }}</div>
+      <div class="total-right" @click="toPayment">去支付</div>
     </div>
   </div>
 </template>
@@ -209,7 +201,7 @@ function getCartList() {
 .wrapper header {
   width: 100%;
   height: 12vw;
-  background-color: #0097FF;
+  background-color: #0097ff;
   color: #fff;
   font-size: 4.8vw;
 
@@ -222,8 +214,8 @@ function getCartList() {
   /*justify-content: center;*/
   align-items: center;
 }
-.wrapper header .head-title{
-  margin:0 auto;
+.wrapper header .head-title {
+  margin: 0 auto;
 }
 .wrapper header .fa-angle-left {
   color: #fff;
@@ -237,7 +229,7 @@ function getCartList() {
   /*注意这里，不设置高，靠内容撑开。因为地址有可能折行*/
   width: 100%;
   margin-top: 12vw;
-  background-color: #0097EF;
+  background-color: #0097ef;
   box-sizing: border-box;
   padding: 2vw;
   color: #fff;
@@ -278,7 +270,7 @@ function getCartList() {
   padding: 3vw;
   font-size: 4vw;
   color: #666;
-  border-bottom: solid 1px #DDD;
+  border-bottom: solid 1px #ddd;
 }
 
 /****************** 订单明细部分 ******************/
@@ -355,7 +347,7 @@ function getCartList() {
 
 .wrapper .total .total-right {
   flex: 1;
-  background-color: #38CA73;
+  background-color: #38ca73;
   color: #fff;
   font-size: 4.5vw;
   font-weight: 700;

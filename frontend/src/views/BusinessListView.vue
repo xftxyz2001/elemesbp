@@ -40,7 +40,7 @@ axios.get('/business/ordertype/' + ordertypeid).then((res) => {
   let r = res.data;
   if (r.code == 0) {
     businessList.value = r.data;
-    if(businessList.value?.length == 0){
+    if (businessList.value?.length == 0) {
       // hasBusiness.value = true;
       // console.log(hasBusiness.value);
     }
@@ -48,14 +48,16 @@ axios.get('/business/ordertype/' + ordertypeid).then((res) => {
     // 获取当前用户在指定店家的购物车项数
     if (businessList.value && businessList.value.length > 0) {
       for (let i = 0; i < businessList.value.length; i++) {
-        businessList.value[i].quantity = getCartItemCountForUserInStore(businessList.value[i].businessid);
+        businessList.value[i].quantity = getCartItemCountForUserInStore(
+          businessList.value[i].businessid
+        );
       }
     }
   } else {
     ElMessage({
-    message: r.msg,
-    type: 'warning'
-  });
+      message: r.msg,
+      type: 'warning'
+    });
   }
 });
 
@@ -64,8 +66,8 @@ function toBusinessInfo(businessid: number) {
   router.push({
     name: 'businessInfo',
     params: {
-      id: businessid,
-    },
+      id: businessid
+    }
   });
 }
 </script>
@@ -79,10 +81,14 @@ function toBusinessInfo(businessid: number) {
     <div v-show="hasBusiness">该分类下暂无商家</div>
     <!-- 商家列表部分 -->
     <ul class="business">
-      <li v-for="item in businessList" :key="item.businessid" @click="toBusinessInfo(item.businessid)">
+      <li
+        v-for="item in businessList"
+        :key="item.businessid"
+        @click="toBusinessInfo(item.businessid)"
+      >
         <div class="business-img">
-          <img :src="item.businessimg">
-          <div class="business-img-quantity" v-show="item.quantity > 0"> {{ item.quantity }} </div>
+          <img :src="item.businessimg" />
+          <div class="business-img-quantity" v-show="item.quantity > 0">{{ item.quantity }}</div>
         </div>
         <div class="business-info">
           <h3>{{ item.businessname }}</h3>
@@ -108,7 +114,7 @@ function toBusinessInfo(businessid: number) {
 .wrapper header {
   width: 100%;
   height: 12vw;
-  background-color: #0097FF;
+  background-color: #0097ff;
   color: #fff;
   font-size: 4.8vw;
 
@@ -133,7 +139,7 @@ function toBusinessInfo(businessid: number) {
   width: 100%;
   box-sizing: border-box;
   padding: 2.5vw;
-  border-bottom: solid 1px #DDD;
+  border-bottom: solid 1px #ddd;
   user-select: none;
   cursor: pointer;
 

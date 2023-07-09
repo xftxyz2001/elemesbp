@@ -1,9 +1,8 @@
 <script setup lang="ts">
-
 import FooterSection from '@/components/FooterSection.vue';
 import axios from 'axios';
-import {onBeforeMount, ref} from 'vue';
-import router from "@/router";
+import { onBeforeMount, ref } from 'vue';
+import router from '@/router';
 interface BusinessItem {
   businessid: number; // 商家编号
   businessname: string; // 商家名称
@@ -26,52 +25,49 @@ interface FoodItem {
 
   quantity: number; // 食品数量
 }
-interface OrderItem{
-  orderid:number;
-  userid:string;
-  businessid:number;
-  orderdate:string;
-  ordertotal:number;
-  daid:number;
-  orderstate:number;
-  foodList:FoodItem[];
-  business:BusinessItem;
-  isShowDetailet:boolean;
+interface OrderItem {
+  orderid: number;
+  userid: string;
+  businessid: number;
+  orderdate: string;
+  ordertotal: number;
+  daid: number;
+  orderstate: number;
+  foodList: FoodItem[];
+  business: BusinessItem;
+  isShowDetailet: boolean;
 }
 
 const orderList = ref<OrderItem[] | null>(null);
 
-onBeforeMount(()=>{
-  axios.get('/orders/list').then((res)=>{
+onBeforeMount(() => {
+  axios.get('/orders/list').then((res) => {
     let r = res.data;
-    if(r.code == 0){
+    if (r.code == 0) {
       orderList.value = r.data;
-      if(orderList.value){
-        for(let i = 0;i < orderList.value?.length;i++){
+      if (orderList.value) {
+        for (let i = 0; i < orderList.value?.length; i++) {
           axios.get('/orders/detailet/' + orderList.value[i].orderid).then((res) => {
             let a = res.data;
-            if(a.code == 0){
-              if(orderList.value){
+            if (a.code == 0) {
+              if (orderList.value) {
                 orderList.value[i] = a.data;
                 orderList.value[i].isShowDetailet = false;
                 console.log(orderList.value[i]);
               }
             }
-          })
+          });
         }
       }
     }
-  })
-})
+  });
+});
 
-
-
-function detailetShow(item:OrderItem){
+function detailetShow(item: OrderItem) {
   item.isShowDetailet = !item.isShowDetailet;
-
 }
-function toPayment(orderid:number){
-  router.push({name:'payment',params:{id:orderid}});
+function toPayment(orderid: number) {
+  router.push({ name: 'payment', params: { id: orderid } });
 }
 </script>
 
@@ -88,55 +84,70 @@ function toPayment(orderid:number){
         <!-- 订单列表部分 -->
         <h3>未支付订单信息：</h3>
         <ul class="order">
-
           <li v-for="item in orderList" :key="item.orderid">
-            <div class="order-info" v-if="item.orderstate==0">
+            <div class="order-info" v-if="item.orderstate == 0">
               <p>
-                {{item.business.businessname}}
-                <i v-show="item.isShowDetailet" class="fa fa-caret-up" @click="detailetShow(item)"></i>
-                <i v-show="!item.isShowDetailet" class="fa fa-caret-down" @click="detailetShow(item)"></i>
+                {{ item.business.businessname }}
+                <i
+                  v-show="item.isShowDetailet"
+                  class="fa fa-caret-up"
+                  @click="detailetShow(item)"
+                ></i>
+                <i
+                  v-show="!item.isShowDetailet"
+                  class="fa fa-caret-down"
+                  @click="detailetShow(item)"
+                ></i>
               </p>
               <div class="order-info-right">
-                <p>&#165;{{item.ordertotal}}</p>
+                <p>&#165;{{ item.ordertotal }}</p>
                 <div class="order-info-right-icon" @click="toPayment(item.orderid)">去支付</div>
               </div>
             </div>
             <ul class="order-detailet" v-show="item.isShowDetailet">
               <li v-for="odItem in item.foodList" :key="odItem.foodid">
-                <p>{{odItem.foodname}} x {{odItem.quantity}}</p>
-                <p>&#165;{{odItem.foodprice*odItem.quantity}}</p>
+                <p>{{ odItem.foodname }} x {{ odItem.quantity }}</p>
+                <p>&#165;{{ odItem.foodprice * odItem.quantity }}</p>
               </li>
               <li>
                 <p>配送费</p>
-                <p>&#165;{{item.business.deliveryprice}}</p>
+                <p>&#165;{{ item.business.deliveryprice }}</p>
               </li>
             </ul>
           </li>
         </ul>
 
         <h3>已支付订单信息：</h3>
-        <ul class="order"> <!-- v-if="item.commentState==1"-->
+        <ul class="order">
+          <!-- v-if="item.commentState==1"-->
           <li v-for="item in orderList" :key="item.orderid">
-            <div class="order-info" v-if="item.orderstate==1">
+            <div class="order-info" v-if="item.orderstate == 1">
               <p>
-                {{item.business.businessname}}
-                <i v-show="item.isShowDetailet" class="fa fa-caret-up" @click="detailetShow(item)"></i>
-                <i v-show="!item.isShowDetailet" class="fa fa-caret-down" @click="detailetShow(item)"></i>
+                {{ item.business.businessname }}
+                <i
+                  v-show="item.isShowDetailet"
+                  class="fa fa-caret-up"
+                  @click="detailetShow(item)"
+                ></i>
+                <i
+                  v-show="!item.isShowDetailet"
+                  class="fa fa-caret-down"
+                  @click="detailetShow(item)"
+                ></i>
               </p>
               <div class="order-info-right">
-                <p>&#165;{{item.ordertotal}}</p>
-                <div class="order-info-right-icon3" >已完成
-                </div>
+                <p>&#165;{{ item.ordertotal }}</p>
+                <div class="order-info-right-icon3">已完成</div>
               </div>
             </div>
             <ul class="order-detailet" v-show="item.isShowDetailet">
               <li v-for="odItem in item.foodList" :key="odItem.foodid">
-                <p>{{odItem.foodname}} x {{odItem.quantity}}</p>
-                <p>&#165;{{odItem.foodprice*odItem.quantity}}</p>
+                <p>{{ odItem.foodname }} x {{ odItem.quantity }}</p>
+                <p>&#165;{{ odItem.foodprice * odItem.quantity }}</p>
               </li>
               <li>
                 <p>配送费</p>
-                <p>&#165;{{item.business.deliveryprice}}</p>
+                <p>&#165;{{ item.business.deliveryprice }}</p>
               </li>
             </ul>
           </li>
@@ -147,11 +158,6 @@ function toPayment(orderid:number){
         <FooterSection />
       </el-footer>
     </el-container>
-
-
-
-
-
   </div>
 </template>
 
@@ -166,7 +172,7 @@ function toPayment(orderid:number){
 .wrapper header {
   width: 100%;
   height: 12vw;
-  background-color: #0097FF;
+  background-color: #0097ff;
   color: #fff;
   font-size: 4.8vw;
 

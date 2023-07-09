@@ -1,5 +1,4 @@
-<script setup lang="ts">
-</script>
+<script setup lang="ts"></script>
 
 <template>
   <ul class="footer">
@@ -34,7 +33,7 @@
 .wrapper .footer {
   width: 100%;
   height: 14vw;
-  border-top: solid 1px #DDD;
+  border-top: solid 1px #ddd;
   background-color: #fff;
 
   position: fixed;
@@ -46,7 +45,7 @@
   align-items: center;
 }
 
-.wrapper .footer .router-link-active li{
+.wrapper .footer .router-link-active li {
   color: black;
 }
 

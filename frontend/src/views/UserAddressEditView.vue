@@ -3,7 +3,7 @@ import FooterSection from '@/components/FooterSection.vue';
 import axios from 'axios';
 import { ref } from 'vue';
 import { useRoute } from 'vue-router';
-import router from "@/router";
+import router from '@/router';
 
 const route = useRoute();
 
@@ -15,36 +15,37 @@ const deliveryAddress = ref({
   contactsex: 1,
   contacttel: '',
   address: '',
-  userid: '',
+  userid: ''
 });
 
 axios.get('/daddress/' + daid).then((res) => {
   let r = res.data;
   if (r.code == 0) {
-    if(r.data)
-    deliveryAddress.value = r.data;
+    if (r.data) deliveryAddress.value = r.data;
   }
 });
 function phoneVerify(phone: string) {
-  return /^((13\d)|(14[5,7,9])|(15[0-3,5-9])|(166)|(17[0,1,3,5,7,8])|(18[0-9])|(19[8,9]))\d{8}/.test(phone);
+  return /^((13\d)|(14[5,7,9])|(15[0-3,5-9])|(166)|(17[0,1,3,5,7,8])|(18[0-9])|(19[8,9]))\d{8}/.test(
+    phone
+  );
 }
 //daddress/save
 function saveUserAddress() {
-  if(!phoneVerify(deliveryAddress.value.contacttel)){
-    alert("号码格式不对,请重新输入");
+  if (!phoneVerify(deliveryAddress.value.contacttel)) {
+    alert('号码格式不对,请重新输入');
     return;
   }
   console.log(deliveryAddress.value);
-  axios.post('/daddress/save', deliveryAddress.value).then(res => {
+  axios.post('/daddress/save', deliveryAddress.value).then((res) => {
     let r = res.data;
     if (r.code == 0) {
-      router.push({name:'userAddress'});
+      router.push({ name: 'userAddress' });
       console.log('更新成功');
     } else {
       ElMessage({
-    message: r.msg,
-    type: 'warning'
-  });
+        message: r.msg,
+        type: 'warning'
+      });
     }
   });
 }
@@ -52,7 +53,6 @@ function saveUserAddress() {
 
 <template>
   <div class="wrapper">
-
     <!-- header部分 -->
     <header>
       <p>编辑送货地址</p>
@@ -61,36 +61,40 @@ function saveUserAddress() {
     <!-- 表单部分 -->
     <ul class="form-box">
       <li>
-        <div class="title">
-          联系人：
-        </div>
+        <div class="title">联系人：</div>
         <div class="content">
-          <input type="text" v-model="deliveryAddress.contactname" placeholder="联系人姓名">
+          <input type="text" v-model="deliveryAddress.contactname" placeholder="联系人姓名" />
         </div>
       </li>
       <li>
-        <div class="title">
-          性别：
-        </div>
-        <div class="content" style="font-size: 3vw;">
-          <input type="radio" name="gender" v-model="deliveryAddress.contactsex" value="1" style="width:6vw;height:3.2vw;">男
-          <input type="radio" name="gender" v-model="deliveryAddress.contactsex" value="0" style="width:6vw;height:3.2vw;">女
+        <div class="title">性别：</div>
+        <div class="content" style="font-size: 3vw">
+          <input
+            type="radio"
+            name="gender"
+            v-model="deliveryAddress.contactsex"
+            value="1"
+            style="width: 6vw; height: 3.2vw"
+          />男
+          <input
+            type="radio"
+            name="gender"
+            v-model="deliveryAddress.contactsex"
+            value="0"
+            style="width: 6vw; height: 3.2vw"
+          />女
         </div>
       </li>
       <li>
-        <div class="title">
-          电话：
-        </div>
+        <div class="title">电话：</div>
         <div class="content">
-          <input type="tel" v-model="deliveryAddress.contacttel" placeholder="电话">
+          <input type="tel" v-model="deliveryAddress.contacttel" placeholder="电话" />
         </div>
       </li>
       <li>
-        <div class="title">
-          收货地址：
-        </div>
+        <div class="title">收货地址：</div>
         <div class="content">
-          <input type="text" v-model="deliveryAddress.address" placeholder="收货地址">
+          <input type="text" v-model="deliveryAddress.address" placeholder="收货地址" />
         </div>
       </li>
     </ul>
@@ -100,7 +104,6 @@ function saveUserAddress() {
 
     <!-- 底部菜单部分 -->
     <FooterSection />
-
   </div>
 </template>
 
@@ -115,7 +118,7 @@ function saveUserAddress() {
 .wrapper header {
   width: 100%;
   height: 12vw;
-  background-color: #0097FF;
+  background-color: #0097ff;
   display: flex;
   justify-content: space-around;
   align-items: center;
@@ -178,6 +181,6 @@ function saveUserAddress() {
   outline: none;
   border-radius: 4px;
   color: #fff;
-  background-color: #38CA73;
+  background-color: #38ca73;
 }
 </style>

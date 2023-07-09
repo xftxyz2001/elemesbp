@@ -1,13 +1,13 @@
 <script setup lang="ts">
 import FooterSection from '@/components/FooterSection.vue';
-import router from "@/router";
+import router from '@/router';
 import axios from 'axios';
-import { onBeforeMount, ref } from "vue";
+import { onBeforeMount, ref } from 'vue';
 interface User {
-  userid: string
-  username: string
-  usersex: number
-  userimg: string
+  userid: string;
+  username: string;
+  usersex: number;
+  userimg: string;
 }
 const user = ref<User | null>(null);
 
@@ -17,7 +17,7 @@ onBeforeMount(() => {
     if (r.code == 0) {
       user.value = r.data;
     }
-  })
+  });
 });
 
 function logout() {
@@ -25,27 +25,26 @@ function logout() {
     let r = res.data;
     if (r.code == 0) {
       ElMessage({
-        message: "退出成功",
-        type: "success"
-      })
-      router.push({ name: "login" });
+        message: '退出成功',
+        type: 'success'
+      });
+      router.push({ name: 'login' });
     }
-  })
+  });
 }
 
 function toMyOrder() {
-  router.push({ name: "myorder" })
+  router.push({ name: 'myorder' });
 }
 </script>
 
 <template>
   <!--总容器-->
   <div class="wrapper">
-
     <!--header部分-->
     <header>
       <div class="userInfo">
-        <img :src="user?.userimg">
+        <img :src="user?.userimg" />
         <div class="location-text">
           <div class="name">
             {{ user?.username }}
@@ -63,19 +62,19 @@ function toMyOrder() {
     <!--用户信息部分-->
     <ul class="userinfo">
       <li>
-        <img src="../assets/收藏.png">
+        <img src="../assets/收藏.png" />
         <p>收藏</p>
       </li>
       <li>
-        <img src="../assets/足迹.png">
+        <img src="../assets/足迹.png" />
         <p>足迹</p>
       </li>
       <li>
-        <img src="../assets/红包卡券.png">
+        <img src="../assets/红包卡券.png" />
         <p>红包卡券</p>
       </li>
       <li>
-        <img src="../assets/余额.png">
+        <img src="../assets/余额.png" />
         <p>余额</p>
       </li>
     </ul>
@@ -84,31 +83,29 @@ function toMyOrder() {
     <ul class="listinfo">
       <p>
         我的订单
-        <p2>
-          全部订单 <i class="fa fa-angle-right"></i>
-        </p2>
+        <p2> 全部订单 <i class="fa fa-angle-right"></i> </p2>
       </p>
     </ul>
     <ul class="listinfo">
       <pic>
         <li>
-          <img src="../assets/待付款.png">
+          <img src="../assets/待付款.png" />
           <p>待付款</p>
         </li>
         <li>
-          <img src="../assets/足迹.png">
+          <img src="../assets/足迹.png" />
           <p>待收货</p>
         </li>
         <li>
-          <img src="../assets/待使用.png">
+          <img src="../assets/待使用.png" />
           <p>待使用</p>
         </li>
         <li>
-          <img src="../assets/红包卡券.png">
+          <img src="../assets/红包卡券.png" />
           <p>待评价</p>
         </li>
         <li>
-          <img src="../assets/余额.png">
+          <img src="../assets/余额.png" />
           <p>退款售后</p>
         </li>
       </pic>
@@ -120,11 +117,10 @@ function toMyOrder() {
     <!--吃货豆部分-->
     <div class="banner2"></div>
 
-    <div style="height: 14vw;"></div>
+    <div style="height: 14vw"></div>
 
     <!-- 底部菜单部分 -->
     <FooterSection />
-
   </div>
 </template>
 
@@ -146,14 +142,13 @@ function toMyOrder() {
 .wrapper header {
   width: 100%;
   height: 18vw;
-  background-color: #FFFFF3;
+  background-color: #fffff3;
 
   display: flex;
   align-items: center;
 }
 
 .wrapper header .userInfo {
-
   display: flex;
   justify-content: center;
   align-items: center;
@@ -225,7 +220,7 @@ function toMyOrder() {
 .wrapper .search .search-fixed-top {
   width: 100%;
   height: 13vw;
-  background-color: #0097FF;
+  background-color: #0097ff;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -242,7 +237,7 @@ function toMyOrder() {
   align-items: center;
 
   font-size: 3.5vw;
-  color: #AEAEAE;
+  color: #aeaeae;
   font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
   /*此样式是让文本选中状态无效 */
   user-select: none;
@@ -348,7 +343,6 @@ function toMyOrder() {
 
   box-sizing: border-box;
   padding: 2vw 2vw;
-
 }
 
 .wrapper .listinfo pic li {
@@ -409,10 +403,10 @@ function toMyOrder() {
   width: 95%;
   margin: 0 auto;
   height: 11.5vw;
-  background-color: #FEEDC1;
+  background-color: #feedc1;
   margin-top: 1.3vw;
   border-radius: 2px;
-  color: #644F1B;
+  color: #644f1b;
 
   display: flex;
   justify-content: space-between;
@@ -494,9 +488,8 @@ function toMyOrder() {
   box-sizing: border-box;
   padding: 2.5vw;
   user-select: none;
-  border-bottom: solid 1px #DDD;
+  border-bottom: solid 1px #ddd;
   display: flex;
-
 }
 
 .wrapper .business li img {
@@ -549,7 +542,7 @@ function toMyOrder() {
 }
 
 .wrapper .business li .business-info .business-info-star .business-info-star-left .fa-star {
-  color: #FEC80E;
+  color: #fec80e;
   margin-right: 0.5vw;
 }
 
@@ -559,7 +552,7 @@ function toMyOrder() {
 }
 
 .wrapper .business li .business-info .business-info-star .business-info-star-right {
-  background-color: #0097FF;
+  background-color: #0097ff;
   color: #fff;
   font-size: 2.4vw;
   font-weight: 600;
@@ -581,11 +574,10 @@ function toMyOrder() {
   display: flex;
   align-items: center;
   margin-bottom: 3vw;
-
 }
 
 .wrapper .business li .business-info .business-info-explain div {
-  border: solid 1px #DDD;
+  border: solid 1px #ddd;
   font-size: 2.8vw;
   color: #666;
   border-radius: 3px;
@@ -602,13 +594,18 @@ function toMyOrder() {
 .wrapper .business li .business-info .business-info-promotion .business-info-promotion-left {
   display: flex;
   align-items: center;
-
 }
 
-.wrapper .business li .business-info .business-info-promotion .business-info-promotion-left .business-info-promotion-left-icon {
+.wrapper
+  .business
+  li
+  .business-info
+  .business-info-promotion
+  .business-info-promotion-left
+  .business-info-promotion-left-icon {
   width: 4vw;
   height: 4vw;
-  background-color: #70BC46;
+  background-color: #70bc46;
   border-radius: 3px;
   font-size: 3vw;
   font-weight: 500;
@@ -641,7 +638,7 @@ function toMyOrder() {
 .wrapper .footer {
   width: 100%;
   height: 14vw;
-  border-top: solid 1px #DDD;
+  border-top: solid 1px #ddd;
   background-color: #fff;
 
   position: fixed;

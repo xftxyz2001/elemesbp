@@ -1,9 +1,9 @@
 <script setup lang="ts">
 import axios from 'axios';
-import {onBeforeMount, ref} from 'vue';
+import { onBeforeMount, ref } from 'vue';
 import type { Ref } from 'vue/dist/vue.js';
 import { useRoute } from 'vue-router';
-import router from "@/router";
+import router from '@/router';
 
 const route = useRoute();
 
@@ -22,8 +22,6 @@ interface BusinessItem {
 const businessid = route.params.id; // 商家编号
 const business = ref<BusinessItem | null>(null); // 商家信息
 
-
-
 // 根据商家编号获取商家食品列表
 interface FoodItem {
   foodid: number; // 食品编号
@@ -39,7 +37,7 @@ interface FoodItem {
 
 const foodList: Ref<FoodItem[]> = ref([]); // 食品列表
 
-onBeforeMount(()=>{
+onBeforeMount(() => {
   // 根据商家编号获取商家信息
   axios.get('/business/business/' + businessid).then((res) => {
     let r = res.data;
@@ -47,9 +45,9 @@ onBeforeMount(()=>{
       business.value = r.data;
     } else {
       ElMessage({
-    message: r.msg,
-    type: 'warning'
-  });
+        message: r.msg,
+        type: 'warning'
+      });
     }
   });
   axios.get('/food/business/' + businessid).then((res) => {
@@ -62,14 +60,12 @@ onBeforeMount(()=>{
       updateNum();
     } else {
       ElMessage({
-    message: r.msg,
-    type: 'warning'
-  });
+        message: r.msg,
+        type: 'warning'
+      });
     }
   });
-})
-
-
+});
 
 const totalQuantity = ref(0); // 总数量
 const totalPrice = ref(0); // 总价格
@@ -85,20 +81,20 @@ function updateCart() {
       totalSettle.value = r.data.totalSettle;
     } else {
       ElMessage({
-    message: r.msg,
-    type: 'warning'
-  });
+        message: r.msg,
+        type: 'warning'
+      });
     }
   });
 }
 
-function updateNum(){
-  axios.get('/cart/business/' + businessid).then((res) =>{
+function updateNum() {
+  axios.get('/cart/business/' + businessid).then((res) => {
     let r = res.data;
     if (r.code == 0) {
       for (const cart of r.data) {
         let food = foodList.value.find((item) => item.foodid == cart.foodid);
-        if(food){
+        if (food) {
           food.quantity = cart.quantity;
           console.log(food.foodid + ' ' + food.quantity);
         }
@@ -106,38 +102,36 @@ function updateNum(){
       updateCart();
     } else {
       ElMessage({
-    message: r.msg,
-    type: 'warning'
-  });
+        message: r.msg,
+        type: 'warning'
+      });
     }
-  })
+  });
 }
-
 
 // 返回上一页
 function goback() {
   history.back();
 }
 
-function updateQuantity(food: FoodItem){
+function updateQuantity(food: FoodItem) {
   let param = {
     businessid: businessid,
     foodid: food.foodid,
     quantity: food.quantity
   };
-  axios.put('/cart/update', param).then(res => {
+  axios.put('/cart/update', param).then((res) => {
     let r = res.data;
     if (r.code == 0) {
       console.log('更新成功');
       updateCart();
     } else {
       ElMessage({
-    message: r.msg,
-    type: 'warning'
-  });
+        message: r.msg,
+        type: 'warning'
+      });
     }
   });
-
 }
 
 // 添加食品
@@ -150,8 +144,6 @@ function add(food: FoodItem) {
   food.quantity++;
   // 发请求
   updateQuantity(food);
-
-
 }
 
 // 减少食品
@@ -169,8 +161,8 @@ function minus(food: FoodItem) {
 // showStarPrice.value = totalSettle.value < business.value?.starprice;
 
 function toOrder() {
-  localStorage.setItem("businessid",businessid.toString());
-  router.push({name:'order'});
+  localStorage.setItem('businessid', businessid.toString());
+  router.push({ name: 'order' });
   console.log('结算');
 }
 </script>
@@ -187,7 +179,8 @@ function toOrder() {
     <div class="business-img-info">
       <div class="business-info">
         <div class="title-collection">
-          <h1>{{ business?.businessname }}
+          <h1>
+            {{ business?.businessname }}
             <!-- <i class="fa fa-heart" id="showColor1"></i> -->
             <!-- <button v-if="collectId == 0" @click="Collect()">收藏</button> -->
             <!-- <button v-if="collectId !== 0" @click="UnCollect()">收藏</button> -->
@@ -208,11 +201,10 @@ function toOrder() {
           <p>&#165;{{ business?.starprice }}起送 &#165;{{ business?.deliveryprice }}配送</p>
           <p>{{ business?.businessexplain }}</p>
         </div>
-
       </div>
       <!-- 商家logo部分 -->
       <div class="business-logo">
-        <img :src="business?.businessimg">
+        <img :src="business?.businessimg" />
       </div>
     </div>
 
@@ -220,7 +212,7 @@ function toOrder() {
     <ul class="food">
       <li v-for="food in foodList" :key="food.foodid">
         <div class="food-left">
-          <img :src="food.foodimg">
+          <img :src="food.foodimg" />
           <div class="food-left-info">
             <h3>{{ food.foodname }}</h3>
             <p>{{ food.foodexplain }}</p>
@@ -231,7 +223,9 @@ function toOrder() {
           <div>
             <i class="fa fa-minus-circle" @click="minus(food)" v-show="food.quantity > 0"></i>
           </div>
-          <p><span v-show="food.quantity > 0">{{ food.quantity }}</span></p>
+          <p>
+            <span v-show="food.quantity > 0">{{ food.quantity }}</span>
+          </p>
           <div>
             <i class="fa fa-plus-circle" @click="add(food)"></i>
           </div>
@@ -242,8 +236,10 @@ function toOrder() {
     <!-- 购物车部分 -->
     <div class="cart">
       <div class="cart-left">
-        <div class="cart-left-icon"
-          :style="totalQuantity == 0 ? 'background-color:#505051;' : 'background-color:#3190E8;'">
+        <div
+          class="cart-left-icon"
+          :style="totalQuantity == 0 ? 'background-color:#505051;' : 'background-color:#3190E8;'"
+        >
           <i class="fa fa-shopping-cart"></i>
           <div class="cart-left-icon-quantity" v-show="totalQuantity != 0">
             {{ totalQuantity }}
@@ -256,8 +252,11 @@ function toOrder() {
       </div>
       <div class="cart-right">
         <!-- 不够起送费 -->
-        <div class="cart-right-item" v-if="totalSettle < business?.starprice!"
-          style="background-color: #535356;cursor: default;">
+        <div
+          class="cart-right-item"
+          v-if="totalSettle < business?.starprice!"
+          style="background-color: #535356; cursor: default"
+        >
           &#165;{{ business?.starprice }}起送
         </div>
         <!-- 达到起送费 -->
@@ -274,14 +273,14 @@ function toOrder() {
 .wrapper {
   width: 100%;
   height: 100%;
-  background: linear-gradient(#0097FF, #fff);
+  background: linear-gradient(#0097ff, #fff);
 }
 
 /****header部分***/
 .wrapper header {
   width: 100%;
   height: 12vw;
-  background-color: #0097FF;
+  background-color: #0097ff;
   color: #fff;
   font-size: 4.8vw;
 
@@ -321,7 +320,6 @@ function toOrder() {
   display: flex;
   justify-content: center;
   align-items: center;
-
 }
 
 /****商家logo部分***/
@@ -339,7 +337,6 @@ function toOrder() {
   width: 40vw;
   height: 28vw;
   border-radius: 5px;
-
 }
 
 /****商家信息部分***/
@@ -371,7 +368,7 @@ function toOrder() {
 .wrapper .business-img-info .business-info .title-collection h1 button {
   font-size: 3.5vw;
   color: #fff;
-  background-color: #AAA;
+  background-color: #aaa;
   border: none;
   cursor: pointer;
   user-select: none;
@@ -381,7 +378,7 @@ function toOrder() {
 .wrapper .business-img-info .business-info .title-collection h1 button2 {
   font-size: 3.5vw;
   color: #fff;
-  background-color: #FAD;
+  background-color: #fad;
   border: none;
   cursor: pointer;
   user-select: none;
@@ -401,17 +398,16 @@ function toOrder() {
   font-size: 3vw;
   margin-top: 1vw;
   /* margin-left: -10vw; */
-
 }
 
 .wrapper .business-img-info .business-info .commentScore .fa-star {
-  color: #FEC80E;
+  color: #fec80e;
   margin-right: 0.5vw;
   margin-top: 1vw;
 }
 
 .wrapper .business-img-info .business-info .commentScore .fa-star-half-empty {
-  color: #FEC80E;
+  color: #fec80e;
   margin-right: 0.5vw;
   margin-top: 1vw;
 }
@@ -439,7 +435,6 @@ function toOrder() {
   display: flex;
   justify-content: space-around;
   align-items: center;
-
 }
 
 .wrapper .order-and-comment li {
@@ -450,7 +445,7 @@ function toOrder() {
 .wrapper .order-and-comment .order {
   width: 32%;
   box-sizing: border-box;
-  border-bottom: solid 2px #AAA;
+  border-bottom: solid 2px #aaa;
   font-weight: 600;
   display: flex;
   justify-content: center;
@@ -497,7 +492,7 @@ function toOrder() {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  border-bottom: solid 1px #DDD;
+  border-bottom: solid 1px #ddd;
 }
 
 .wrapper .food li .food-left {
@@ -545,7 +540,7 @@ function toOrder() {
 
 .wrapper .food li .food-right .fa-plus-circle {
   font-size: 5.5vw;
-  color: #0097EF;
+  color: #0097ef;
   cursor: pointer;
 }
 
@@ -573,7 +568,7 @@ function toOrder() {
   box-sizing: border-box;
   border: solid 1.6vw #444;
   border-radius: 8vw;
-  background-color: #3190E8;
+  background-color: #3190e8;
   font-size: 7vw;
   color: #fff;
 
@@ -611,19 +606,18 @@ function toOrder() {
 
 .wrapper .cart .cart-left .cart-left-info p:last-child {
   font-size: 2.8vw;
-  color: #AAA;
+  color: #aaa;
 }
 
 .wrapper .cart .cart-right {
   flex: 1;
-
 }
 
 /****达到起送费时的样式****/
 .wrapper .cart .cart-right .cart-right-item {
   width: 100%;
   height: 100%;
-  background-color: #38CA73;
+  background-color: #38ca73;
   color: #fff;
   font-size: 4.5vw;
   font-weight: 700;
@@ -634,7 +628,6 @@ function toOrder() {
   justify-content: center;
   align-items: center;
 }
-
 
 .Rating-gray {
   margin-right: 1.066667vw;
