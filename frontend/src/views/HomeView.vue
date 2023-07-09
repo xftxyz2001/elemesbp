@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import FooterSection from '@/components/FooterSection.vue';
 import router from '@/router';
+import axios from 'axios';
 import { onBeforeUnmount, onMounted, ref } from 'vue';
 
 interface BusinessItem {
@@ -73,6 +74,29 @@ function toBusinessInfo(id: number) {
       id
     }
   });
+}
+
+function changeServer() {
+  ElMessageBox.prompt('Please input your server address', 'Tip', {
+    confirmButtonText: 'OK',
+    cancelButtonText: 'Cancel',
+    inputErrorMessage: 'Invalid Email',
+  }).then((value: any) => {
+    if (!value.value.startsWith('http://')) {
+      value.value = 'http://' + value.value;
+    }
+    axios.defaults.baseURL = value.value;
+    ElMessage({
+      type: 'success',
+      message: `Server address changed to ${value.value}`,
+    })
+  })
+    .catch(() => {
+      ElMessage({
+        type: 'info',
+        message: 'Input canceled',
+      })
+    });
 }
 </script>
 
@@ -153,7 +177,7 @@ function toBusinessInfo(id: number) {
         <h3>超级会员</h3>
         <p>&#8226; 每月享超值权益</p>
       </div>
-      <div class="right">
+      <div class="right" @click="changeServer()">
         立即开通 &gt;
       </div>
     </div>
