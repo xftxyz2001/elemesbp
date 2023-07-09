@@ -3,6 +3,7 @@ package com.xftxyz.elm.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestAttribute;
@@ -13,13 +14,17 @@ import com.xftxyz.elm.config.ElmProperties;
 import com.xftxyz.elm.domain.Food;
 import com.xftxyz.elm.domain.User;
 import com.xftxyz.elm.service.FoodService;
+import com.xftxyz.elm.validation.ValidInfo;
 import com.xftxyz.elm.vo.res.FoodWithQuantityVO;
+
+import jakarta.validation.constraints.NotBlank;
 
 /**
  * 食品相关
  */
 @RestController
 @RequestMapping("/food")
+@Validated
 public class FoodController {
 
     @Autowired
@@ -32,7 +37,8 @@ public class FoodController {
      * @return 食品列表
      */
     @GetMapping("/business/{businessid}")
-    public List<Food> getFoodList(@PathVariable("businessid") Integer businessid) {
+    public List<Food> getFoodList(
+            @PathVariable("businessid") @NotBlank(message = ValidInfo.BUSINESS_ID_NOT_NULL) Integer businessid) {
         return foodService.getFoodList(businessid);
     }
 
@@ -45,7 +51,7 @@ public class FoodController {
     @GetMapping("/business/{businessid}/with/quantity")
     public List<FoodWithQuantityVO> getFoodListWithQuantity(
             @RequestAttribute(ElmProperties.requestUser) User user,
-            @PathVariable("businessid") Integer businessid) {
+            @PathVariable("businessid") @NotBlank(message = ValidInfo.BUSINESS_ID_NOT_NULL) Integer businessid) {
         return foodService.getFoodListWithQuantity(user.getUserid(), businessid);
     }
 }

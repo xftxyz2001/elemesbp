@@ -13,4 +13,8 @@ import java.util.List;
 public interface BusinessService extends IService<Business> {
 
     List<Business> findBusinessByOrdertypeid(Integer ordertypeid);
+
+    List<Business> findBusinessByBusinessname(String businessname);
+
+    List<Business> findBusinessByBusinesaddress(String businessaddress);
 }

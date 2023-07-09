@@ -3,6 +3,7 @@ package com.xftxyz.elm.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -15,15 +16,19 @@ import com.xftxyz.elm.config.ElmProperties;
 import com.xftxyz.elm.domain.Cart;
 import com.xftxyz.elm.domain.User;
 import com.xftxyz.elm.service.CartService;
+import com.xftxyz.elm.validation.ValidInfo;
 import com.xftxyz.elm.vo.req.CartUpdateVO;
 import com.xftxyz.elm.vo.res.CartInfoVO;
 import com.xftxyz.elm.vo.res.CartWithFoodVO;
+
+import jakarta.validation.constraints.NotBlank;
 
 /**
  * 购物车相关
  */
 @RestController
 @RequestMapping("/cart")
+@Validated
 public class CartController {
 
     @Autowired
@@ -38,7 +43,7 @@ public class CartController {
      */
     @GetMapping("/count/{businessid}")
     public Integer getCartItemCountForUserInStore(@RequestAttribute(ElmProperties.requestUser) User user,
-            @PathVariable("businessid") Integer businessid) {
+            @PathVariable("businessid") @NotBlank(message = ValidInfo.BUSINESS_ID_NOT_NULL) Integer businessid) {
         return cartService.getTotalQuantity(user.getUserid(), businessid);
     }
 
@@ -51,7 +56,7 @@ public class CartController {
      */
     @GetMapping("/business/{businessid}")
     public List<Cart> listCart(@RequestAttribute(ElmProperties.requestUser) User user,
-            @PathVariable("businessid") Integer businessid) {
+            @PathVariable("businessid") @NotBlank(message = ValidInfo.BUSINESS_ID_NOT_NULL) Integer businessid) {
         return cartService.listCart(user.getUserid(), businessid);
     }
 
@@ -64,7 +69,7 @@ public class CartController {
      */
     @GetMapping("/business/{businessid}/with/food")
     public List<CartWithFoodVO> listCartWithFood(@RequestAttribute(ElmProperties.requestUser) User user,
-            @PathVariable("businessid") Integer businessid) {
+            @PathVariable("businessid") @NotBlank(message = ValidInfo.BUSINESS_ID_NOT_NULL) Integer businessid) {
         return cartService.listCartWithFood(user.getUserid(), businessid);
     }
 
@@ -77,7 +82,7 @@ public class CartController {
      */
     @GetMapping("/info/{businessid}")
     public CartInfoVO getCartInfo(@RequestAttribute(ElmProperties.requestUser) User user,
-            @PathVariable("businessid") Integer businessid) {
+            @PathVariable("businessid") @NotBlank(message = ValidInfo.BUSINESS_ID_NOT_NULL) Integer businessid) {
         return cartService.getCartInfo(user.getUserid(), businessid);
     }
 
@@ -90,7 +95,7 @@ public class CartController {
      */
     @PutMapping("/update")
     public Boolean updateCart(@RequestAttribute(ElmProperties.requestUser) User user,
-            @RequestBody CartUpdateVO cartUpdateVO) {
+            @RequestBody @Validated CartUpdateVO cartUpdateVO) {
         return cartService.updateCart(user.getUserid(), cartUpdateVO.getBusinessid(), cartUpdateVO.getFoodid(),
                 cartUpdateVO.getQuantity());
     }

@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.xftxyz.elm.config.ElmProperties;
 import com.xftxyz.elm.domain.User;
 import com.xftxyz.elm.service.UserService;
+import com.xftxyz.elm.validation.ValidInfo;
 import com.xftxyz.elm.vo.req.LoginVO;
 import com.xftxyz.elm.vo.req.RegisterVO;
 import com.xftxyz.elm.vo.res.UserVO;
@@ -72,7 +73,7 @@ public class UserController {
      * @return true:存在 false:不存在
      */
     @GetMapping("/check/{userid}")
-    public Boolean checkUserid(@PathVariable("userid") @NotBlank(message = "用户id不能为空") String userid) {
+    public Boolean checkUserid(@PathVariable("userid") @NotBlank(message = ValidInfo.USER_ID_NOT_NULL) String userid) {
         return userService.checkUserid(userid);
     }
 
@@ -104,7 +105,7 @@ public class UserController {
     public Boolean deleteUser(@RequestAttribute(ElmProperties.requestUser) User user) {
         return userService.deleteUser(user);
     }
-    
+
     /**
      * 用户查询（根据id）
      * 
@@ -112,7 +113,7 @@ public class UserController {
      * @return 用户信息
      */
     @GetMapping("/{userid}")
-    public UserVO getUser(@PathVariable("userid") @NotBlank(message = "用户id不能为空") String userid) {
+    public UserVO getUser(@PathVariable("userid") @NotBlank(message = ValidInfo.USER_ID_NOT_NULL) String userid) {
         return userService.getUserVO(userid);
     }
 

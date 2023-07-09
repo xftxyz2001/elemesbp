@@ -3,6 +3,7 @@ package com.xftxyz.elm.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -16,12 +17,14 @@ import com.xftxyz.elm.service.BusinessService;
 import com.xftxyz.elm.validation.ValidInfo;
 
 import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotBlank;
 
 /**
  * 商家相关
  */
 @RestController
 @RequestMapping("/business")
+@Validated
 public class BusinessController {
 
     @Autowired
@@ -34,7 +37,8 @@ public class BusinessController {
      * @return 商家信息
      */
     @GetMapping("/business/{businessid}")
-    public Business findBusinessByBusinessid(@PathVariable("businessid") Integer businessid) {
+    public Business findBusinessByBusinessid(
+            @PathVariable("businessid") @NotBlank(message = ValidInfo.BUSINESS_ID_NOT_NULL) Integer businessid) {
         return businessService.getById(businessid);
     }
 
@@ -45,11 +49,18 @@ public class BusinessController {
      * @return 商家信息列表
      */
     @GetMapping("/ordertype/{ordertypeid}")
-    public List<Business> findBusinessByOrdertypeid(@PathVariable("ordertypeid") Integer ordertypeid) {
+    public List<Business> findBusinessByOrdertypeid(
+            @PathVariable("ordertypeid") @NotBlank(message = ValidInfo.ORDERTYPE_NOT_NULL) Integer ordertypeid) {
         return businessService.findBusinessByOrdertypeid(ordertypeid);
     }
 
-    // 返回所有商家信息（分页）
+    /**
+     * 返回所有商家信息（分页）
+     * 
+     * @param pageNum  页码
+     * @param pageSize 页大小
+     * @return 商家信息列表
+     */
     @GetMapping("/list")
     public IPage<Business> list(
             @RequestParam(defaultValue = "1") @Min(value = 1, message = ValidInfo.PAGE_LESS_THAN_ONE) Integer pageNum,
@@ -58,22 +69,17 @@ public class BusinessController {
         return businessService.page(page);
     }
 
-    // 商家名称
-    // 商家地址
-    // 起送费
-    // 配送费
     /**
      * 根据商家名称查询商家信息
      * 
      * @param businessname 商家名称
      * @return 商家信息列表
      */
-    // @GetMapping("/businessname/{businessname}")
-    // public List<Business>
-    // findBusinessByBusinessname(@PathVariable("businessname") String businessname)
-    // {
-    // return businessService.findBusinessByBusinessname(businessname);
-    // }
+    @GetMapping("/businessname/{businessname}")
+    public List<Business> findBusinessByBusinessname(
+            @PathVariable("businessname") @NotBlank(message = ValidInfo.BUSINESS_NAME_NOT_NULL) String businessname) {
+        return businessService.findBusinessByBusinessname(businessname);
+    }
 
     /**
      * 根据商家地址查询商家信息
@@ -81,12 +87,11 @@ public class BusinessController {
      * @param businessaddress 商家地址
      * @return 商家信息列表
      */
-    // @GetMapping("/businessaddress/{businessaddress}")
-    // public List<Business>
-    // findBusinessByBusinessaddress(@PathVariable("businessaddress") String
-    // businessaddress) {
-    // return businessService.findBusinessByBusinessaddress(businessaddress);
-    // }
+    @GetMapping("/businessaddress/{businessaddress}")
+    public List<Business> findBusinessByBusinessaddress(
+            @PathVariable("businessaddress") @NotBlank(message = ValidInfo.BUSINESS_ADDRESS_NOT_NULL) String businessaddress) {
+        return businessService.findBusinessByBusinesaddress(businessaddress);
+    }
 
     /**
      * 根据起送费范围查询商家信息

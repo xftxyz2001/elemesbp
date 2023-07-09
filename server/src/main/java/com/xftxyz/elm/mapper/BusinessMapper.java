@@ -16,6 +16,10 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 @Mapper
 public interface BusinessMapper extends BaseMapper<Business> {
     List<Business> selectAllByOrdertypeid(@Param("ordertypeid") Integer ordertypeid);
+
+    List<Business> selectAllByBusinessnameLike(@Param("businessname") String businessname);
+
+    List<Business> selectAllByBusinessaddressLike(@Param("businessaddress") String businessaddress);
 }
 
 

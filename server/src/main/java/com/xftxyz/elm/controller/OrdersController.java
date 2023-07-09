@@ -3,6 +3,7 @@ package com.xftxyz.elm.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -15,14 +16,18 @@ import com.xftxyz.elm.config.ElmProperties;
 import com.xftxyz.elm.domain.Orders;
 import com.xftxyz.elm.domain.User;
 import com.xftxyz.elm.service.OrdersService;
+import com.xftxyz.elm.validation.ValidInfo;
 import com.xftxyz.elm.vo.req.OrdersNewVO;
 import com.xftxyz.elm.vo.res.OrdersVO;
+
+import jakarta.validation.constraints.NotBlank;
 
 /**
  * 订单相关
  */
 @RestController
 @RequestMapping("/orders")
+@Validated
 public class OrdersController {
 
     @Autowired
@@ -35,7 +40,8 @@ public class OrdersController {
      * @return 订单列表
      */
     @GetMapping("/user/{userid}")
-    public List<Orders> findOrdersByUserId(@PathVariable("userid") String userId) {
+    public List<Orders> findOrdersByUserId(
+            @PathVariable("userid") @NotBlank(message = ValidInfo.USER_ID_NOT_NULL) String userId) {
         return ordersService.findOrdersByUserId(userId);
     }
 
@@ -57,7 +63,8 @@ public class OrdersController {
      * @return 订单
      */
     @GetMapping("/{orderid}")
-    public Orders findOrdersById(@PathVariable("orderid") int orderId) {
+    public Orders findOrdersById(
+            @PathVariable("orderid") @NotBlank(message = ValidInfo.ORDER_ID_NOT_NULL) Integer orderId) {
         return ordersService.getById(orderId);
     }
 
@@ -68,7 +75,8 @@ public class OrdersController {
      * @return 订单详细信息
      */
     @GetMapping("/detailet/{orderid}")
-    public OrdersVO findOrderdetailetById(@PathVariable("orderid") int orderId) {
+    public OrdersVO findOrderdetailetById(
+            @PathVariable("orderid") @NotBlank(message = ValidInfo.ORDER_ID_NOT_NULL) Integer orderId) {
         return ordersService.getDetailetById(orderId);
     }
 
@@ -81,7 +89,7 @@ public class OrdersController {
      */
     @PostMapping("/new")
     public Orders createOrders(@RequestAttribute(ElmProperties.requestUser) User user,
-            @RequestBody OrdersNewVO ordersNewVO) {
+            @RequestBody @Validated OrdersNewVO ordersNewVO) {
         return ordersService.createOrders(user.getUserid(), ordersNewVO.getBusinessid(),
                 ordersNewVO.getDaid());
     }
@@ -90,7 +98,7 @@ public class OrdersController {
     // 支付订单
     @PostMapping("/pay/{orderid}")
     public Boolean payOrder(@RequestAttribute(ElmProperties.requestUser) User user,
-            @PathVariable("orderid") int orderId) {
+            @PathVariable("orderid") @NotBlank(message = ValidInfo.ORDER_ID_NOT_NULL) Integer orderId) {
         return ordersService.payOrder(user.getUserid(), orderId);
     }
 

@@ -28,4 +28,18 @@
         where
         orderTypeId = #{ordertypeid,jdbcType=NUMERIC}
     </select>
+    <select id="selectAllByBusinessnameLike" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from business
+        where
+        businessName like #{businessname,jdbcType=VARCHAR}
+    </select>
+    <select id="selectAllByBusinessaddressLike" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from business
+        where
+        businessAddress like #{businessaddress,jdbcType=VARCHAR}
+    </select>
 </mapper>

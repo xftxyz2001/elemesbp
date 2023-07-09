@@ -3,6 +3,7 @@ package com.xftxyz.elm.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -16,13 +17,17 @@ import com.xftxyz.elm.config.ElmProperties;
 import com.xftxyz.elm.domain.Deliveryaddress;
 import com.xftxyz.elm.domain.User;
 import com.xftxyz.elm.service.DeliveryaddressService;
+import com.xftxyz.elm.validation.ValidInfo;
 import com.xftxyz.elm.vo.req.DeliveryaddressVO;
+
+import jakarta.validation.constraints.NotBlank;
 
 /**
  * 配送地址相关
  */
 @RestController
 @RequestMapping("/daddress")
+@Validated
 public class DeliveryAddressController {
 
     @Autowired
@@ -59,7 +64,7 @@ public class DeliveryAddressController {
      */
     @PostMapping("/save")
     public Boolean saveDeliveryAddress(@RequestAttribute(ElmProperties.requestUser) User user,
-            @RequestBody DeliveryaddressVO deliveryaddressVO) {
+            @RequestBody @Validated DeliveryaddressVO deliveryaddressVO) {
         return deliveryaddressService.saveDeliveryAddress(
                 deliveryaddressVO.getDaid(),
                 user.getUserid(),
@@ -76,7 +81,8 @@ public class DeliveryAddressController {
      * @return 是否删除成功
      */
     @DeleteMapping("/{daid}")
-    public Boolean removeDeliveryAddressById(@PathVariable("daid") Integer daid) {
+    public Boolean removeDeliveryAddressById(
+            @PathVariable("daid") @NotBlank(message = ValidInfo.DELIVERY_ADDRESS_ID_NOT_NULL) Integer daid) {
         return deliveryaddressService.removeById(daid);
     }
 

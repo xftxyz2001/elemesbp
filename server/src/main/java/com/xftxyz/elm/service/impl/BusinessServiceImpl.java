@@ -28,8 +28,14 @@ public class BusinessServiceImpl extends ServiceImpl<BusinessMapper, Business>
     public List<Business> findBusinessByOrdertypeid(Integer ordertypeid) {
         return businessMapper.selectAllByOrdertypeid(ordertypeid);
     }
+
+    @Override
+    public List<Business> findBusinessByBusinessname(String businessname) {
+        return businessMapper.selectAllByBusinessnameLike(businessname);
+    }
+
+    @Override
+    public List<Business> findBusinessByBusinesaddress(String businessaddress) {
+        return businessMapper.selectAllByBusinessaddressLike(businessaddress);
+    }
 }
-
-
-
-
