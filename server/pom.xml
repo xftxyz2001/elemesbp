@@ -18,6 +18,11 @@
 		<java.version>17</java.version>
 	</properties>
 	<dependencies>
+		<dependency>
+			<groupId>com.google.code.findbugs</groupId>
+			<artifactId>annotations</artifactId>
+			<version>3.0.1</version>
+		</dependency>
 		<!-- 数据库链接相关 -->
 		<dependency>
 			<groupId>com.baomidou</groupId>
